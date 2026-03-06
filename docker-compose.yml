@@ -1,0 +1,119 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: kross-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: krosscares
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d krosscares"]
+      interval: 10s
+      timeout: 5s
+      retries: 8
+
+  redis:
+    image: redis:7-alpine
+    container_name: kross-redis
+    profiles: ["full"]
+    ports:
+      - "6379:6379"
+
+  minio:
+    image: minio/minio:latest
+    container_name: kross-minio
+    profiles: ["full"]
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+  minio-init:
+    image: minio/mc:latest
+    container_name: kross-minio-init
+    profiles: ["full"]
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      sleep 3;
+      mc alias set local http://minio:9000 minioadmin minioadmin;
+      mc mb -p local/kross-assets || true;
+      mc anonymous set public local/kross-assets || true;
+      exit 0;
+      "
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: kross-mailpit
+    profiles: ["full"]
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: kross-web
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/krosscares?schema=public
+      APP_URL: http://localhost:3000
+      SESSION_SECRET: local-dev-secret
+      SMTP_FROM: noreply@krosscares.local
+      INTERNAL_CRON_SECRET: local-cron-secret
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+      - /app/.next
+
+  scheduler:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: kross-scheduler
+    profiles: ["full"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/krosscares?schema=public
+      SMTP_FROM: noreply@krosscares.local
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+    command: >
+      sh -c "npm run db:generate &&
+             npm run db:migrate &&
+             npm run db:seed &&
+             while true; do npm run worker:renewals; sleep 3600; done"
+
+  stripe-cli:
+    image: stripe/stripe-cli:latest
+    container_name: kross-stripe-cli
+    profiles: ["stripe"]
+    command: listen --forward-to web:3000/api/webhooks/stripe
+    environment:
+      STRIPE_API_KEY: ${STRIPE_API_KEY:-}
+    depends_on:
+      - web
+
+volumes:
+  pgdata:
+  minio_data:

@@ -1,0 +1,273 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  REALTOR
+}
+
+enum ZipStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+  BLOCKED
+}
+
+enum ZipTier {
+  STANDARD
+  HIGH_DEMAND
+  PREMIUM
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum ContractStatus {
+  DRAFT
+  SENT
+  SIGNED
+  DECLINED
+}
+
+enum OnboardingStatus {
+  PENDING
+  FORM_COMPLETE
+  SIGNED
+  ACTIVE
+}
+
+enum OnboardingFormStatus {
+  NOT_SENT
+  SENT
+  COMPLETED
+}
+
+enum ContactMethod {
+  EMAIL
+  SMS
+  CALL
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  CLOSED
+  INVALID
+}
+
+enum WaitlistStatus {
+  PENDING
+  NOTIFIED
+  CONVERTED
+}
+
+model User {
+  id          String     @id @default(uuid()) @db.Uuid
+  email       String     @unique
+  passwordHash String
+  role        UserRole
+  fullName    String
+  phone       String?
+  companyName String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  client      Client?
+  sessions    Session[]
+  auditLogs   AuditLog[]
+}
+
+model Session {
+  id        String   @id @default(uuid()) @db.Uuid
+  token     String   @unique
+  userId    String   @db.Uuid
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Client {
+  id                     String            @id @default(uuid()) @db.Uuid
+  userId                 String            @unique @db.Uuid
+  licenseNumber          String?
+  serviceCity            String?
+  serviceState           String?
+  website                String?
+  calendarLink           String?
+  headshotUrl            String?
+  logoUrl                String?
+  onboardingStatus       OnboardingStatus  @default(PENDING)
+  leadRoutingEmail       String?
+  leadRoutingPhone       String?
+  preferredContactMethod ContactMethod?
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+  user                   User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  territories            ZipInventory[]    @relation("AssignedTerritories")
+  payments               Payment[]
+  contracts              Contract[]
+  onboardingForms        OnboardingForm[]
+  leadRoutes             LeadRoute[]
+  leads                  Lead[]
+
+  @@index([onboardingStatus])
+}
+
+model ZipInventory {
+  id                 String         @id @default(uuid()) @db.Uuid
+  zipCode            String         @unique @db.VarChar(5)
+  state              String
+  city               String
+  county             String
+  tier               ZipTier
+  annualPriceCents   Int
+  status             ZipStatus      @default(AVAILABLE)
+  assignedClientId   String?        @db.Uuid
+  reservationExpiresAt DateTime?
+  renewalDate        DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  assignedClient     Client?        @relation("AssignedTerritories", fields: [assignedClientId], references: [id], onDelete: SetNull)
+  payments           Payment[]
+  contracts          Contract[]
+  onboardingForms    OnboardingForm[]
+  waitlistEntries    Waitlist[]
+  leads              Lead[]
+  renewalReminders   RenewalReminder[]
+
+  @@index([status])
+  @@index([state, city])
+  @@index([tier, status])
+}
+
+model Payment {
+  id                String        @id @default(uuid()) @db.Uuid
+  clientId          String        @db.Uuid
+  zipId             String        @db.Uuid
+  provider          String        @default("mock")
+  providerSessionId String?
+  amountCents       Int
+  status            PaymentStatus @default(PENDING)
+  paidAt            DateTime?
+  createdAt         DateTime      @default(now())
+  client            Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  zip               ZipInventory  @relation(fields: [zipId], references: [id], onDelete: Cascade)
+
+  @@index([clientId, status])
+  @@index([zipId, status])
+}
+
+model Contract {
+  id         String         @id @default(uuid()) @db.Uuid
+  clientId   String         @db.Uuid
+  zipId      String         @db.Uuid
+  status     ContractStatus @default(DRAFT)
+  documentUrl String?
+  sentAt     DateTime?
+  signedAt   DateTime?
+  createdAt  DateTime       @default(now())
+  client     Client         @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  zip        ZipInventory   @relation(fields: [zipId], references: [id], onDelete: Cascade)
+
+  @@index([clientId, status])
+  @@index([zipId, status])
+}
+
+model OnboardingForm {
+  id          String               @id @default(uuid()) @db.Uuid
+  clientId    String               @db.Uuid
+  zipId       String               @db.Uuid
+  status      OnboardingFormStatus @default(NOT_SENT)
+  submittedAt DateTime?
+  notes       String?
+  createdAt   DateTime             @default(now())
+  client      Client               @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  zip         ZipInventory         @relation(fields: [zipId], references: [id], onDelete: Cascade)
+
+  @@unique([clientId, zipId])
+  @@index([status])
+}
+
+model LeadRoute {
+  id               String   @id @default(uuid()) @db.Uuid
+  clientId         String   @db.Uuid
+  zipCode          String   @unique @db.VarChar(5)
+  destinationEmail String
+  destinationPhone String
+  alertsEmail      Boolean  @default(true)
+  alertsSms        Boolean  @default(true)
+  crmIntegration   String?
+  active           Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  client           Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+}
+
+model Lead {
+  id         String     @id @default(uuid()) @db.Uuid
+  zipId      String     @db.Uuid
+  clientId   String     @db.Uuid
+  firstName  String
+  lastName   String
+  email      String
+  phone      String
+  status     LeadStatus @default(NEW)
+  createdAt  DateTime   @default(now())
+  zip        ZipInventory @relation(fields: [zipId], references: [id], onDelete: Cascade)
+  client     Client     @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId, status])
+  @@index([zipId])
+}
+
+model Waitlist {
+  id           String         @id @default(uuid()) @db.Uuid
+  zipId        String         @db.Uuid
+  zipCode      String         @db.VarChar(5)
+  name         String
+  email        String
+  phone        String
+  businessType String
+  status       WaitlistStatus @default(PENDING)
+  createdAt    DateTime       @default(now())
+  zip          ZipInventory   @relation(fields: [zipId], references: [id], onDelete: Cascade)
+
+  @@index([zipCode, status])
+}
+
+model RenewalReminder {
+  id         String   @id @default(uuid()) @db.Uuid
+  zipId      String   @db.Uuid
+  daysBefore Int
+  sentAt     DateTime @default(now())
+  zip        ZipInventory @relation(fields: [zipId], references: [id], onDelete: Cascade)
+
+  @@unique([zipId, daysBefore])
+}
+
+model AuditLog {
+  id          String   @id @default(uuid()) @db.Uuid
+  actorUserId String?  @db.Uuid
+  action      String
+  entityType  String
+  entityId    String
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  actor       User?    @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId])
+  @@index([action])
+}

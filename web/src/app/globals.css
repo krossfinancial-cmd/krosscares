@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4f8ff;
+  --foreground: #0f1a3a;
+  --card: #ffffff;
+  --muted: #65739a;
+  --primary: #1258ff;
+  --primary-dark: #0a3ec0;
+  --ring: rgba(18, 88, 255, 0.3);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(18, 88, 255, 0.14), transparent 24%),
+    radial-gradient(circle at 88% 25%, rgba(18, 88, 255, 0.08), transparent 20%),
+    linear-gradient(180deg, #f7faff 0%, #edf3ff 100%);
+  min-height: 100vh;
+}
+
+* {
+  border-color: #dde6ff;
+}
+
+a,
+button {
+  transition: all 180ms ease;
+}
+
+input,
+select,
+textarea {
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.glass {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid #dbe5ff;
+  border-radius: 18px;
+  box-shadow: 0 14px 32px rgba(13, 37, 91, 0.08);
+}
+
+.primary-btn {
+  background: linear-gradient(140deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(18, 88, 255, 0.25);
+}
+
+.secondary-btn {
+  background: #fff;
+  border: 1px solid #cfe0ff;
+  color: #103689;
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+}
