@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
+import { appUrl } from "@/lib/app-url";
 
 export async function POST(request: Request) {
   const limit = checkRateLimit(`waitlist:${requestFingerprint(request)}`, 40, 60_000);
@@ -26,7 +27,7 @@ export async function POST(request: Request) {
   });
 
   if (!zip) {
-    return NextResponse.redirect(new URL("/waitlist?error=zip-not-found", request.url));
+    return NextResponse.redirect(appUrl("/waitlist?error=zip-not-found"));
   }
 
   await prisma.waitlist.create({
@@ -41,5 +42,5 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.redirect(new URL(`/waitlist?zip=${zipCode}&success=1`, request.url));
+  return NextResponse.redirect(appUrl(`/waitlist?zip=${zipCode}&success=1`));
 }

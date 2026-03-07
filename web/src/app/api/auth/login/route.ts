@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { loginWithPassword } from "@/lib/auth";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
+import { appUrl } from "@/lib/app-url";
 
 export async function POST(request: Request) {
   const limit = checkRateLimit(`login:${requestFingerprint(request)}`, 20, 60_000);
@@ -14,10 +15,10 @@ export async function POST(request: Request) {
 
   const result = await loginWithPassword(email, password);
   if (!result.ok) {
-    return NextResponse.redirect(new URL("/login?error=invalid", request.url));
+    return NextResponse.redirect(appUrl("/login?error=invalid"));
   }
 
   const target =
     result.role === "ADMIN" ? "/dashboard/admin" : result.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
-  return NextResponse.redirect(new URL(target, request.url));
+  return NextResponse.redirect(appUrl(target));
 }

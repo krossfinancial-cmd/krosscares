@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { uploadFile } from "@/lib/storage";
 import { attemptActivation, completeOnboarding } from "@/lib/workflows";
+import { appUrl } from "@/lib/app-url";
 
 function ensureFile(file: unknown, label: string) {
   if (!(file instanceof File)) throw new Error(`${label} is required.`);
@@ -13,12 +14,12 @@ function ensureFile(file: unknown, label: string) {
 export async function POST(request: Request) {
   const user = await getCurrentUser();
   if (!user || (user.role !== "REALTOR" && user.role !== "DEALER")) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(appUrl("/login"));
   }
   const basePath = user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
 
   const client = await prisma.client.findUnique({ where: { userId: user.id } });
-  if (!client) return NextResponse.redirect(new URL(`${basePath}?error=client`, request.url));
+  if (!client) return NextResponse.redirect(appUrl(`${basePath}?error=client`));
 
   const formData = await request.formData();
   const zipId = String(formData.get("zipId") || "");
@@ -60,9 +61,9 @@ export async function POST(request: Request) {
     await completeOnboarding(zipId, { userId: user.id, clientId: client.id });
     await attemptActivation(zipId, { userId: user.id, clientId: client.id });
 
-    return NextResponse.redirect(new URL(`${basePath}?onboarding=complete`, request.url));
+    return NextResponse.redirect(appUrl(`${basePath}?onboarding=complete`));
   } catch (error) {
     const message = encodeURIComponent(error instanceof Error ? error.message : "Onboarding failed.");
-    return NextResponse.redirect(new URL(`${basePath}/onboarding/${zipId}?error=${message}`, request.url));
+    return NextResponse.redirect(appUrl(`${basePath}/onboarding/${zipId}?error=${message}`));
   }
 }

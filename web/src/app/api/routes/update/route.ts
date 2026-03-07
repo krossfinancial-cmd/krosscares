@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { appUrl } from "@/lib/app-url";
 
 export async function POST(request: Request) {
   const user = await getCurrentUser();
   if (!user || (user.role !== "REALTOR" && user.role !== "DEALER")) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(appUrl("/login"));
   }
   const basePath = user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
 
@@ -18,7 +19,7 @@ export async function POST(request: Request) {
     where: { id: clientId },
   });
   if (!client || client.userId !== user.id) {
-    return NextResponse.redirect(new URL(`${basePath}/routing?error=forbidden`, request.url));
+    return NextResponse.redirect(appUrl(`${basePath}/routing?error=forbidden`));
   }
 
   await prisma.$transaction(async (tx) => {
@@ -39,5 +40,5 @@ export async function POST(request: Request) {
     });
   });
 
-  return NextResponse.redirect(new URL(`${basePath}/routing?saved=1`, request.url));
+  return NextResponse.redirect(appUrl(`${basePath}/routing?saved=1`));
 }
