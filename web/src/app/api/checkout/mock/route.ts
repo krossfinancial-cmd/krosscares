@@ -16,10 +16,15 @@ export async function POST(request: Request) {
   const client = await prisma.client.findUnique({ where: { userId: user.id } });
   if (!client) return NextResponse.redirect(appUrl(`${basePath}?error=client`));
 
-  await completeMockPayment(zipId, {
-    userId: user.id,
-    clientId: client.id,
-  });
+  try {
+    await completeMockPayment(zipId, {
+      userId: user.id,
+      clientId: client.id,
+    });
+  } catch (error) {
+    const message = encodeURIComponent(error instanceof Error ? error.message : "Payment failed.");
+    return NextResponse.redirect(appUrl(`${basePath}/checkout/${zipId}?error=${message}`));
+  }
 
   return NextResponse.redirect(appUrl(`${basePath}/contract/${zipId}`));
 }

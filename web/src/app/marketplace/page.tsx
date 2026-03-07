@@ -13,6 +13,7 @@ type SearchParams = Promise<{
 
 export default async function MarketplacePage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
+  const now = new Date();
   const user = await getCurrentUser();
   const lockedVertical = user?.role === "DEALER" ? "DEALER" : user?.role === "REALTOR" ? "REALTOR" : undefined;
   const effectiveVertical = lockedVertical ?? params.vertical ?? "ALL";
@@ -106,41 +107,47 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
             </tr>
           </thead>
           <tbody>
-            {zips.map((zip) => (
-              <tr key={zip.id} className="border-t border-blue-100 hover:bg-blue-50/60">
-                <td className="px-4 py-3 font-semibold text-blue-950">{zip.zipCode}</td>
-                <td className="px-4 py-3 text-blue-900">{zip.city}, {zip.state}</td>
-                <td className="px-4 py-3 text-blue-900">{zip.tier.replace("_", " ")}</td>
-                <td className="px-4 py-3 text-blue-900">{zip.vertical}</td>
-                <td className="px-4 py-3 font-semibold text-blue-950">{formatCurrency(zip.annualPriceCents)}</td>
-                <td className="px-4 py-3">
-                  <span className={`rounded-full px-2 py-1 text-xs font-semibold ${zipStatusColor(zip.status)}`}>
-                    {zip.status}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-right">
-                  {!user ? (
-                    <a href="/login" className="secondary-btn text-xs">
-                      Sign in to claim
-                    </a>
-                  ) : user.role === "ADMIN" ? (
-                    <a href="/dashboard/admin/zips" className="secondary-btn text-xs">
-                      Assign in Admin
-                    </a>
-                  ) : user.role !== zip.vertical ? (
-                    <span className="text-xs text-blue-700/70">Not your vertical</span>
-                  ) : (
-                    <ZipActionButton
-                      zipId={zip.id}
-                      zipCode={zip.zipCode}
-                      vertical={zip.vertical}
-                      dashboardPath={user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor"}
-                      status={zip.status}
-                    />
-                  )}
-                </td>
-              </tr>
-            ))}
+            {zips.map((zip) => {
+              const expiredReservation =
+                zip.status === "RESERVED" && !!zip.reservationExpiresAt && zip.reservationExpiresAt <= now;
+              const displayStatus = expiredReservation ? "AVAILABLE" : zip.status;
+
+              return (
+                <tr key={zip.id} className="border-t border-blue-100 hover:bg-blue-50/60">
+                  <td className="px-4 py-3 font-semibold text-blue-950">{zip.zipCode}</td>
+                  <td className="px-4 py-3 text-blue-900">{zip.city}, {zip.state}</td>
+                  <td className="px-4 py-3 text-blue-900">{zip.tier.replace("_", " ")}</td>
+                  <td className="px-4 py-3 text-blue-900">{zip.vertical}</td>
+                  <td className="px-4 py-3 font-semibold text-blue-950">{formatCurrency(zip.annualPriceCents)}</td>
+                  <td className="px-4 py-3">
+                    <span className={`rounded-full px-2 py-1 text-xs font-semibold ${zipStatusColor(displayStatus)}`}>
+                      {displayStatus}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    {!user ? (
+                      <a href="/login" className="secondary-btn text-xs">
+                        Sign in to claim
+                      </a>
+                    ) : user.role === "ADMIN" ? (
+                      <a href="/dashboard/admin/zips" className="secondary-btn text-xs">
+                        Assign in Admin
+                      </a>
+                    ) : user.role !== zip.vertical ? (
+                      <span className="text-xs text-blue-700/70">Not your vertical</span>
+                    ) : (
+                      <ZipActionButton
+                        zipId={zip.id}
+                        zipCode={zip.zipCode}
+                        vertical={zip.vertical}
+                        dashboardPath={user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor"}
+                        status={displayStatus}
+                      />
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
             {!zips.length && (
               <tr>
               <td colSpan={7} className="px-4 py-8 text-center text-sm text-blue-700">

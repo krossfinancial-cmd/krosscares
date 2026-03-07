@@ -1,3 +1,4 @@
+import { Prisma, Vertical, ZipStatus, ZipTier } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 const STATUS_WHITELIST = new Set(["AVAILABLE", "RESERVED", "SOLD", "BLOCKED"]);
@@ -9,25 +10,57 @@ export async function getMarketplaceZips(filters: { search?: string; status?: st
   const status = filters.status?.toUpperCase() || "ALL";
   const tier = filters.tier?.toUpperCase() || "ALL";
   const vertical = filters.vertical?.toUpperCase() || "ALL";
+  const now = new Date();
 
-  const safeStatus = status === "ALL" ? "ALL" : STATUS_WHITELIST.has(status) ? status : "ALL";
-  const safeTier = tier === "ALL" ? "ALL" : TIER_WHITELIST.has(tier) ? tier : "ALL";
-  const safeVertical = vertical === "ALL" ? "ALL" : VERTICAL_WHITELIST.has(vertical) ? vertical : "ALL";
+  const safeStatus: "ALL" | ZipStatus =
+    status === "ALL" ? "ALL" : STATUS_WHITELIST.has(status) ? (status as ZipStatus) : "ALL";
+  const safeTier: "ALL" | ZipTier =
+    tier === "ALL" ? "ALL" : TIER_WHITELIST.has(tier) ? (tier as ZipTier) : "ALL";
+  const safeVertical: "ALL" | Vertical =
+    vertical === "ALL" ? "ALL" : VERTICAL_WHITELIST.has(vertical) ? (vertical as Vertical) : "ALL";
+
+  const where: Prisma.ZipInventoryWhereInput = {
+    ...(safeTier !== "ALL" ? { tier: safeTier } : {}),
+    ...(safeVertical !== "ALL" ? { vertical: safeVertical } : {}),
+  };
+
+  const andFilters: Prisma.ZipInventoryWhereInput[] = [];
+
+  if (search) {
+    andFilters.push({
+      OR: [{ zipCode: { contains: search, mode: "insensitive" } }, { city: { contains: search, mode: "insensitive" } }],
+    });
+  }
+
+  if (safeStatus === "AVAILABLE") {
+    andFilters.push({
+      OR: [
+        { status: "AVAILABLE" },
+        {
+          status: "RESERVED",
+          reservationExpiresAt: {
+            lte: now,
+          },
+        },
+      ],
+    });
+  } else if (safeStatus === "RESERVED") {
+    andFilters.push({
+      status: "RESERVED",
+      OR: [{ reservationExpiresAt: null }, { reservationExpiresAt: { gt: now } }],
+    });
+  } else if (safeStatus !== "ALL") {
+    andFilters.push({
+      status: safeStatus,
+    });
+  }
+
+  if (andFilters.length) {
+    where.AND = andFilters;
+  }
 
   return prisma.zipInventory.findMany({
-    where: {
-      ...(search
-        ? {
-            OR: [
-              { zipCode: { contains: search, mode: "insensitive" } },
-              { city: { contains: search, mode: "insensitive" } },
-            ],
-          }
-        : {}),
-      ...(safeStatus !== "ALL" ? { status: safeStatus as never } : {}),
-      ...(safeTier !== "ALL" ? { tier: safeTier as never } : {}),
-      ...(safeVertical !== "ALL" ? { vertical: safeVertical as never } : {}),
-    },
+    where,
     orderBy: [{ annualPriceCents: "desc" }, { vertical: "asc" }, { zipCode: "asc" }],
   });
 }

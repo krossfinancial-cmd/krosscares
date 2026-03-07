@@ -21,7 +21,7 @@ async function audit(actorUserId: string, action: string, entityType: string, en
 
 export async function reserveZip(zipId: string, actor: WorkflowActor) {
   const expiration = addDays(new Date(), 0);
-  expiration.setMinutes(expiration.getMinutes() + 30);
+  expiration.setMinutes(expiration.getMinutes() + 5);
 
   return prisma.$transaction(async (tx) => {
     const claimResult = await tx.zipInventory.updateMany({
@@ -123,6 +123,17 @@ export async function completeMockPayment(zipId: string, actor: WorkflowActor) {
     if (!zip) throw new Error("ZIP not found.");
     if (zip.assignedClientId !== actor.clientId) throw new Error("ZIP is not assigned to this account.");
     if (zip.status !== ZipStatus.RESERVED) throw new Error("ZIP must be reserved before payment.");
+    if (zip.reservationExpiresAt && zip.reservationExpiresAt <= new Date()) {
+      await tx.zipInventory.update({
+        where: { id: zip.id },
+        data: {
+          status: ZipStatus.AVAILABLE,
+          assignedClientId: null,
+          reservationExpiresAt: null,
+        },
+      });
+      throw new Error("Reservation expired. Reclaim this ZIP to continue checkout.");
+    }
 
     await tx.payment.updateMany({
       where: {
@@ -154,6 +165,13 @@ export async function completeMockPayment(zipId: string, actor: WorkflowActor) {
       },
       data: {
         status: OnboardingFormStatus.SENT,
+      },
+    });
+
+    await tx.zipInventory.update({
+      where: { id: zipId },
+      data: {
+        reservationExpiresAt: null,
       },
     });
 
