@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/lib/auth";
 type SearchParams = Promise<{
   error?: string;
   logged_out?: string;
+  password_set?: string;
 }>;
 
 function errorMessage(code?: string) {
@@ -21,6 +22,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
   const params = await searchParams;
   const error = errorMessage(params.error);
   const loggedOut = params.logged_out === "1";
+  const passwordSet = params.password_set === "1";
 
   return (
     <div className="mx-auto max-w-md">
@@ -30,6 +32,11 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         {loggedOut ? (
           <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
             You have been logged out.
+          </div>
+        ) : null}
+        {passwordSet ? (
+          <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+            Password set successfully. You can now sign in.
           </div>
         ) : null}
         {error ? (

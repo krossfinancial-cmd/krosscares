@@ -11,6 +11,10 @@ export async function POST(request: Request) {
   const zipId = String(formData.get("zipId") || "").trim();
   const clientId = String(formData.get("clientId") || "").trim();
 
+  if (clientId === "__new__") {
+    return NextResponse.redirect(appUrl(`/dashboard/admin/enroll/${zipId}`));
+  }
+
   if (!zipId || !clientId) {
     return NextResponse.redirect(appUrl("/dashboard/admin/zips?error=missing-input"));
   }

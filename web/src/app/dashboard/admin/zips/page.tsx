@@ -5,6 +5,7 @@ type SearchParams = Promise<{
   assigned?: string;
   reassigned?: string;
   released?: string;
+  invited?: string;
   error?: string;
 }>;
 
@@ -32,10 +33,17 @@ export default async function AdminZipsPage({ searchParams }: { searchParams: Se
   return (
     <div className="card p-6">
       <h1 className="text-xl font-bold text-blue-950">ZIP Inventory Manager</h1>
-      <p className="mt-1 text-sm text-blue-900/70">Assign available ZIPs to an existing client, or release claimed ZIPs.</p>
+      <p className="mt-1 text-sm text-blue-900/70">
+        Assign available ZIPs to existing clients, enroll new clients from the row dropdown, reassign, or release claimed ZIPs.
+      </p>
       {params.assigned === "1" ? (
         <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
           ZIP assigned and activated.
+        </div>
+      ) : null}
+      {params.invited === "1" ? (
+        <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-800">
+          Invite email sent. The customer can set their password from the link in their inbox.
         </div>
       ) : null}
       {params.reassigned === "1" ? (
@@ -84,9 +92,6 @@ export default async function AdminZipsPage({ searchParams }: { searchParams: Se
                 {zip.status === "AVAILABLE" ? (
                   (() => {
                     const matchingClients = clients.filter((client) => client.vertical === zip.vertical);
-                    if (!matchingClients.length) {
-                      return <span className="text-xs text-blue-700/70">No {zip.vertical.toLowerCase()} clients yet</span>;
-                    }
                     return (
                       <form action="/api/admin/zips/assign" method="post" className="flex items-center justify-end gap-2">
                         <input type="hidden" name="zipId" value={zip.id} />
@@ -101,6 +106,7 @@ export default async function AdminZipsPage({ searchParams }: { searchParams: Se
                               {client.user.fullName} ({client.user.email})
                             </option>
                           ))}
+                          <option value="__new__">+ Enroll new client for this ZIP</option>
                         </select>
                         <button className="primary-btn px-3 py-1.5 text-xs" type="submit">
                           Assign
@@ -113,29 +119,26 @@ export default async function AdminZipsPage({ searchParams }: { searchParams: Se
                     const matchingClients = clients.filter((client) => client.vertical === zip.vertical);
                     return (
                       <div className="flex flex-col items-end gap-2">
-                        {matchingClients.length ? (
-                          <form action="/api/admin/zips/reassign" method="post" className="flex items-center gap-2">
-                            <input type="hidden" name="zipId" value={zip.id} />
-                            <select
-                              name="clientId"
-                              required
-                              defaultValue={zip.assignedClientId || ""}
-                              className="max-w-[210px] rounded-lg border border-blue-200 bg-white px-2 py-1.5 text-xs text-blue-950"
-                            >
-                              <option value="">Select client</option>
-                              {matchingClients.map((client) => (
-                                <option key={client.id} value={client.id}>
-                                  {client.user.fullName} ({client.user.email})
-                                </option>
-                              ))}
-                            </select>
-                            <button className="primary-btn px-3 py-1.5 text-xs" type="submit">
-                              Reassign
-                            </button>
-                          </form>
-                        ) : (
-                          <span className="text-xs text-blue-700/70">No {zip.vertical.toLowerCase()} clients yet</span>
-                        )}
+                        <form action="/api/admin/zips/reassign" method="post" className="flex items-center gap-2">
+                          <input type="hidden" name="zipId" value={zip.id} />
+                          <select
+                            name="clientId"
+                            required
+                            defaultValue={zip.assignedClientId || ""}
+                            className="max-w-[210px] rounded-lg border border-blue-200 bg-white px-2 py-1.5 text-xs text-blue-950"
+                          >
+                            <option value="">Select client</option>
+                            {matchingClients.map((client) => (
+                              <option key={client.id} value={client.id}>
+                                {client.user.fullName} ({client.user.email})
+                              </option>
+                            ))}
+                            <option value="__new__">+ Enroll new client for this ZIP</option>
+                          </select>
+                          <button className="primary-btn px-3 py-1.5 text-xs" type="submit">
+                            Reassign
+                          </button>
+                        </form>
                         <form action="/api/admin/zips/release" method="post">
                           <input type="hidden" name="zipId" value={zip.id} />
                           <button className="secondary-btn text-xs" type="submit">
