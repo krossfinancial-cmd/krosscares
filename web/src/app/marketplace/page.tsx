@@ -96,7 +96,17 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right">
-                  {user && user.role !== "ADMIN" && user.role === zip.vertical ? (
+                  {!user ? (
+                    <a href="/login" className="secondary-btn text-xs">
+                      Sign in to claim
+                    </a>
+                  ) : user.role === "ADMIN" ? (
+                    <a href="/dashboard/admin/zips" className="secondary-btn text-xs">
+                      Assign in Admin
+                    </a>
+                  ) : user.role !== zip.vertical ? (
+                    <span className="text-xs text-blue-700/70">Not your vertical</span>
+                  ) : (
                     <ZipActionButton
                       zipId={zip.id}
                       zipCode={zip.zipCode}
@@ -104,10 +114,6 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
                       dashboardPath={user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor"}
                       status={zip.status}
                     />
-                  ) : (
-                    <a href="/login" className="secondary-btn text-xs">
-                      Sign in to claim
-                    </a>
                   )}
                 </td>
               </tr>
