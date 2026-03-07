@@ -55,7 +55,7 @@ export async function runRenewalWorker() {
     if (daysLeft < -7) {
       await prisma.$transaction(async (tx) => {
         await tx.leadRoute.updateMany({
-          where: { zipCode: zip.zipCode },
+          where: { zipCode: zip.zipCode, vertical: zip.vertical },
           data: { active: false },
         });
 

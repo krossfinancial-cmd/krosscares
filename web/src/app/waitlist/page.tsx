@@ -1,8 +1,9 @@
-type SearchParams = Promise<{ zip?: string }>;
+type SearchParams = Promise<{ zip?: string; vertical?: string }>;
 
 export default async function WaitlistPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const zip = params.zip || "";
+  const vertical = params.vertical === "DEALER" ? "DEALER" : "REALTOR";
 
   return (
     <div className="mx-auto max-w-xl">
@@ -14,6 +15,7 @@ export default async function WaitlistPage({ searchParams }: { searchParams: Sea
 
         <form action="/api/waitlist" method="post" className="mt-6 space-y-4">
           <input type="hidden" name="zipCode" value={zip} />
+          <input type="hidden" name="vertical" value={vertical} />
           <div>
             <label className="mb-1 block text-sm font-semibold text-blue-900">ZIP Code</label>
             <input
@@ -38,7 +40,9 @@ export default async function WaitlistPage({ searchParams }: { searchParams: Sea
           <div>
             <label className="mb-1 block text-sm font-semibold text-blue-900">Business Type</label>
             <select name="businessType" className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950">
-              <option value="realtor">Realtor</option>
+              <option value={vertical === "DEALER" ? "dealer" : "realtor"}>
+                {vertical === "DEALER" ? "Dealer" : "Realtor"}
+              </option>
             </select>
           </div>
           <button className="primary-btn w-full" type="submit">

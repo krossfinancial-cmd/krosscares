@@ -10,6 +10,7 @@ datasource db {
 enum UserRole {
   ADMIN
   REALTOR
+  DEALER
 }
 
 enum ZipStatus {
@@ -71,6 +72,11 @@ enum WaitlistStatus {
   CONVERTED
 }
 
+enum Vertical {
+  REALTOR
+  DEALER
+}
+
 model User {
   id          String     @id @default(uuid()) @db.Uuid
   email       String     @unique
@@ -111,6 +117,7 @@ model Client {
   leadRoutingEmail       String?
   leadRoutingPhone       String?
   preferredContactMethod ContactMethod?
+  vertical               Vertical          @default(REALTOR)
   createdAt              DateTime          @default(now())
   updatedAt              DateTime          @updatedAt
   user                   User              @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -126,7 +133,8 @@ model Client {
 
 model ZipInventory {
   id                 String         @id @default(uuid()) @db.Uuid
-  zipCode            String         @unique @db.VarChar(5)
+  zipCode            String         @db.VarChar(5)
+  vertical           Vertical       @default(REALTOR)
   state              String
   city               String
   county             String
@@ -146,7 +154,9 @@ model ZipInventory {
   leads              Lead[]
   renewalReminders   RenewalReminder[]
 
+  @@unique([zipCode, vertical])
   @@index([status])
+  @@index([vertical, status])
   @@index([state, city])
   @@index([tier, status])
 }
@@ -202,7 +212,8 @@ model OnboardingForm {
 model LeadRoute {
   id               String   @id @default(uuid()) @db.Uuid
   clientId         String   @db.Uuid
-  zipCode          String   @unique @db.VarChar(5)
+  zipCode          String   @db.VarChar(5)
+  vertical         Vertical @default(REALTOR)
   destinationEmail String
   destinationPhone String
   alertsEmail      Boolean  @default(true)
@@ -213,6 +224,7 @@ model LeadRoute {
   updatedAt        DateTime @updatedAt
   client           Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
+  @@unique([zipCode, vertical])
   @@index([clientId])
 }
 
@@ -237,6 +249,7 @@ model Waitlist {
   id           String         @id @default(uuid()) @db.Uuid
   zipId        String         @db.Uuid
   zipCode      String         @db.VarChar(5)
+  vertical     Vertical       @default(REALTOR)
   name         String
   email        String
   phone        String
@@ -245,7 +258,7 @@ model Waitlist {
   createdAt    DateTime       @default(now())
   zip          ZipInventory   @relation(fields: [zipId], references: [id], onDelete: Cascade)
 
-  @@index([zipCode, status])
+  @@index([zipCode, status, vertical])
 }
 
 model RenewalReminder {

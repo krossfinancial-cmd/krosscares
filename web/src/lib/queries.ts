@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/prisma";
 
-export async function getMarketplaceZips(filters: { search?: string; status?: string; tier?: string }) {
+export async function getMarketplaceZips(filters: { search?: string; status?: string; tier?: string; vertical?: string }) {
   const search = filters.search?.trim();
   const status = filters.status?.toUpperCase();
   const tier = filters.tier?.toUpperCase();
+  const vertical = filters.vertical?.toUpperCase();
 
   return prisma.zipInventory.findMany({
     where: {
@@ -17,8 +18,9 @@ export async function getMarketplaceZips(filters: { search?: string; status?: st
         : {}),
       ...(status && status !== "ALL" ? { status: status as never } : {}),
       ...(tier && tier !== "ALL" ? { tier: tier as never } : {}),
+      ...(vertical && vertical !== "ALL" ? { vertical: vertical as never } : {}),
     },
-    orderBy: [{ annualPriceCents: "desc" }, { zipCode: "asc" }],
+    orderBy: [{ annualPriceCents: "desc" }, { vertical: "asc" }, { zipCode: "asc" }],
   });
 }
 

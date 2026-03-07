@@ -6,10 +6,12 @@ import { useState } from "react";
 type ZipActionButtonProps = {
   zipId: string;
   zipCode: string;
+  vertical: "REALTOR" | "DEALER";
+  dashboardPath: "/dashboard/realtor" | "/dashboard/dealer";
   status: "AVAILABLE" | "RESERVED" | "SOLD" | "BLOCKED";
 };
 
-export function ZipActionButton({ zipId, zipCode, status }: ZipActionButtonProps) {
+export function ZipActionButton({ zipId, zipCode, vertical, dashboardPath, status }: ZipActionButtonProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -32,13 +34,13 @@ export function ZipActionButton({ zipId, zipCode, status }: ZipActionButtonProps
       return;
     }
 
-    router.push(`/dashboard/realtor/checkout/${zipId}`);
+    router.push(`${dashboardPath}/checkout/${zipId}`);
     router.refresh();
   };
 
   if (status !== "AVAILABLE") {
     return (
-      <button className="secondary-btn text-xs" onClick={() => router.push(`/waitlist?zip=${zipCode}`)}>
+      <button className="secondary-btn text-xs" onClick={() => router.push(`/waitlist?zip=${zipCode}&vertical=${vertical}`)}>
         Join Waitlist
       </button>
     );

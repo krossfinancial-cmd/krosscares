@@ -229,9 +229,15 @@ export async function attemptActivation(zipId: string, actor: WorkflowActor) {
     });
 
     await tx.leadRoute.upsert({
-      where: { zipCode: zip.zipCode },
+      where: {
+        zipCode_vertical: {
+          zipCode: zip.zipCode,
+          vertical: zip.vertical,
+        },
+      },
       update: {
         clientId: actor.clientId,
+        vertical: zip.vertical,
         destinationEmail: client.leadRoutingEmail ?? "",
         destinationPhone: client.leadRoutingPhone ?? "",
         active: true,
@@ -239,6 +245,7 @@ export async function attemptActivation(zipId: string, actor: WorkflowActor) {
       create: {
         clientId: actor.clientId,
         zipCode: zip.zipCode,
+        vertical: zip.vertical,
         destinationEmail: client.leadRoutingEmail ?? "",
         destinationPhone: client.leadRoutingPhone ?? "",
         active: true,
@@ -263,7 +270,7 @@ export async function releaseZip(zipId: string, actorUserId: string) {
   });
 
   await prisma.leadRoute.updateMany({
-    where: { zipCode: zip.zipCode },
+    where: { zipCode: zip.zipCode, vertical: zip.vertical },
     data: { active: false },
   });
 

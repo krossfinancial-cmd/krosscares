@@ -8,6 +8,12 @@ import { prisma } from "@/lib/prisma";
 const COOKIE_NAME = "kc_session";
 const SESSION_DAYS = 30;
 
+function homeForRole(role: UserRole) {
+  if (role === "ADMIN") return "/dashboard/admin";
+  if (role === "DEALER") return "/dashboard/dealer";
+  return "/dashboard/realtor";
+}
+
 function sessionExpiry() {
   return new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000);
 }
@@ -74,7 +80,7 @@ export async function getCurrentUser() {
 export async function requireUser(role?: UserRole) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
-  if (role && user.role !== role) redirect(user.role === "ADMIN" ? "/dashboard/admin" : "/dashboard/realtor");
+  if (role && user.role !== role) redirect(homeForRole(user.role));
   return user;
 }
 

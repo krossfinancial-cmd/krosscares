@@ -22,6 +22,7 @@ export default async function AdminZipsPage() {
             <th className="py-2 text-left">ZIP</th>
             <th className="py-2 text-left">City</th>
             <th className="py-2 text-left">Tier</th>
+            <th className="py-2 text-left">Vertical</th>
             <th className="py-2 text-left">Price</th>
             <th className="py-2 text-left">Status</th>
             <th className="py-2 text-left">Owner</th>
@@ -34,6 +35,7 @@ export default async function AdminZipsPage() {
               <td className="py-3 font-semibold text-blue-950">{zip.zipCode}</td>
               <td className="py-3 text-blue-900">{zip.city}, {zip.state}</td>
               <td className="py-3 text-blue-900">{zip.tier.replace("_", " ")}</td>
+              <td className="py-3 text-blue-900">{zip.vertical}</td>
               <td className="py-3 text-blue-900">{formatCurrency(zip.annualPriceCents)}</td>
               <td className="py-3">
                 <span className={`rounded-full px-2 py-1 text-xs font-semibold ${zipStatusColor(zip.status)}`}>

@@ -25,7 +25,7 @@ export async function AppHeader() {
           </Link>
           {user && (
             <Link
-              href={user.role === "ADMIN" ? "/dashboard/admin" : "/dashboard/realtor"}
+              href={user.role === "ADMIN" ? "/dashboard/admin" : user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor"}
               className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-blue-50"
             >
               <LayoutDashboard size={15} />

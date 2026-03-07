@@ -43,6 +43,7 @@ export default function LoginPage() {
           <p className="font-semibold">Demo Credentials</p>
           <p className="mt-1">Admin: admin@krosscares.local / Admin#2026!</p>
           <p>Realtor: realtor@krosscares.local / Realtor#2026!</p>
+          <p>Dealer: dealer@krosscares.local / Dealer#2026!</p>
         </div>
 
         <Link href="/marketplace" className="mt-5 inline-block text-sm font-semibold text-blue-700 hover:text-blue-900">

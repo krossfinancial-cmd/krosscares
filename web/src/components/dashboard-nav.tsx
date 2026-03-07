@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 type DashboardNavProps = {
-  role: "ADMIN" | "REALTOR";
+  role: "ADMIN" | "REALTOR" | "DEALER";
 };
 
 export function DashboardNav({ role }: DashboardNavProps) {
@@ -13,18 +13,26 @@ export function DashboardNav({ role }: DashboardNavProps) {
           { href: "/dashboard/admin/clients", label: "Clients" },
           { href: "/dashboard/admin/renewals", label: "Renewals" },
         ]
-      : [
+      : role === "REALTOR"
+        ? [
           { href: "/dashboard/realtor", label: "Overview" },
           { href: "/dashboard/realtor/territories", label: "My Territories" },
           { href: "/dashboard/realtor/leads", label: "Leads" },
           { href: "/dashboard/realtor/routing", label: "Lead Routing" },
           { href: "/dashboard/realtor/billing", label: "Billing" },
+        ]
+        : [
+          { href: "/dashboard/dealer", label: "Overview" },
+          { href: "/dashboard/dealer/territories", label: "My Territories" },
+          { href: "/dashboard/dealer/leads", label: "Leads" },
+          { href: "/dashboard/dealer/routing", label: "Lead Routing" },
+          { href: "/dashboard/dealer/billing", label: "Billing" },
         ];
 
   return (
     <aside className="card h-fit p-4">
       <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-blue-600">
-        {role === "ADMIN" ? "Admin Panel" : "Realtor Portal"}
+        {role === "ADMIN" ? "Admin Panel" : role === "REALTOR" ? "Realtor Portal" : "Dealer Portal"}
       </p>
       <div className="space-y-2">
         {links.map((item) => (

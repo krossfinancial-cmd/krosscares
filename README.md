@@ -17,16 +17,24 @@ Premium blue/white Next.js SaaS for exclusive ZIP territory sales and lifecycle 
 docker compose up --build
 ```
 
+Optional full stack services (Redis, MinIO, Mailpit, scheduler):
+
+```bash
+docker compose --profile full up --build
+```
+
 ## Local URLs
 
 - App: http://localhost:3000
 - Mailpit: http://localhost:8025
 - MinIO Console: http://localhost:9001
+- Health check: http://localhost:3000/api/health
 
 ## Demo Credentials
 
 - Admin: `admin@krosscares.local` / `Admin#2026!`
 - Realtor: `realtor@krosscares.local` / `Realtor#2026!`
+- Dealer: `dealer@krosscares.local` / `Dealer#2026!`
 
 ## Implemented Phases (Docker-First)
 
@@ -38,5 +46,7 @@ docker compose up --build
 6. Admin dashboard (inventory, clients, renewals, release actions).
 7. Renewal worker, dunning simulation, waitlist notifications.
 8. Local QA and flow docs.
+9. Dealer vertical parity and dual-vertical ZIP inventory (`zip + vertical` ownership).
+10. Enterprise baseline hardening (rate limits, health endpoint, env validation, audit logging).
 
 Phase 9 (Supabase cutover) intentionally excluded for now.

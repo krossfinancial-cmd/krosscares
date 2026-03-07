@@ -1,4 +1,4 @@
-import { PrismaClient, UserRole, ZipStatus, ZipTier } from "@prisma/client";
+import { PrismaClient, UserRole, Vertical, ZipStatus, ZipTier } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
@@ -17,16 +17,23 @@ const SAMPLE_ZIPS = [
 async function main() {
   const adminPassword = await bcrypt.hash("Admin#2026!", 10);
   const realtorPassword = await bcrypt.hash("Realtor#2026!", 10);
+  const dealerPassword = await bcrypt.hash("Dealer#2026!", 10);
 
-  const adminUser = await prisma.user.upsert({
-    where: { email: "admin@krosscares.local" },
-    update: {
-      passwordHash: adminPassword,
-      role: UserRole.ADMIN,
-      fullName: "Platform Admin",
-      companyName: "Kross Cares",
-    },
-    create: {
+  await prisma.session.deleteMany();
+  await prisma.lead.deleteMany();
+  await prisma.payment.deleteMany();
+  await prisma.contract.deleteMany();
+  await prisma.onboardingForm.deleteMany();
+  await prisma.leadRoute.deleteMany();
+  await prisma.waitlist.deleteMany();
+  await prisma.renewalReminder.deleteMany();
+  await prisma.auditLog.deleteMany();
+  await prisma.zipInventory.deleteMany();
+  await prisma.client.deleteMany();
+  await prisma.user.deleteMany();
+
+  const adminUser = await prisma.user.create({
+    data: {
       email: "admin@krosscares.local",
       passwordHash: adminPassword,
       role: UserRole.ADMIN,
@@ -36,15 +43,8 @@ async function main() {
     },
   });
 
-  const realtorUser = await prisma.user.upsert({
-    where: { email: "realtor@krosscares.local" },
-    update: {
-      passwordHash: realtorPassword,
-      role: UserRole.REALTOR,
-      fullName: "Sasha Realtor",
-      companyName: "Blue Ridge Realty",
-    },
-    create: {
+  const realtorUser = await prisma.user.create({
+    data: {
       email: "realtor@krosscares.local",
       passwordHash: realtorPassword,
       role: UserRole.REALTOR,
@@ -54,18 +54,19 @@ async function main() {
     },
   });
 
-  const realtorClient = await prisma.client.upsert({
-    where: { userId: realtorUser.id },
-    update: {
-      serviceCity: "Raleigh",
-      serviceState: "NC",
-      licenseNumber: "NC-RE-004274",
-      onboardingStatus: "ACTIVE",
-      leadRoutingEmail: "realtor@krosscares.local",
-      leadRoutingPhone: "919-555-0102",
-      preferredContactMethod: "EMAIL",
+  const dealerUser = await prisma.user.create({
+    data: {
+      email: "dealer@krosscares.local",
+      passwordHash: dealerPassword,
+      role: UserRole.DEALER,
+      fullName: "Miles Dealer",
+      companyName: "Capital Auto Group",
+      phone: "919-555-0103",
     },
-    create: {
+  });
+
+  const realtorClient = await prisma.client.create({
+    data: {
       userId: realtorUser.id,
       serviceCity: "Raleigh",
       serviceState: "NC",
@@ -74,33 +75,61 @@ async function main() {
       leadRoutingEmail: "realtor@krosscares.local",
       leadRoutingPhone: "919-555-0102",
       preferredContactMethod: "EMAIL",
+      vertical: Vertical.REALTOR,
+    },
+  });
+
+  const dealerClient = await prisma.client.create({
+    data: {
+      userId: dealerUser.id,
+      serviceCity: "Raleigh",
+      serviceState: "NC",
+      onboardingStatus: "ACTIVE",
+      leadRoutingEmail: "dealer@krosscares.local",
+      leadRoutingPhone: "919-555-0103",
+      preferredContactMethod: "EMAIL",
+      vertical: Vertical.DEALER,
     },
   });
 
   for (const zip of SAMPLE_ZIPS) {
-    await prisma.zipInventory.upsert({
-      where: { zipCode: zip.zipCode },
-      update: {
-        state: "NC",
-        city: zip.city,
-        county: zip.county,
-        tier: zip.tier,
-        annualPriceCents: zip.price,
-      },
-      create: {
-        zipCode: zip.zipCode,
-        state: "NC",
-        city: zip.city,
-        county: zip.county,
-        tier: zip.tier,
-        annualPriceCents: zip.price,
-        status: ZipStatus.AVAILABLE,
-      },
-    });
+    for (const vertical of [Vertical.REALTOR, Vertical.DEALER]) {
+      await prisma.zipInventory.upsert({
+        where: {
+          zipCode_vertical: {
+            zipCode: zip.zipCode,
+            vertical,
+          },
+        },
+        update: {
+          state: "NC",
+          city: zip.city,
+          county: zip.county,
+          tier: zip.tier,
+          annualPriceCents: zip.price,
+          vertical,
+        },
+        create: {
+          zipCode: zip.zipCode,
+          state: "NC",
+          city: zip.city,
+          county: zip.county,
+          tier: zip.tier,
+          annualPriceCents: zip.price,
+          status: ZipStatus.AVAILABLE,
+          vertical,
+        },
+      });
+    }
   }
 
   const ownedZip = await prisma.zipInventory.update({
-    where: { zipCode: "27519" },
+    where: {
+      zipCode_vertical: {
+        zipCode: "27519",
+        vertical: Vertical.REALTOR,
+      },
+    },
     data: {
       status: ZipStatus.SOLD,
       assignedClientId: realtorClient.id,
@@ -110,18 +139,64 @@ async function main() {
   });
 
   await prisma.leadRoute.upsert({
-    where: { zipCode: "27519" },
+    where: {
+      zipCode_vertical: {
+        zipCode: "27519",
+        vertical: Vertical.REALTOR,
+      },
+    },
     update: {
       clientId: realtorClient.id,
       destinationEmail: "realtor@krosscares.local",
       destinationPhone: "919-555-0102",
+      vertical: Vertical.REALTOR,
       active: true,
     },
     create: {
       clientId: realtorClient.id,
       zipCode: "27519",
+      vertical: Vertical.REALTOR,
       destinationEmail: "realtor@krosscares.local",
       destinationPhone: "919-555-0102",
+      active: true,
+    },
+  });
+
+  const dealerOwnedZip = await prisma.zipInventory.update({
+    where: {
+      zipCode_vertical: {
+        zipCode: "28207",
+        vertical: Vertical.DEALER,
+      },
+    },
+    data: {
+      status: ZipStatus.SOLD,
+      assignedClientId: dealerClient.id,
+      renewalDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+      reservationExpiresAt: null,
+    },
+  });
+
+  await prisma.leadRoute.upsert({
+    where: {
+      zipCode_vertical: {
+        zipCode: "28207",
+        vertical: Vertical.DEALER,
+      },
+    },
+    update: {
+      clientId: dealerClient.id,
+      destinationEmail: "dealer@krosscares.local",
+      destinationPhone: "919-555-0103",
+      vertical: Vertical.DEALER,
+      active: true,
+    },
+    create: {
+      clientId: dealerClient.id,
+      zipCode: "28207",
+      vertical: Vertical.DEALER,
+      destinationEmail: "dealer@krosscares.local",
+      destinationPhone: "919-555-0103",
       active: true,
     },
   });
@@ -167,6 +242,14 @@ async function main() {
         lastName: "Carter",
         email: "jordan.carter@example.com",
         phone: "919-555-0201",
+      },
+      {
+        zipId: dealerOwnedZip.id,
+        clientId: dealerClient.id,
+        firstName: "Chris",
+        lastName: "Lee",
+        email: "chris.lee@example.com",
+        phone: "919-555-0203",
       },
       {
         zipId: ownedZip.id,

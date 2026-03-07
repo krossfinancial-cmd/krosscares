@@ -8,6 +8,7 @@ type SearchParams = Promise<{
   search?: string;
   status?: string;
   tier?: string;
+  vertical?: string;
 }>;
 
 export default async function MarketplacePage({ searchParams }: { searchParams: SearchParams }) {
@@ -54,7 +55,15 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
               <option value="PREMIUM">Premium</option>
             </select>
           </label>
-          <button type="submit" className="primary-btn md:col-span-4">
+          <label>
+            <span className="mb-1 block text-xs font-semibold uppercase text-blue-700">Vertical</span>
+            <select name="vertical" defaultValue={params.vertical || "ALL"} className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950">
+              <option value="ALL">All</option>
+              <option value="REALTOR">Realtor</option>
+              <option value="DEALER">Dealer</option>
+            </select>
+          </label>
+          <button type="submit" className="primary-btn md:col-span-1">
             Apply Filters
           </button>
         </form>
@@ -67,6 +76,7 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
               <th className="px-4 py-3">ZIP</th>
               <th className="px-4 py-3">City</th>
               <th className="px-4 py-3">Tier</th>
+              <th className="px-4 py-3">Vertical</th>
               <th className="px-4 py-3">Annual Price</th>
               <th className="px-4 py-3">Status</th>
               <th className="px-4 py-3 text-right">Action</th>
@@ -78,6 +88,7 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
                 <td className="px-4 py-3 font-semibold text-blue-950">{zip.zipCode}</td>
                 <td className="px-4 py-3 text-blue-900">{zip.city}, {zip.state}</td>
                 <td className="px-4 py-3 text-blue-900">{zip.tier.replace("_", " ")}</td>
+                <td className="px-4 py-3 text-blue-900">{zip.vertical}</td>
                 <td className="px-4 py-3 font-semibold text-blue-950">{formatCurrency(zip.annualPriceCents)}</td>
                 <td className="px-4 py-3">
                   <span className={`rounded-full px-2 py-1 text-xs font-semibold ${zipStatusColor(zip.status)}`}>
@@ -85,8 +96,14 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right">
-                  {user?.role === "REALTOR" ? (
-                    <ZipActionButton zipId={zip.id} zipCode={zip.zipCode} status={zip.status} />
+                  {user && user.role !== "ADMIN" && user.role === zip.vertical ? (
+                    <ZipActionButton
+                      zipId={zip.id}
+                      zipCode={zip.zipCode}
+                      vertical={zip.vertical}
+                      dashboardPath={user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor"}
+                      status={zip.status}
+                    />
                   ) : (
                     <a href="/login" className="secondary-btn text-xs">
                       Sign in to claim
@@ -97,9 +114,9 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
             ))}
             {!zips.length && (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-sm text-blue-700">
-                  No ZIPs match your filters.
-                </td>
+              <td colSpan={7} className="px-4 py-8 text-center text-sm text-blue-700">
+                No ZIPs match your filters.
+              </td>
               </tr>
             )}
           </tbody>
