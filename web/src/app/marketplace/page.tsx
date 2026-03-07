@@ -14,13 +14,23 @@ type SearchParams = Promise<{
 export default async function MarketplacePage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const user = await getCurrentUser();
-  const zips = await getMarketplaceZips(params);
+  const lockedVertical = user?.role === "DEALER" ? "DEALER" : user?.role === "REALTOR" ? "REALTOR" : undefined;
+  const effectiveVertical = lockedVertical ?? params.vertical ?? "ALL";
+  const zips = await getMarketplaceZips({
+    ...params,
+    vertical: effectiveVertical,
+  });
 
   return (
     <div className="space-y-6">
       <div className="card p-6">
         <h1 className="text-2xl font-bold text-blue-950">ZIP Territory Marketplace</h1>
         <p className="mt-2 text-sm text-blue-900/70">One active owner per ZIP. Once sold, it moves to waitlist mode.</p>
+        {lockedVertical ? (
+          <p className="mt-2 inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
+            Showing {lockedVertical.toLowerCase()} territories for your account
+          </p>
+        ) : null}
         <a href="/marketplace/scarcity" className="mt-3 inline-block text-sm font-semibold text-blue-700 hover:text-blue-900">
           View scarcity map
         </a>
@@ -57,11 +67,24 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
           </label>
           <label>
             <span className="mb-1 block text-xs font-semibold uppercase text-blue-700">Vertical</span>
-            <select name="vertical" defaultValue={params.vertical || "ALL"} className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950">
-              <option value="ALL">All</option>
-              <option value="REALTOR">Realtor</option>
-              <option value="DEALER">Dealer</option>
-            </select>
+            {lockedVertical ? (
+              <>
+                <input type="hidden" name="vertical" value={lockedVertical} />
+                <select
+                  value={lockedVertical}
+                  disabled
+                  className="w-full cursor-not-allowed rounded-xl border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-900"
+                >
+                  <option value={lockedVertical}>{lockedVertical === "REALTOR" ? "Realtor" : "Dealer"}</option>
+                </select>
+              </>
+            ) : (
+              <select name="vertical" defaultValue={params.vertical || "ALL"} className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950">
+                <option value="ALL">All</option>
+                <option value="REALTOR">Realtor</option>
+                <option value="DEALER">Dealer</option>
+              </select>
+            )}
           </label>
           <button type="submit" className="primary-btn md:col-span-1">
             Apply Filters
