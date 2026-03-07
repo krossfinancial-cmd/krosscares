@@ -147,7 +147,7 @@ export default function Home() {
           <a href="/marketplace" className="primary-btn">
             Check ZIP Availability
           </a>
-          <a href="mailto:sales@krosscares.local?subject=Talk%20to%20Sales" className="secondary-btn">
+          <a href="mailto:sales@krossfinancials.com?subject=Talk%20to%20Sales" className="secondary-btn">
             Talk to Sales
           </a>
         </div>

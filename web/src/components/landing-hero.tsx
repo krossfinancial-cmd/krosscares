@@ -78,7 +78,7 @@ export function LandingHero() {
         <Link href="/marketplace" className="primary-btn inline-flex items-center gap-2">
           Check ZIP Availability <ArrowRight size={16} />
         </Link>
-        <a href="mailto:sales@krosscares.local?subject=Book%20Demo" className="secondary-btn inline-flex items-center gap-2">
+        <a href="mailto:sales@krossfinancials.com?subject=Book%20Demo" className="secondary-btn inline-flex items-center gap-2">
           Book a Demo
         </a>
       </div>
