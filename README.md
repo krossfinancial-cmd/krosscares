@@ -14,7 +14,12 @@ Premium blue/white Next.js SaaS for exclusive ZIP territory sales and lifecycle 
 ## Run Locally
 
 ```bash
-docker compose up --build
+docker compose up -d db
+cd web
+npm run db:generate
+npm run db:migrate
+npm run db:seed   # run when you want to reset local demo data
+npm run dev
 ```
 
 Optional full stack services (Redis, MinIO, Mailpit, scheduler):

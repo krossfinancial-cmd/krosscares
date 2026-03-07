@@ -1,10 +1,18 @@
 import { prisma } from "@/lib/prisma";
 
+const STATUS_WHITELIST = new Set(["AVAILABLE", "RESERVED", "SOLD", "BLOCKED"]);
+const TIER_WHITELIST = new Set(["STANDARD", "HIGH_DEMAND", "PREMIUM"]);
+const VERTICAL_WHITELIST = new Set(["REALTOR", "DEALER"]);
+
 export async function getMarketplaceZips(filters: { search?: string; status?: string; tier?: string; vertical?: string }) {
   const search = filters.search?.trim();
-  const status = filters.status?.toUpperCase();
-  const tier = filters.tier?.toUpperCase();
-  const vertical = filters.vertical?.toUpperCase();
+  const status = filters.status?.toUpperCase() || "ALL";
+  const tier = filters.tier?.toUpperCase() || "ALL";
+  const vertical = filters.vertical?.toUpperCase() || "ALL";
+
+  const safeStatus = status === "ALL" ? "ALL" : STATUS_WHITELIST.has(status) ? status : "ALL";
+  const safeTier = tier === "ALL" ? "ALL" : TIER_WHITELIST.has(tier) ? tier : "ALL";
+  const safeVertical = vertical === "ALL" ? "ALL" : VERTICAL_WHITELIST.has(vertical) ? vertical : "ALL";
 
   return prisma.zipInventory.findMany({
     where: {
@@ -16,9 +24,9 @@ export async function getMarketplaceZips(filters: { search?: string; status?: st
             ],
           }
         : {}),
-      ...(status && status !== "ALL" ? { status: status as never } : {}),
-      ...(tier && tier !== "ALL" ? { tier: tier as never } : {}),
-      ...(vertical && vertical !== "ALL" ? { vertical: vertical as never } : {}),
+      ...(safeStatus !== "ALL" ? { status: safeStatus as never } : {}),
+      ...(safeTier !== "ALL" ? { tier: safeTier as never } : {}),
+      ...(safeVertical !== "ALL" ? { vertical: safeVertical as never } : {}),
     },
     orderBy: [{ annualPriceCents: "desc" }, { vertical: "asc" }, { zipCode: "asc" }],
   });

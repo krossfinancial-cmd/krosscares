@@ -11,17 +11,22 @@ export async function POST(request: Request) {
 
   const formData = await request.formData();
   const zipCode = String(formData.get("zipCode") || "").trim();
-  const vertical = String(formData.get("vertical") || "REALTOR").trim().toUpperCase();
+  const verticalInput = String(formData.get("vertical") || "REALTOR").trim().toUpperCase();
   const name = String(formData.get("name") || "").trim();
   const email = String(formData.get("email") || "").trim();
   const phone = String(formData.get("phone") || "").trim();
   const businessType = String(formData.get("businessType") || "realtor").trim();
+  const vertical = verticalInput === "DEALER" ? "DEALER" : verticalInput === "REALTOR" ? "REALTOR" : null;
+
+  if (!vertical) {
+    return NextResponse.json({ error: "Invalid vertical." }, { status: 400 });
+  }
 
   const zip = await prisma.zipInventory.findUnique({
     where: {
       zipCode_vertical: {
         zipCode,
-        vertical: vertical as "REALTOR" | "DEALER",
+        vertical,
       },
     },
   });
@@ -34,7 +39,7 @@ export async function POST(request: Request) {
     data: {
       zipId: zip.id,
       zipCode,
-      vertical: vertical as "REALTOR" | "DEALER",
+      vertical,
       name,
       email,
       phone,

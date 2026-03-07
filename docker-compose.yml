@@ -101,7 +101,6 @@ services:
     command: >
       sh -c "npm run db:generate &&
              npm run db:migrate &&
-             npm run db:seed &&
              while true; do npm run worker:renewals; sleep 3600; done"
 
   stripe-cli:
