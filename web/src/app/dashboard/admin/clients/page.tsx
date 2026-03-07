@@ -108,6 +108,9 @@ export default async function AdminClientsPage({ searchParams }: { searchParams:
           {clients.map((client) => {
             const paidPayments = client.payments.filter((p) => p.status === "PAID").length;
             const signedContracts = client.contracts.filter((c) => c.status === "SIGNED").length;
+            const territoryZips = [...client.territories]
+              .sort((a, b) => a.zipCode.localeCompare(b.zipCode))
+              .map((territory) => territory.zipCode);
             return (
               <div key={client.id} className="rounded-xl border border-blue-100 p-4">
                 <div className="flex flex-wrap items-center justify-between gap-3">
@@ -115,6 +118,10 @@ export default async function AdminClientsPage({ searchParams }: { searchParams:
                     <p className="font-semibold text-blue-950">{client.user.fullName}</p>
                     <p className="text-sm text-blue-900/70">{client.user.email}</p>
                     <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-blue-600">{client.vertical}</p>
+                    <p className="mt-2 text-xs text-blue-900/80">
+                      Territory ZIPs:{" "}
+                      <strong>{territoryZips.length ? territoryZips.join(", ") : "None assigned"}</strong>
+                    </p>
                   </div>
                   <div className="text-right text-xs text-blue-900">
                     <p>Onboarding: <strong>{client.onboardingStatus.replace("_", " ")}</strong></p>
