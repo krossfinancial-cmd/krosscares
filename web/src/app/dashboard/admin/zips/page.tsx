@@ -1,7 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import { formatCurrency, zipStatusColor } from "@/lib/format";
 
-export default async function AdminZipsPage() {
+type SearchParams = Promise<{
+  assigned?: string;
+  released?: string;
+  error?: string;
+}>;
+
+export default async function AdminZipsPage({ searchParams }: { searchParams: SearchParams }) {
+  const params = await searchParams;
   const zips = await prisma.zipInventory.findMany({
     include: {
       assignedClient: {
@@ -12,10 +19,34 @@ export default async function AdminZipsPage() {
     },
     orderBy: [{ status: "asc" }, { annualPriceCents: "desc" }],
   });
+  const clients = await prisma.client.findMany({
+    include: {
+      user: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
   return (
     <div className="card p-6">
       <h1 className="text-xl font-bold text-blue-950">ZIP Inventory Manager</h1>
+      <p className="mt-1 text-sm text-blue-900/70">Assign available ZIPs to an existing client, or release claimed ZIPs.</p>
+      {params.assigned === "1" ? (
+        <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
+          ZIP assigned and activated.
+        </div>
+      ) : null}
+      {params.released === "1" ? (
+        <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">
+          ZIP released and routing disabled.
+        </div>
+      ) : null}
+      {params.error ? (
+        <div className="mt-4 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+          {decodeURIComponent(params.error)}
+        </div>
+      ) : null}
       <table className="mt-4 w-full text-sm">
         <thead className="text-xs uppercase text-blue-700">
           <tr>
@@ -44,15 +75,40 @@ export default async function AdminZipsPage() {
               </td>
               <td className="py-3 text-blue-900">{zip.assignedClient?.user.email || "-"}</td>
               <td className="py-3 text-right">
-                {zip.status !== "AVAILABLE" ? (
+                {zip.status === "AVAILABLE" ? (
+                  (() => {
+                    const matchingClients = clients.filter((client) => client.vertical === zip.vertical);
+                    if (!matchingClients.length) {
+                      return <span className="text-xs text-blue-700/70">No {zip.vertical.toLowerCase()} clients yet</span>;
+                    }
+                    return (
+                      <form action="/api/admin/zips/assign" method="post" className="flex items-center justify-end gap-2">
+                        <input type="hidden" name="zipId" value={zip.id} />
+                        <select
+                          name="clientId"
+                          required
+                          className="max-w-[210px] rounded-lg border border-blue-200 bg-white px-2 py-1.5 text-xs text-blue-950"
+                        >
+                          <option value="">Select client</option>
+                          {matchingClients.map((client) => (
+                            <option key={client.id} value={client.id}>
+                              {client.user.fullName} ({client.user.email})
+                            </option>
+                          ))}
+                        </select>
+                        <button className="primary-btn px-3 py-1.5 text-xs" type="submit">
+                          Assign
+                        </button>
+                      </form>
+                    );
+                  })()
+                ) : (
                   <form action="/api/admin/zips/release" method="post">
                     <input type="hidden" name="zipId" value={zip.id} />
                     <button className="secondary-btn text-xs" type="submit">
                       Release ZIP
                     </button>
                   </form>
-                ) : (
-                  <span className="text-xs text-blue-700/70">No action</span>
                 )}
               </td>
             </tr>

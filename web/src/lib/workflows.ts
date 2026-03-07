@@ -307,3 +307,171 @@ export async function releaseZip(zipId: string, actorUserId: string) {
     zipCode: zip.zipCode,
   });
 }
+
+export async function assignZipToClientAdmin(zipId: string, clientId: string, actorUserId: string) {
+  const now = new Date();
+  const renewalDate = addDays(now, 365);
+
+  await prisma.$transaction(async (tx) => {
+    const zip = await tx.zipInventory.findUnique({
+      where: { id: zipId },
+    });
+    if (!zip) throw new Error("ZIP not found.");
+    if (zip.status === ZipStatus.BLOCKED) throw new Error("ZIP is blocked.");
+    if (zip.status === ZipStatus.SOLD && zip.assignedClientId && zip.assignedClientId !== clientId) {
+      throw new Error("ZIP is already sold.");
+    }
+    if (zip.status === ZipStatus.RESERVED && zip.assignedClientId && zip.assignedClientId !== clientId) {
+      throw new Error("ZIP is currently reserved by another client.");
+    }
+
+    const client = await tx.client.findUnique({
+      where: { id: clientId },
+      include: { user: true },
+    });
+    if (!client) throw new Error("Client not found.");
+    if (client.vertical !== zip.vertical) throw new Error("Client vertical must match ZIP vertical.");
+
+    await tx.zipInventory.update({
+      where: { id: zipId },
+      data: {
+        status: ZipStatus.SOLD,
+        assignedClientId: clientId,
+        reservationExpiresAt: null,
+        renewalDate,
+      },
+    });
+
+    const paidPayment = await tx.payment.findFirst({
+      where: {
+        clientId,
+        zipId,
+        status: PaymentStatus.PAID,
+      },
+    });
+    if (!paidPayment) {
+      const pendingPayment = await tx.payment.findFirst({
+        where: {
+          clientId,
+          zipId,
+          status: PaymentStatus.PENDING,
+        },
+      });
+      if (pendingPayment) {
+        await tx.payment.update({
+          where: { id: pendingPayment.id },
+          data: {
+            status: PaymentStatus.PAID,
+            paidAt: now,
+          },
+        });
+      } else {
+        await tx.payment.create({
+          data: {
+            clientId,
+            zipId,
+            provider: "admin_manual",
+            status: PaymentStatus.PAID,
+            amountCents: zip.annualPriceCents,
+            paidAt: now,
+          },
+        });
+      }
+    }
+
+    const signedContract = await tx.contract.findFirst({
+      where: {
+        clientId,
+        zipId,
+        status: ContractStatus.SIGNED,
+      },
+    });
+    if (!signedContract) {
+      const existingContract = await tx.contract.findFirst({
+        where: {
+          clientId,
+          zipId,
+        },
+      });
+      if (existingContract) {
+        await tx.contract.update({
+          where: { id: existingContract.id },
+          data: {
+            status: ContractStatus.SIGNED,
+            sentAt: existingContract.sentAt ?? now,
+            signedAt: now,
+            documentUrl: existingContract.documentUrl ?? "https://example.local/contracts/admin-assigned.pdf",
+          },
+        });
+      } else {
+        await tx.contract.create({
+          data: {
+            clientId,
+            zipId,
+            status: ContractStatus.SIGNED,
+            sentAt: now,
+            signedAt: now,
+            documentUrl: "https://example.local/contracts/admin-assigned.pdf",
+          },
+        });
+      }
+    }
+
+    await tx.onboardingForm.upsert({
+      where: {
+        clientId_zipId: {
+          clientId,
+          zipId,
+        },
+      },
+      update: {
+        status: OnboardingFormStatus.COMPLETED,
+        submittedAt: now,
+      },
+      create: {
+        clientId,
+        zipId,
+        status: OnboardingFormStatus.COMPLETED,
+        submittedAt: now,
+      },
+    });
+
+    await tx.client.update({
+      where: { id: clientId },
+      data: {
+        onboardingStatus: "ACTIVE",
+        leadRoutingEmail: client.leadRoutingEmail ?? client.user.email,
+        leadRoutingPhone: client.leadRoutingPhone ?? client.user.phone ?? "",
+        preferredContactMethod: client.preferredContactMethod ?? "EMAIL",
+      },
+    });
+
+    await tx.leadRoute.upsert({
+      where: {
+        zipCode_vertical: {
+          zipCode: zip.zipCode,
+          vertical: zip.vertical,
+        },
+      },
+      update: {
+        clientId,
+        destinationEmail: client.leadRoutingEmail ?? client.user.email,
+        destinationPhone: client.leadRoutingPhone ?? client.user.phone ?? "",
+        active: true,
+      },
+      create: {
+        clientId,
+        zipCode: zip.zipCode,
+        vertical: zip.vertical,
+        destinationEmail: client.leadRoutingEmail ?? client.user.email,
+        destinationPhone: client.leadRoutingPhone ?? client.user.phone ?? "",
+        active: true,
+      },
+    });
+
+    await audit(actorUserId, "zip.assigned_admin", "zip_inventory", zipId, {
+      zipCode: zip.zipCode,
+      clientId,
+    });
+  });
+}
