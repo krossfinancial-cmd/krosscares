@@ -29,6 +29,18 @@ export async function POST(request: Request) {
   const website = String(formData.get("website") || "").trim();
   const leadRoutingEmail = String(formData.get("leadRoutingEmail") || "").trim();
   const leadRoutingPhone = String(formData.get("leadRoutingPhone") || "").trim();
+  const territoriesPath = `${basePath}/territories`;
+
+  if (!zipId) {
+    return NextResponse.redirect(appUrl(`${territoriesPath}?error=zip-not-assigned`));
+  }
+
+  const zip = await prisma.zipInventory.findUnique({
+    where: { id: zipId },
+  });
+  if (!zip || zip.assignedClientId !== client.id) {
+    return NextResponse.redirect(appUrl(`${territoriesPath}?error=zip-not-assigned`));
+  }
 
   try {
     const headshot = ensureFile(formData.get("headshot"), "Headshot");
@@ -63,7 +75,8 @@ export async function POST(request: Request) {
 
     return NextResponse.redirect(appUrl(`${basePath}?onboarding=complete`));
   } catch (error) {
-    const message = encodeURIComponent(error instanceof Error ? error.message : "Onboarding failed.");
+    const rawMessage = error instanceof Error ? error.message.trim() : "Onboarding failed.";
+    const message = encodeURIComponent(rawMessage || "Onboarding failed.");
     return NextResponse.redirect(appUrl(`${basePath}/onboarding/${zipId}?error=${message}`));
   }
 }

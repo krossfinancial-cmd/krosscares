@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
@@ -16,7 +16,9 @@ export default async function ContractPage({ params }: { params: Params }) {
   if (!client) return null;
 
   const zip = await prisma.zipInventory.findUnique({ where: { id: zipId } });
-  if (!zip || zip.assignedClientId !== client.id) notFound();
+  if (!zip || zip.assignedClientId !== client.id) {
+    redirect("/dashboard/dealer/territories?error=zip-not-assigned");
+  }
 
   const [payment, contract, onboarding] = await Promise.all([
     prisma.payment.findFirst({ where: { clientId: client.id, zipId }, orderBy: { createdAt: "desc" } }),

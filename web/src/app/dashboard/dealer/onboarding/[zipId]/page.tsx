@@ -1,22 +1,37 @@
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 type Params = Promise<{ zipId: string }>;
+type SearchParams = Promise<{ error?: string }>;
 
-export default async function OnboardingPage({ params }: { params: Params }) {
+export default async function OnboardingPage({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams: SearchParams;
+}) {
   const { zipId } = await params;
+  const query = await searchParams;
   const user = await requireUser("DEALER");
   const client = await prisma.client.findUnique({ where: { userId: user.id } });
   if (!client) return null;
 
   const zip = await prisma.zipInventory.findUnique({ where: { id: zipId } });
-  if (!zip || zip.assignedClientId !== client.id) notFound();
+  if (!zip || zip.assignedClientId !== client.id) {
+    redirect("/dashboard/dealer/territories?error=zip-not-assigned");
+  }
 
   return (
     <div className="card p-6">
       <h1 className="text-xl font-bold text-blue-950">Onboarding: ZIP {zip.zipCode}</h1>
       <p className="mt-2 text-sm text-blue-900/70">Submit required profile details and assets to activate territory routing.</p>
+      {query.error ? (
+        <div className="mt-3 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+          {decodeURIComponent(query.error)}
+        </div>
+      ) : null}
 
       <form action="/api/onboarding/submit" method="post" encType="multipart/form-data" className="mt-6 grid gap-4 md:grid-cols-2">
         <input type="hidden" name="zipId" value={zip.id} />

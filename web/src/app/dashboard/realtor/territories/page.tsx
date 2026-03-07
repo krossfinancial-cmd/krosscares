@@ -3,7 +3,12 @@ import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { formatCurrency, zipStatusColor } from "@/lib/format";
 
-export default async function RealtorTerritoriesPage() {
+type SearchParams = Promise<{
+  error?: string;
+}>;
+
+export default async function RealtorTerritoriesPage({ searchParams }: { searchParams: SearchParams }) {
+  const params = await searchParams;
   const user = await requireUser("REALTOR");
   const client = await prisma.client.findUnique({ where: { userId: user.id } });
   if (!client) return null;
@@ -16,6 +21,11 @@ export default async function RealtorTerritoriesPage() {
   return (
     <div className="card p-6">
       <h1 className="text-xl font-bold text-blue-950">My Territories</h1>
+      {params.error === "zip-not-assigned" ? (
+        <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">
+          That ZIP is not assigned to your account.
+        </div>
+      ) : null}
       <div className="mt-5 space-y-3">
         {zips.map((zip) => (
           <div key={zip.id} className="rounded-xl border border-blue-100 p-4">
