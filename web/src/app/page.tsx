@@ -1,73 +1,156 @@
-import Link from "next/link";
-import { ArrowRight, BarChart3, Lock, MapPinned, Sparkles } from "lucide-react";
 import { AnimatedCard } from "@/components/animated-card";
-import { getDashboardMetrics } from "@/lib/queries";
-import { formatCurrency } from "@/lib/format";
+import { LandingHero } from "@/components/landing-hero";
 
-export default async function Home() {
-  const metrics = await getDashboardMetrics();
+const HOW_IT_WORKS = [
+  {
+    title: "Search your ZIP",
+    description: "See live status, tier, and annual pricing in seconds.",
+  },
+  {
+    title: "Reserve and secure it",
+    description: "Complete checkout to lock the territory before someone else does.",
+  },
+  {
+    title: "Sign and onboard",
+    description: "Sign the agreement and submit routing details, headshot, and logo.",
+  },
+  {
+    title: "Go live",
+    description: "Leads are routed directly to your team for your active ZIP.",
+  },
+];
 
+const BENEFITS = [
+  {
+    title: "True exclusivity",
+    description: "One active partner per ZIP per vertical during the contract term.",
+  },
+  {
+    title: "Higher-intent leads",
+    description: "Prospects are already in a credit-improvement path with buying intent.",
+  },
+  {
+    title: "Faster follow-up",
+    description: "Lead routing by email/SMS to your preferred team destination.",
+  },
+  {
+    title: "Predictable cost",
+    description: "Simple annual territory pricing with renewal reminders.",
+  },
+];
+
+export default function Home() {
   return (
-    <div className="space-y-8">
-      <section className="card relative overflow-hidden px-8 py-12">
-        <div className="absolute right-6 top-6 rounded-full bg-blue-50 p-3 text-blue-500">
-          <Sparkles size={22} />
-        </div>
-        <p className="mb-3 inline-flex rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-700">
-          Premium ZIP Territory SaaS
-        </p>
-        <h1 className="max-w-3xl text-4xl font-bold tracking-tight text-blue-950 md:text-5xl">
-          Claim exclusive ZIP territories before another agent does.
-        </h1>
-        <p className="mt-4 max-w-2xl text-lg text-blue-900/80">
-          Manage inventory, contracts, onboarding, routing, and renewals in one platform. Local-first build with
-          Docker so you can validate every flow before production cutover.
-        </p>
-        <div className="mt-7 flex flex-wrap gap-3">
-          <Link href="/marketplace" className="primary-btn inline-flex items-center gap-2">
-            Explore Marketplace <ArrowRight size={16} />
-          </Link>
-          <Link href="/login" className="secondary-btn inline-flex items-center gap-2">
-            Sign In
-          </Link>
+    <div className="space-y-8 pb-10">
+      <LandingHero />
+
+      <section id="how-it-works" className="card p-7 md:p-8">
+        <h2 className="text-2xl font-bold text-blue-950">How It Works</h2>
+        <p className="mt-2 text-sm text-blue-900/70">From ZIP search to activation in four clear steps.</p>
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
+          {HOW_IT_WORKS.map((item, index) => (
+            <AnimatedCard key={item.title} className="p-5">
+              <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Step {index + 1}</p>
+              <h3 className="mt-2 text-lg font-semibold text-blue-950">{item.title}</h3>
+              <p className="mt-2 text-sm text-blue-900/75">{item.description}</p>
+            </AnimatedCard>
+          ))}
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-4">
-        <AnimatedCard className="p-5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Total ZIPs</p>
-          <p className="mt-2 text-3xl font-bold text-blue-950">{metrics.totalZips}</p>
+      <section id="benefits" className="card p-7 md:p-8">
+        <h2 className="text-2xl font-bold text-blue-950">Why Teams Buy Territories</h2>
+        <div className="mt-5 grid gap-4 md:grid-cols-2">
+          {BENEFITS.map((item) => (
+            <AnimatedCard key={item.title} className="p-5">
+              <h3 className="text-lg font-semibold text-blue-950">{item.title}</h3>
+              <p className="mt-2 text-sm text-blue-900/75">{item.description}</p>
+            </AnimatedCard>
+          ))}
+        </div>
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-2">
+        <AnimatedCard className="p-6">
+          <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Realtor ROI Example</p>
+          <h3 className="mt-2 text-xl font-bold text-blue-950">One home closing can cover your annual ZIP fee.</h3>
+          <p className="mt-3 text-sm text-blue-900/75">
+            Example: A $300,000 closing at a 3% side can outperform a $1,000 annual ZIP cost.
+          </p>
         </AnimatedCard>
-        <AnimatedCard className="p-5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Sold</p>
-          <p className="mt-2 text-3xl font-bold text-blue-950">{metrics.soldZips}</p>
-        </AnimatedCard>
-        <AnimatedCard className="p-5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Available</p>
-          <p className="mt-2 text-3xl font-bold text-blue-950">{metrics.availableZips}</p>
-        </AnimatedCard>
-        <AnimatedCard className="p-5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Revenue (Paid)</p>
-          <p className="mt-2 text-3xl font-bold text-blue-950">{formatCurrency(metrics.totalRevenueCents)}</p>
+        <AnimatedCard className="p-6">
+          <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Dealer ROI Example</p>
+          <h3 className="mt-2 text-xl font-bold text-blue-950">One financed sale can cover your yearly territory.</h3>
+          <p className="mt-3 text-sm text-blue-900/75">
+            Example: A financed deal with ~$2,000 gross can outperform a $750–$1,500 annual ZIP cost.
+          </p>
         </AnimatedCard>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-3">
-        <AnimatedCard className="p-6">
-          <Lock className="text-blue-600" />
-          <h3 className="mt-3 text-lg font-semibold text-blue-950">True Exclusivity</h3>
-          <p className="mt-2 text-sm text-blue-900/70">One active owner per ZIP in the vertical, with lifecycle audit logs.</p>
-        </AnimatedCard>
-        <AnimatedCard className="p-6">
-          <MapPinned className="text-blue-600" />
-          <h3 className="mt-3 text-lg font-semibold text-blue-950">Live Inventory</h3>
-          <p className="mt-2 text-sm text-blue-900/70">Availability, reservations, waitlist, and release rules in one dashboard.</p>
-        </AnimatedCard>
-        <AnimatedCard className="p-6">
-          <BarChart3 className="text-blue-600" />
-          <h3 className="mt-3 text-lg font-semibold text-blue-950">Revenue Ops</h3>
-          <p className="mt-2 text-sm text-blue-900/70">Payment, contract status, onboarding, renewal reminders, and dunning controls.</p>
-        </AnimatedCard>
+      <section id="pricing" className="card p-7 md:p-8">
+        <h2 className="text-2xl font-bold text-blue-950">Pricing</h2>
+        <p className="mt-2 text-sm text-blue-900/70">Annual pricing by territory demand and lead velocity.</p>
+        <div className="mt-5 grid gap-4 md:grid-cols-3">
+          <AnimatedCard className="p-5">
+            <p className="text-sm font-semibold text-blue-700">Standard</p>
+            <p className="mt-2 text-3xl font-bold text-blue-950">$500</p>
+            <p className="text-sm text-blue-900/70">per year</p>
+          </AnimatedCard>
+          <AnimatedCard className="p-5">
+            <p className="text-sm font-semibold text-blue-700">High Demand</p>
+            <p className="mt-2 text-3xl font-bold text-blue-950">$1,000</p>
+            <p className="text-sm text-blue-900/70">per year</p>
+          </AnimatedCard>
+          <AnimatedCard className="p-5">
+            <p className="text-sm font-semibold text-blue-700">Premium</p>
+            <p className="mt-2 text-3xl font-bold text-blue-950">$1,500</p>
+            <p className="text-sm text-blue-900/70">per year</p>
+          </AnimatedCard>
+        </div>
+      </section>
+
+      <section className="card p-7 md:p-8">
+        <h2 className="text-2xl font-bold text-blue-950">Built for Accountability</h2>
+        <ul className="mt-4 space-y-2 text-sm text-blue-900/80">
+          <li>Exclusivity guarantee: no second active partner in the same ZIP/vertical.</li>
+          <li>Lead validity guarantee: invalid leads replaced under policy terms.</li>
+          <li>Delivery standard: credit/extension terms apply if minimum delivery terms are missed.</li>
+        </ul>
+      </section>
+
+      <section id="faq" className="card p-7 md:p-8">
+        <h2 className="text-2xl font-bold text-blue-950">FAQ</h2>
+        <div className="mt-5 space-y-4">
+          <AnimatedCard className="p-5">
+            <h3 className="font-semibold text-blue-950">Is this really exclusive?</h3>
+            <p className="mt-1 text-sm text-blue-900/75">Yes. One active partner per ZIP per vertical during the contract term.</p>
+          </AnimatedCard>
+          <AnimatedCard className="p-5">
+            <h3 className="font-semibold text-blue-950">How long do I own a ZIP?</h3>
+            <p className="mt-1 text-sm text-blue-900/75">12 months from activation, with renewal options.</p>
+          </AnimatedCard>
+          <AnimatedCard className="p-5">
+            <h3 className="font-semibold text-blue-950">When do leads start?</h3>
+            <p className="mt-1 text-sm text-blue-900/75">After payment, signed agreement, and completed onboarding.</p>
+          </AnimatedCard>
+          <AnimatedCard className="p-5">
+            <h3 className="font-semibold text-blue-950">What if my ZIP is sold?</h3>
+            <p className="mt-1 text-sm text-blue-900/75">Join the waitlist and we will notify you if it reopens.</p>
+          </AnimatedCard>
+        </div>
+      </section>
+
+      <section id="final-cta" className="card p-8 text-center">
+        <h2 className="text-3xl font-bold text-blue-950">Check if your ZIP is still available</h2>
+        <p className="mt-2 text-sm text-blue-900/75">If it is open, claim it before another team does.</p>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <a href="/marketplace" className="primary-btn">
+            Check ZIP Availability
+          </a>
+          <a href="mailto:sales@krosscares.local?subject=Talk%20to%20Sales" className="secondary-btn">
+            Talk to Sales
+          </a>
+        </div>
       </section>
     </div>
   );

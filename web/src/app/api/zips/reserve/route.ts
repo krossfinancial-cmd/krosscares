@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
-  const limit = checkRateLimit(`reserve:${requestFingerprint(request)}`, 60, 60_000);
+  const limit = await checkRateLimit(`reserve:${requestFingerprint(request)}`, 60, 60_000);
   if (!limit.allowed) {
     return NextResponse.json({ error: "Rate limit exceeded." }, { status: 429 });
   }

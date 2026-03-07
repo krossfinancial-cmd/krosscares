@@ -24,41 +24,70 @@ export async function reserveZip(zipId: string, actor: WorkflowActor) {
   expiration.setMinutes(expiration.getMinutes() + 30);
 
   return prisma.$transaction(async (tx) => {
-    const zip = await tx.zipInventory.findUnique({
-      where: { id: zipId },
-    });
-    if (!zip) throw new Error("ZIP not found.");
-    if (zip.status === ZipStatus.BLOCKED || zip.status === ZipStatus.SOLD) throw new Error("ZIP is unavailable.");
-    if (zip.status === ZipStatus.RESERVED && zip.reservationExpiresAt && zip.reservationExpiresAt > new Date()) {
-      throw new Error("ZIP is currently reserved by another client.");
-    }
-
-    const updated = await tx.zipInventory.update({
-      where: { id: zip.id },
+    const claimResult = await tx.zipInventory.updateMany({
+      where: {
+        id: zipId,
+        OR: [
+          { status: ZipStatus.AVAILABLE },
+          {
+            status: ZipStatus.RESERVED,
+            reservationExpiresAt: {
+              lt: new Date(),
+            },
+          },
+          {
+            status: ZipStatus.RESERVED,
+            assignedClientId: actor.clientId,
+          },
+        ],
+      },
       data: {
         status: ZipStatus.RESERVED,
         assignedClientId: actor.clientId,
         reservationExpiresAt: expiration,
       },
     });
+    if (claimResult.count === 0) throw new Error("ZIP is currently unavailable.");
 
-    await tx.payment.create({
-      data: {
+    const updated = await tx.zipInventory.findUnique({
+      where: { id: zipId },
+    });
+    if (!updated) throw new Error("ZIP not found.");
+
+    const pendingPayment = await tx.payment.findFirst({
+      where: {
         clientId: actor.clientId,
         zipId: updated.id,
-        amountCents: updated.annualPriceCents,
-        provider: "mock",
         status: PaymentStatus.PENDING,
       },
     });
+    if (!pendingPayment) {
+      await tx.payment.create({
+        data: {
+          clientId: actor.clientId,
+          zipId: updated.id,
+          amountCents: updated.annualPriceCents,
+          provider: "mock",
+          status: PaymentStatus.PENDING,
+        },
+      });
+    }
 
-    await tx.contract.create({
-      data: {
+    const existingContract = await tx.contract.findFirst({
+      where: {
         clientId: actor.clientId,
         zipId: updated.id,
-        status: ContractStatus.DRAFT,
       },
     });
+    if (!existingContract) {
+      await tx.contract.create({
+        data: {
+          clientId: actor.clientId,
+          zipId: updated.id,
+          status: ContractStatus.DRAFT,
+        },
+      });
+    }
 
     await tx.onboardingForm.upsert({
       where: {

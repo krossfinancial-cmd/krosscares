@@ -4,7 +4,7 @@ import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 import { appUrl } from "@/lib/app-url";
 
 export async function POST(request: Request) {
-  const limit = checkRateLimit(`login:${requestFingerprint(request)}`, 20, 60_000);
+  const limit = await checkRateLimit(`login:${requestFingerprint(request)}`, 20, 60_000);
   if (!limit.allowed) {
     return NextResponse.json({ error: "Too many login attempts. Please retry shortly." }, { status: 429 });
   }

@@ -19,11 +19,28 @@ export async function AppHeader() {
         </div>
 
         <nav className="hidden items-center gap-4 text-sm font-medium text-blue-900 md:flex">
-          <Link href="/marketplace" className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-blue-50">
-            <Search size={15} />
-            Marketplace
-          </Link>
-          {user && (
+          {!user ? (
+            <>
+              <a href="#how-it-works" className="rounded-lg px-3 py-2 hover:bg-blue-50">
+                How It Works
+              </a>
+              <a href="#benefits" className="rounded-lg px-3 py-2 hover:bg-blue-50">
+                Benefits
+              </a>
+              <a href="#pricing" className="rounded-lg px-3 py-2 hover:bg-blue-50">
+                Pricing
+              </a>
+              <a href="#faq" className="rounded-lg px-3 py-2 hover:bg-blue-50">
+                FAQ
+              </a>
+            </>
+          ) : (
+            <Link href="/marketplace" className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-blue-50">
+              <Search size={15} />
+              Marketplace
+            </Link>
+          )}
+          {user ? (
             <Link
               href={user.role === "ADMIN" ? "/dashboard/admin" : user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor"}
               className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-blue-50"
@@ -31,14 +48,19 @@ export async function AppHeader() {
               <LayoutDashboard size={15} />
               Dashboard
             </Link>
-          )}
+          ) : null}
         </nav>
 
         <div className="flex items-center gap-3">
           {!user && (
-            <Link href="/login" className="secondary-btn text-sm">
-              Sign In
-            </Link>
+            <>
+              <Link href="/marketplace" className="primary-btn hidden text-sm md:inline-flex">
+                Check ZIP Availability
+              </Link>
+              <Link href="/login" className="secondary-btn text-sm">
+                Sign In
+              </Link>
+            </>
           )}
           {user && (
             <>

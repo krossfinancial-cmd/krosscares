@@ -4,7 +4,7 @@ import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 import { appUrl } from "@/lib/app-url";
 
 export async function POST(request: Request) {
-  const limit = checkRateLimit(`waitlist:${requestFingerprint(request)}`, 40, 60_000);
+  const limit = await checkRateLimit(`waitlist:${requestFingerprint(request)}`, 40, 60_000);
   if (!limit.allowed) {
     return NextResponse.json({ error: "Rate limit exceeded." }, { status: 429 });
   }
