@@ -21,28 +21,28 @@ export async function POST(request: Request) {
   const client = await prisma.client.findUnique({ where: { userId: user.id } });
   if (!client) return NextResponse.redirect(appUrl(`${basePath}?error=client`));
 
-  const formData = await request.formData();
-  const zipId = String(formData.get("zipId") || "");
-  const fullName = String(formData.get("fullName") || "").trim();
-  const companyName = String(formData.get("companyName") || "").trim();
-  const licenseNumber = String(formData.get("licenseNumber") || "").trim();
-  const website = String(formData.get("website") || "").trim();
-  const leadRoutingEmail = String(formData.get("leadRoutingEmail") || "").trim();
-  const leadRoutingPhone = String(formData.get("leadRoutingPhone") || "").trim();
   const territoriesPath = `${basePath}/territories`;
-
-  if (!zipId) {
-    return NextResponse.redirect(appUrl(`${territoriesPath}?error=zip-not-assigned`));
-  }
-
-  const zip = await prisma.zipInventory.findUnique({
-    where: { id: zipId },
-  });
-  if (!zip || zip.assignedClientId !== client.id) {
-    return NextResponse.redirect(appUrl(`${territoriesPath}?error=zip-not-assigned`));
-  }
-
   try {
+    const formData = await request.formData();
+    const zipId = String(formData.get("zipId") || "");
+    const fullName = String(formData.get("fullName") || "").trim();
+    const companyName = String(formData.get("companyName") || "").trim();
+    const licenseNumber = String(formData.get("licenseNumber") || "").trim();
+    const website = String(formData.get("website") || "").trim();
+    const leadRoutingEmail = String(formData.get("leadRoutingEmail") || "").trim();
+    const leadRoutingPhone = String(formData.get("leadRoutingPhone") || "").trim();
+
+    if (!zipId) {
+      return NextResponse.redirect(appUrl(`${territoriesPath}?error=zip-not-assigned`));
+    }
+
+    const zip = await prisma.zipInventory.findUnique({
+      where: { id: zipId },
+    });
+    if (!zip || zip.assignedClientId !== client.id) {
+      return NextResponse.redirect(appUrl(`${territoriesPath}?error=zip-not-assigned`));
+    }
+
     const headshot = ensureFile(formData.get("headshot"), "Headshot");
     const logo = ensureFile(formData.get("logo"), "Logo");
 
@@ -71,12 +71,31 @@ export async function POST(request: Request) {
     });
 
     await completeOnboarding(zipId, { userId: user.id, clientId: client.id });
-    await attemptActivation(zipId, { userId: user.id, clientId: client.id });
+    try {
+      await attemptActivation(zipId, { userId: user.id, clientId: client.id });
+    } catch (error) {
+      const message = error instanceof Error ? error.message.trim() : "Activation requirements are not complete.";
+      if (message === "Activation requirements are not complete.") {
+        return NextResponse.redirect(appUrl(`${basePath}/contract/${zipId}?info=onboarding-complete`));
+      }
+      throw error;
+    }
 
     return NextResponse.redirect(appUrl(`${basePath}?onboarding=complete`));
   } catch (error) {
     const rawMessage = error instanceof Error ? error.message.trim() : "Onboarding failed.";
     const message = encodeURIComponent(rawMessage || "Onboarding failed.");
-    return NextResponse.redirect(appUrl(`${basePath}/onboarding/${zipId}?error=${message}`));
+
+    if (rawMessage.toLowerCase().includes("body") || rawMessage.toLowerCase().includes("formdata")) {
+      return NextResponse.redirect(
+        appUrl(
+          `${territoriesPath}?error=${encodeURIComponent(
+            "Upload failed. Please retry with JPG/PNG files under 5MB each.",
+          )}`,
+        ),
+      );
+    }
+
+    return NextResponse.redirect(appUrl(`${territoriesPath}?error=${message}`));
   }
 }

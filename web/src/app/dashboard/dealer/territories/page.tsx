@@ -7,6 +7,14 @@ type SearchParams = Promise<{
   error?: string;
 }>;
 
+function safeDecode(value: string) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
 export default async function DealerTerritoriesPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const user = await requireUser("DEALER");
@@ -21,9 +29,11 @@ export default async function DealerTerritoriesPage({ searchParams }: { searchPa
   return (
     <div className="card p-6">
       <h1 className="text-xl font-bold text-blue-950">My Territories</h1>
-      {params.error === "zip-not-assigned" ? (
+      {params.error ? (
         <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">
-          That ZIP is not assigned to your account.
+          {params.error === "zip-not-assigned"
+            ? "That ZIP is not assigned to your account."
+            : safeDecode(params.error)}
         </div>
       ) : null}
       <div className="mt-5 space-y-3">
