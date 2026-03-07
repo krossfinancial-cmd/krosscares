@@ -2,17 +2,32 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 
-export default async function LoginPage() {
+type SearchParams = Promise<{
+  error?: string;
+}>;
+
+function errorMessage(code?: string) {
+  if (!code) return null;
+  if (code === "invalid") return "Invalid email or password.";
+  return decodeURIComponent(code);
+}
+
+export default async function LoginPage({ searchParams }: { searchParams: SearchParams }) {
   const user = await getCurrentUser();
   if (user) {
     redirect(user.role === "ADMIN" ? "/dashboard/admin" : user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor");
   }
+  const params = await searchParams;
+  const error = errorMessage(params.error);
 
   return (
     <div className="mx-auto max-w-md">
       <div className="card p-8">
         <h1 className="text-2xl font-bold text-blue-950">Sign In</h1>
-        <p className="mt-2 text-sm text-blue-900/70">Use seeded accounts to test realtor and admin flows.</p>
+        <p className="mt-2 text-sm text-blue-900/70">Sign in to manage your territories and lead routing.</p>
+        {error ? (
+          <div className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</div>
+        ) : null}
 
         <form action="/api/auth/login" method="post" className="mt-6 space-y-4">
           <div>
@@ -53,9 +68,14 @@ export default async function LoginPage() {
           <p>Dealer: dealer@krosscares.local / Dealer#2026!</p>
         </div>
 
-        <Link href="/marketplace" className="mt-5 inline-block text-sm font-semibold text-blue-700 hover:text-blue-900">
-          Back to marketplace
-        </Link>
+        <div className="mt-5 flex items-center justify-between text-sm">
+          <Link href="/marketplace" className="font-semibold text-blue-700 hover:text-blue-900">
+            Back to marketplace
+          </Link>
+          <Link href="/signup" className="font-semibold text-blue-700 hover:text-blue-900">
+            Create account
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -57,6 +57,9 @@ export async function AppHeader() {
               <Link href="/marketplace" className="primary-btn hidden text-sm md:inline-flex">
                 Check ZIP Availability
               </Link>
+              <Link href="/signup" className="secondary-btn hidden text-sm md:inline-flex">
+                Create Account
+              </Link>
               <Link href="/login" className="secondary-btn text-sm">
                 Sign In
               </Link>
