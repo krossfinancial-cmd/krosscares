@@ -3,6 +3,7 @@ import { formatCurrency, zipStatusColor } from "@/lib/format";
 
 type SearchParams = Promise<{
   assigned?: string;
+  reassigned?: string;
   released?: string;
   error?: string;
 }>;
@@ -35,6 +36,11 @@ export default async function AdminZipsPage({ searchParams }: { searchParams: Se
       {params.assigned === "1" ? (
         <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
           ZIP assigned and activated.
+        </div>
+      ) : null}
+      {params.reassigned === "1" ? (
+        <div className="mt-4 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm text-indigo-800">
+          ZIP reassigned and routing switched to the new owner.
         </div>
       ) : null}
       {params.released === "1" ? (
@@ -103,12 +109,42 @@ export default async function AdminZipsPage({ searchParams }: { searchParams: Se
                     );
                   })()
                 ) : (
-                  <form action="/api/admin/zips/release" method="post">
-                    <input type="hidden" name="zipId" value={zip.id} />
-                    <button className="secondary-btn text-xs" type="submit">
-                      Release ZIP
-                    </button>
-                  </form>
+                  (() => {
+                    const matchingClients = clients.filter((client) => client.vertical === zip.vertical);
+                    return (
+                      <div className="flex flex-col items-end gap-2">
+                        {matchingClients.length ? (
+                          <form action="/api/admin/zips/reassign" method="post" className="flex items-center gap-2">
+                            <input type="hidden" name="zipId" value={zip.id} />
+                            <select
+                              name="clientId"
+                              required
+                              defaultValue={zip.assignedClientId || ""}
+                              className="max-w-[210px] rounded-lg border border-blue-200 bg-white px-2 py-1.5 text-xs text-blue-950"
+                            >
+                              <option value="">Select client</option>
+                              {matchingClients.map((client) => (
+                                <option key={client.id} value={client.id}>
+                                  {client.user.fullName} ({client.user.email})
+                                </option>
+                              ))}
+                            </select>
+                            <button className="primary-btn px-3 py-1.5 text-xs" type="submit">
+                              Reassign
+                            </button>
+                          </form>
+                        ) : (
+                          <span className="text-xs text-blue-700/70">No {zip.vertical.toLowerCase()} clients yet</span>
+                        )}
+                        <form action="/api/admin/zips/release" method="post">
+                          <input type="hidden" name="zipId" value={zip.id} />
+                          <button className="secondary-btn text-xs" type="submit">
+                            Release ZIP
+                          </button>
+                        </form>
+                      </div>
+                    );
+                  })()
                 )}
               </td>
             </tr>
