@@ -19,21 +19,31 @@ async function main() {
   const realtorPassword = await bcrypt.hash("Realtor#2026!", 10);
   const dealerPassword = await bcrypt.hash("Dealer#2026!", 10);
 
-  await prisma.session.deleteMany();
-  await prisma.lead.deleteMany();
-  await prisma.payment.deleteMany();
-  await prisma.contract.deleteMany();
-  await prisma.onboardingForm.deleteMany();
-  await prisma.leadRoute.deleteMany();
-  await prisma.waitlist.deleteMany();
-  await prisma.renewalReminder.deleteMany();
-  await prisma.auditLog.deleteMany();
-  await prisma.zipInventory.deleteMany();
-  await prisma.client.deleteMany();
-  await prisma.user.deleteMany();
+  if (process.env.SEED_RESET === "true") {
+    await prisma.session.deleteMany();
+    await prisma.lead.deleteMany();
+    await prisma.payment.deleteMany();
+    await prisma.contract.deleteMany();
+    await prisma.onboardingForm.deleteMany();
+    await prisma.leadRoute.deleteMany();
+    await prisma.waitlist.deleteMany();
+    await prisma.renewalReminder.deleteMany();
+    await prisma.auditLog.deleteMany();
+    await prisma.zipInventory.deleteMany();
+    await prisma.client.deleteMany();
+    await prisma.user.deleteMany();
+  }
 
-  const adminUser = await prisma.user.create({
-    data: {
+  const adminUser = await prisma.user.upsert({
+    where: { email: "admin@krosscares.local" },
+    update: {
+      passwordHash: adminPassword,
+      role: UserRole.ADMIN,
+      fullName: "Platform Admin",
+      companyName: "Kross Cares",
+      phone: "919-555-0101",
+    },
+    create: {
       email: "admin@krosscares.local",
       passwordHash: adminPassword,
       role: UserRole.ADMIN,
@@ -43,8 +53,16 @@ async function main() {
     },
   });
 
-  const realtorUser = await prisma.user.create({
-    data: {
+  const realtorUser = await prisma.user.upsert({
+    where: { email: "realtor@krosscares.local" },
+    update: {
+      passwordHash: realtorPassword,
+      role: UserRole.REALTOR,
+      fullName: "Sasha Realtor",
+      companyName: "Blue Ridge Realty",
+      phone: "919-555-0102",
+    },
+    create: {
       email: "realtor@krosscares.local",
       passwordHash: realtorPassword,
       role: UserRole.REALTOR,
@@ -54,8 +72,16 @@ async function main() {
     },
   });
 
-  const dealerUser = await prisma.user.create({
-    data: {
+  const dealerUser = await prisma.user.upsert({
+    where: { email: "dealer@krosscares.local" },
+    update: {
+      passwordHash: dealerPassword,
+      role: UserRole.DEALER,
+      fullName: "Miles Dealer",
+      companyName: "Capital Auto Group",
+      phone: "919-555-0103",
+    },
+    create: {
       email: "dealer@krosscares.local",
       passwordHash: dealerPassword,
       role: UserRole.DEALER,
@@ -65,8 +91,19 @@ async function main() {
     },
   });
 
-  const realtorClient = await prisma.client.create({
-    data: {
+  const realtorClient = await prisma.client.upsert({
+    where: { userId: realtorUser.id },
+    update: {
+      serviceCity: "Raleigh",
+      serviceState: "NC",
+      licenseNumber: "NC-RE-004274",
+      onboardingStatus: "ACTIVE",
+      leadRoutingEmail: "realtor@krosscares.local",
+      leadRoutingPhone: "919-555-0102",
+      preferredContactMethod: "EMAIL",
+      vertical: Vertical.REALTOR,
+    },
+    create: {
       userId: realtorUser.id,
       serviceCity: "Raleigh",
       serviceState: "NC",
@@ -79,8 +116,18 @@ async function main() {
     },
   });
 
-  const dealerClient = await prisma.client.create({
-    data: {
+  const dealerClient = await prisma.client.upsert({
+    where: { userId: dealerUser.id },
+    update: {
+      serviceCity: "Raleigh",
+      serviceState: "NC",
+      onboardingStatus: "ACTIVE",
+      leadRoutingEmail: "dealer@krosscares.local",
+      leadRoutingPhone: "919-555-0103",
+      preferredContactMethod: "EMAIL",
+      vertical: Vertical.DEALER,
+    },
+    create: {
       userId: dealerUser.id,
       serviceCity: "Raleigh",
       serviceState: "NC",
@@ -201,30 +248,51 @@ async function main() {
     },
   });
 
-  await prisma.payment.create({
-    data: {
-      clientId: realtorClient.id,
-      zipId: ownedZip.id,
-      amountCents: 100000,
-      provider: "mock",
-      status: "PAID",
-      paidAt: new Date(),
-    },
+  const realtorPaidExists = await prisma.payment.findFirst({
+    where: { clientId: realtorClient.id, zipId: ownedZip.id, status: "PAID" },
   });
+  if (!realtorPaidExists) {
+    await prisma.payment.create({
+      data: {
+        clientId: realtorClient.id,
+        zipId: ownedZip.id,
+        amountCents: 100000,
+        provider: "mock",
+        status: "PAID",
+        paidAt: new Date(),
+      },
+    });
+  }
 
-  await prisma.contract.create({
-    data: {
-      clientId: realtorClient.id,
-      zipId: ownedZip.id,
-      status: "SIGNED",
-      sentAt: new Date(),
-      signedAt: new Date(),
-      documentUrl: "https://example.local/contracts/demo-contract.pdf",
-    },
+  const realtorSignedContract = await prisma.contract.findFirst({
+    where: { clientId: realtorClient.id, zipId: ownedZip.id, status: "SIGNED" },
   });
+  if (!realtorSignedContract) {
+    await prisma.contract.create({
+      data: {
+        clientId: realtorClient.id,
+        zipId: ownedZip.id,
+        status: "SIGNED",
+        sentAt: new Date(),
+        signedAt: new Date(),
+        documentUrl: "https://example.local/contracts/demo-contract.pdf",
+      },
+    });
+  }
 
-  await prisma.onboardingForm.create({
-    data: {
+  await prisma.onboardingForm.upsert({
+    where: {
+      clientId_zipId: {
+        clientId: realtorClient.id,
+        zipId: ownedZip.id,
+      },
+    },
+    update: {
+      status: "COMPLETED",
+      submittedAt: new Date(),
+      notes: "Seed onboarding complete",
+    },
+    create: {
       clientId: realtorClient.id,
       zipId: ownedZip.id,
       status: "COMPLETED",
@@ -233,47 +301,111 @@ async function main() {
     },
   });
 
-  await prisma.lead.createMany({
-    data: [
-      {
-        zipId: ownedZip.id,
-        clientId: realtorClient.id,
-        firstName: "Jordan",
-        lastName: "Carter",
-        email: "jordan.carter@example.com",
-        phone: "919-555-0201",
-      },
-      {
-        zipId: dealerOwnedZip.id,
+  const dealerPaidExists = await prisma.payment.findFirst({
+    where: { clientId: dealerClient.id, zipId: dealerOwnedZip.id, status: "PAID" },
+  });
+  if (!dealerPaidExists) {
+    await prisma.payment.create({
+      data: {
         clientId: dealerClient.id,
-        firstName: "Chris",
-        lastName: "Lee",
-        email: "chris.lee@example.com",
-        phone: "919-555-0203",
+        zipId: dealerOwnedZip.id,
+        amountCents: 150000,
+        provider: "mock",
+        status: "PAID",
+        paidAt: new Date(),
       },
-      {
-        zipId: ownedZip.id,
-        clientId: realtorClient.id,
-        firstName: "Alex",
-        lastName: "Morgan",
-        email: "alex.morgan@example.com",
-        phone: "919-555-0202",
+    });
+  }
+
+  const dealerSignedContract = await prisma.contract.findFirst({
+    where: { clientId: dealerClient.id, zipId: dealerOwnedZip.id, status: "SIGNED" },
+  });
+  if (!dealerSignedContract) {
+    await prisma.contract.create({
+      data: {
+        clientId: dealerClient.id,
+        zipId: dealerOwnedZip.id,
+        status: "SIGNED",
+        sentAt: new Date(),
+        signedAt: new Date(),
+        documentUrl: "https://example.local/contracts/demo-contract.pdf",
       },
-    ],
-    skipDuplicates: true,
+    });
+  }
+
+  await prisma.onboardingForm.upsert({
+    where: {
+      clientId_zipId: {
+        clientId: dealerClient.id,
+        zipId: dealerOwnedZip.id,
+      },
+    },
+    update: {
+      status: "COMPLETED",
+      submittedAt: new Date(),
+      notes: "Seed onboarding complete",
+    },
+    create: {
+      clientId: dealerClient.id,
+      zipId: dealerOwnedZip.id,
+      status: "COMPLETED",
+      submittedAt: new Date(),
+      notes: "Seed onboarding complete",
+    },
   });
 
-  await prisma.auditLog.create({
-    data: {
-      actorUserId: adminUser.id,
+  const existingLeadCount = await prisma.lead.count();
+  if (existingLeadCount === 0) {
+    await prisma.lead.createMany({
+      data: [
+        {
+          zipId: ownedZip.id,
+          clientId: realtorClient.id,
+          firstName: "Jordan",
+          lastName: "Carter",
+          email: "jordan.carter@example.com",
+          phone: "919-555-0201",
+        },
+        {
+          zipId: dealerOwnedZip.id,
+          clientId: dealerClient.id,
+          firstName: "Chris",
+          lastName: "Lee",
+          email: "chris.lee@example.com",
+          phone: "919-555-0203",
+        },
+        {
+          zipId: ownedZip.id,
+          clientId: realtorClient.id,
+          firstName: "Alex",
+          lastName: "Morgan",
+          email: "alex.morgan@example.com",
+          phone: "919-555-0202",
+        },
+      ],
+    });
+  }
+
+  const seedLog = await prisma.auditLog.findFirst({
+    where: {
       action: "seed.initialized",
       entityType: "system",
       entityId: "bootstrap",
-      metadata: {
-        initializedAt: new Date().toISOString(),
-      },
     },
   });
+  if (!seedLog) {
+    await prisma.auditLog.create({
+      data: {
+        actorUserId: adminUser.id,
+        action: "seed.initialized",
+        entityType: "system",
+        entityId: "bootstrap",
+        metadata: {
+          initializedAt: new Date().toISOString(),
+        },
+      },
+    });
+  }
 }
 
 main()
