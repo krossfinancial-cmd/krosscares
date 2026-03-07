@@ -48,6 +48,13 @@ export async function clearSession() {
       where: { token },
     });
   }
+  store.set(COOKIE_NAME, "", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    expires: new Date(0),
+    path: "/",
+  });
   store.delete(COOKIE_NAME);
 }
 

@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/lib/auth";
 
 type SearchParams = Promise<{
   error?: string;
+  logged_out?: string;
 }>;
 
 function errorMessage(code?: string) {
@@ -19,12 +20,18 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
   }
   const params = await searchParams;
   const error = errorMessage(params.error);
+  const loggedOut = params.logged_out === "1";
 
   return (
     <div className="mx-auto max-w-md">
       <div className="card p-8">
         <h1 className="text-2xl font-bold text-blue-950">Sign In</h1>
         <p className="mt-2 text-sm text-blue-900/70">Sign in to manage your territories and lead routing.</p>
+        {loggedOut ? (
+          <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+            You have been logged out.
+          </div>
+        ) : null}
         {error ? (
           <div className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</div>
         ) : null}
