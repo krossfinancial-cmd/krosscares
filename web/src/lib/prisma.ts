@@ -1,6 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import "@/lib/env";
 
+if (process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = process.env.DATABASE_URL.trim();
+}
+
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };

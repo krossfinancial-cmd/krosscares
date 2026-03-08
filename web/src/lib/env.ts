@@ -7,9 +7,13 @@ const schema = z.object({
   INTERNAL_CRON_SECRET: z.string().default("local-cron-secret"),
 });
 
+function normalize(value: string | undefined) {
+  return typeof value === "string" ? value.trim() : value;
+}
+
 export const env = schema.parse({
-  DATABASE_URL: process.env.DATABASE_URL,
-  APP_URL: process.env.APP_URL,
-  SESSION_SECRET: process.env.SESSION_SECRET,
-  INTERNAL_CRON_SECRET: process.env.INTERNAL_CRON_SECRET,
+  DATABASE_URL: normalize(process.env.DATABASE_URL),
+  APP_URL: normalize(process.env.APP_URL),
+  SESSION_SECRET: normalize(process.env.SESSION_SECRET),
+  INTERNAL_CRON_SECRET: normalize(process.env.INTERNAL_CRON_SECRET),
 });
