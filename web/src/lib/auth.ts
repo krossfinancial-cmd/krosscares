@@ -18,6 +18,35 @@ function sessionExpiry() {
   return new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000);
 }
 
+export async function setSessionCookie(token: string, expiresAt: Date | string) {
+  const expiry = typeof expiresAt === "string" ? new Date(expiresAt) : expiresAt;
+  const store = await cookies();
+  store.set(COOKIE_NAME, token, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    expires: expiry,
+    path: "/",
+  });
+}
+
+export async function getSessionToken() {
+  const store = await cookies();
+  return store.get(COOKIE_NAME)?.value || null;
+}
+
+export async function clearSessionCookie() {
+  const store = await cookies();
+  store.set(COOKIE_NAME, "", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    expires: new Date(0),
+    path: "/",
+  });
+  store.delete(COOKIE_NAME);
+}
+
 export async function createSession(userId: string) {
   const token = randomUUID().replace(/-/g, "") + randomUUID().replace(/-/g, "");
   const expiresAt = sessionExpiry();
@@ -30,37 +59,22 @@ export async function createSession(userId: string) {
     },
   });
 
-  const store = await cookies();
-  store.set(COOKIE_NAME, token, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    expires: expiresAt,
-    path: "/",
-  });
+  await setSessionCookie(token, expiresAt);
 }
 
 export async function clearSession() {
-  const store = await cookies();
-  const token = store.get(COOKIE_NAME)?.value;
+  const token = await getSessionToken();
   if (token) {
     await prisma.session.deleteMany({
       where: { token },
     });
   }
-  store.set(COOKIE_NAME, "", {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    expires: new Date(0),
-    path: "/",
-  });
-  store.delete(COOKIE_NAME);
+  await clearSessionCookie();
 }
 
 export async function getCurrentUser() {
   const store = await cookies();
-  const token = store.get(COOKIE_NAME)?.value;
+  const token = await getSessionToken();
   if (!token) return null;
 
   const session = await prisma.session.findUnique({

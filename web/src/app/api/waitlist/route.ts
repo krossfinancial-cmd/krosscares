@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { callBackendApi } from "@/lib/backend-api";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 import { appUrl } from "@/lib/app-url";
 
@@ -22,30 +22,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid vertical." }, { status: 400 });
   }
 
-  const zip = await prisma.zipInventory.findUnique({
-    where: {
-      zipCode_vertical: {
-        zipCode,
-        vertical,
-      },
-    },
-  });
-
-  if (!zip) {
-    return NextResponse.redirect(appUrl("/waitlist?error=zip-not-found"));
-  }
-
-  await prisma.waitlist.create({
-    data: {
-      zipId: zip.id,
+  try {
+    await callBackendApi("waitlist.join", {
       zipCode,
       vertical,
       name,
       email,
       phone,
       businessType,
-    },
-  });
+    });
+  } catch {
+    return NextResponse.redirect(appUrl("/waitlist?error=zip-not-found"));
+  }
 
   return NextResponse.redirect(appUrl(`/waitlist?zip=${zipCode}&success=1`));
 }

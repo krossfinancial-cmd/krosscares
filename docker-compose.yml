@@ -73,6 +73,8 @@ services:
     environment:
       NODE_ENV: development
       DATABASE_URL: postgresql://postgres:postgres@db:5432/krosscares?schema=public
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-https://wmqttntewwxderckkfbg.supabase.co}
+      BACKEND_API_SHARED_SECRET: ${BACKEND_API_SHARED_SECRET:-}
       APP_URL: http://localhost:3000
       SESSION_SECRET: local-dev-secret
       SMTP_FROM: noreply@krosscares.local

@@ -1,9 +1,7 @@
-import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { UserRole, Vertical } from "@prisma/client";
 import { appUrl } from "@/lib/app-url";
 import { getCurrentUser } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { callBackendApi } from "@/lib/backend-api";
 
 export async function POST(request: Request) {
   const user = await getCurrentUser();
@@ -24,48 +22,17 @@ export async function POST(request: Request) {
     return NextResponse.redirect(appUrl("/dashboard/admin/clients?error=password-too-short"));
   }
 
-  const vertical = verticalInput === "DEALER" ? Vertical.DEALER : Vertical.REALTOR;
-  const role = vertical === Vertical.DEALER ? UserRole.DEALER : UserRole.REALTOR;
+  const vertical = verticalInput === "DEALER" ? "DEALER" : "REALTOR";
 
   try {
-    const passwordHash = await bcrypt.hash(password, 12);
-
-    await prisma.$transaction(async (tx) => {
-      const createdUser = await tx.user.create({
-        data: {
-          fullName,
-          email,
-          passwordHash,
-          companyName: companyName || null,
-          phone: phone || null,
-          role,
-        },
-      });
-
-      const createdClient = await tx.client.create({
-        data: {
-          userId: createdUser.id,
-          vertical,
-          serviceState: "NC",
-          leadRoutingEmail: email,
-          leadRoutingPhone: phone || "",
-          preferredContactMethod: "EMAIL",
-          onboardingStatus: "PENDING",
-        },
-      });
-
-      await tx.auditLog.create({
-        data: {
-          actorUserId: user.id,
-          action: "client.created_admin",
-          entityType: "client",
-          entityId: createdClient.id,
-          metadata: {
-            email,
-            vertical,
-          },
-        },
-      });
+    await callBackendApi("admin.client.create", {
+      actorUserId: user.id,
+      fullName,
+      email,
+      password,
+      companyName,
+      phone,
+      vertical,
     });
 
     return NextResponse.redirect(appUrl("/dashboard/admin/clients?created=1"));

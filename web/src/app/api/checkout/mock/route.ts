@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
-import { completeMockPayment } from "@/lib/workflows";
 import { appUrl } from "@/lib/app-url";
+import { callBackendApi } from "@/lib/backend-api";
 
 export async function POST(request: Request) {
   const user = await getCurrentUser();
@@ -13,13 +12,11 @@ export async function POST(request: Request) {
 
   const formData = await request.formData();
   const zipId = String(formData.get("zipId") || "");
-  const client = await prisma.client.findUnique({ where: { userId: user.id } });
-  if (!client) return NextResponse.redirect(appUrl(`${basePath}?error=client`));
 
   try {
-    await completeMockPayment(zipId, {
+    await callBackendApi("checkout.mock", {
+      zipId,
       userId: user.id,
-      clientId: client.id,
     });
   } catch (error) {
     const message = encodeURIComponent(error instanceof Error ? error.message : "Payment failed.");

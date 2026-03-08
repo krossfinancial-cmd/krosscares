@@ -5,7 +5,9 @@ Premium blue/white Next.js SaaS for exclusive ZIP territory sales and lifecycle 
 ## Stack
 
 - Next.js 16 (App Router, TypeScript, Tailwind)
-- Prisma + PostgreSQL
+- Supabase Postgres (primary database)
+- Supabase Edge Function (`backend-api`) for API workflows
+- Prisma (read-model compatibility layer during UI transition)
 - Redis
 - MinIO (headshots/logos)
 - Mailpit (email inbox)
@@ -54,4 +56,4 @@ docker compose --profile full up --build
 9. Dealer vertical parity and dual-vertical ZIP inventory (`zip + vertical` ownership).
 10. Enterprise baseline hardening (rate limits, health endpoint, env validation, audit logging).
 
-Phase 9 (Supabase cutover) intentionally excluded for now.
+Phase 9 (Supabase cutover) is now active for API and database backend.

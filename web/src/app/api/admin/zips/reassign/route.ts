@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import { appUrl } from "@/lib/app-url";
-import { reassignZipToClientAdmin } from "@/lib/workflows";
+import { callBackendApi } from "@/lib/backend-api";
 
 export async function POST(request: Request) {
   const user = await getCurrentUser();
@@ -20,7 +20,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    await reassignZipToClientAdmin(zipId, clientId, user.id);
+    await callBackendApi("admin.zip.reassign", {
+      zipId,
+      clientId,
+      actorUserId: user.id,
+    });
     return NextResponse.redirect(appUrl("/dashboard/admin/zips?reassigned=1"));
   } catch (error) {
     const message = error instanceof Error ? error.message : "Reassignment failed.";

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
-import { releaseZip } from "@/lib/workflows";
 import { appUrl } from "@/lib/app-url";
+import { callBackendApi } from "@/lib/backend-api";
 
 export async function POST(request: Request) {
   const user = await getCurrentUser();
@@ -9,7 +9,10 @@ export async function POST(request: Request) {
 
   const formData = await request.formData();
   const zipId = String(formData.get("zipId") || "");
-  await releaseZip(zipId, user.id);
+  await callBackendApi("admin.zip.release", {
+    zipId,
+    actorUserId: user.id,
+  });
 
   return NextResponse.redirect(appUrl("/dashboard/admin/zips?released=1"));
 }

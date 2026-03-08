@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
-import { runRenewalWorker } from "@/lib/renewals";
 import { appUrl } from "@/lib/app-url";
+import { callBackendApi } from "@/lib/backend-api";
 
 export async function POST() {
   const user = await getCurrentUser();
@@ -9,6 +9,8 @@ export async function POST() {
     return NextResponse.redirect(appUrl("/login"));
   }
 
-  await runRenewalWorker();
+  await callBackendApi("renewals.run", {
+    actorUserId: user.id,
+  });
   return NextResponse.redirect(appUrl("/dashboard/admin/renewals?ran=1"));
 }

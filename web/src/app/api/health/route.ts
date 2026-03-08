@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { callBackendApi } from "@/lib/backend-api";
 
 export async function GET() {
   try {
-    await prisma.$queryRaw`SELECT 1`;
+    await callBackendApi("health");
     return NextResponse.json({
       status: "ok",
       uptimeSeconds: Math.floor(process.uptime()),

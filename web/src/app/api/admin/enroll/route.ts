@@ -1,15 +1,10 @@
-import { randomBytes } from "crypto";
-import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { UserRole, Vertical } from "@prisma/client";
 import { z } from "zod";
 import { appUrl } from "@/lib/app-url";
+import { callBackendApi } from "@/lib/backend-api";
 import { getCurrentUser } from "@/lib/auth";
 import { sendEmail } from "@/lib/mailer";
-import { issuePasswordSetupToken } from "@/lib/password-setup";
-import { prisma } from "@/lib/prisma";
 import { uploadFile } from "@/lib/storage";
-import { assignZipToClientAdmin, reassignZipToClientAdmin } from "@/lib/workflows";
 
 const AdminEnrollSchema = z.object({
   zipId: z.string().uuid(),
@@ -23,10 +18,6 @@ const AdminEnrollSchema = z.object({
   leadRoutingPhone: z.string().trim().min(7).max(30),
   paymentCollected: z.literal("on"),
 });
-
-function roleForVertical(vertical: Vertical): UserRole {
-  return vertical === "DEALER" ? "DEALER" : "REALTOR";
-}
 
 function optionalFile(value: FormDataEntryValue | null, label: string) {
   if (!(value instanceof File)) return null;
@@ -60,16 +51,6 @@ export async function POST(request: Request) {
     return NextResponse.redirect(appUrl(`/dashboard/admin/enroll/${rawZipId}?error=${encodeURIComponent(issue)}`));
   }
 
-  const zip = await prisma.zipInventory.findUnique({ where: { id: parsed.data.zipId } });
-  if (!zip) {
-    return NextResponse.redirect(appUrl("/dashboard/admin/zips?error=zip-not-found"));
-  }
-
-  const existingUser = await prisma.user.findUnique({ where: { email: parsed.data.email } });
-  if (existingUser) {
-    return NextResponse.redirect(appUrl(`/dashboard/admin/enroll/${zip.id}?error=${encodeURIComponent("Email already exists.")}`));
-  }
-
   try {
     const headshot = optionalFile(formData.get("headshot"), "Headshot");
     const logo = optionalFile(formData.get("logo"), "Company logo");
@@ -79,81 +60,47 @@ export async function POST(request: Request) {
       logo ? uploadFile(logo, "logos") : Promise.resolve<string | null>(null),
     ]);
 
-    const temporaryPassword = randomBytes(24).toString("hex");
-    const passwordHash = await bcrypt.hash(temporaryPassword, 12);
-
-    const role = roleForVertical(zip.vertical);
-
-    const createdClient = await prisma.$transaction(async (tx) => {
-      const createdUser = await tx.user.create({
-        data: {
-          fullName: parsed.data.fullName,
-          email: parsed.data.email,
-          phone: parsed.data.phone,
-          companyName: parsed.data.companyName,
-          role,
-          passwordHash,
-        },
-      });
-
-      const client = await tx.client.create({
-        data: {
-          userId: createdUser.id,
-          vertical: zip.vertical,
-          licenseNumber: parsed.data.licenseNumber || null,
-          website: parsed.data.website || null,
-          headshotUrl,
-          logoUrl,
-          leadRoutingEmail: parsed.data.leadRoutingEmail,
-          leadRoutingPhone: parsed.data.leadRoutingPhone,
-          preferredContactMethod: "EMAIL",
-          onboardingStatus: "FORM_COMPLETE",
-          serviceState: zip.state,
-          serviceCity: zip.city,
-        },
-      });
-
-      await tx.auditLog.create({
-        data: {
-          actorUserId: admin.id,
-          action: "client.enrolled_admin",
-          entityType: "client",
-          entityId: client.id,
-          metadata: {
-            zipId: zip.id,
-            zipCode: zip.zipCode,
-            vertical: zip.vertical,
-          },
-        },
-      });
-
-      return {
-        user: createdUser,
-        client,
+    const result = await callBackendApi<{
+      ok: boolean;
+      invite: {
+        email: string;
+        fullName: string;
+        token: string;
+        expiresAt: string;
       };
+      zip: {
+        zipCode: string;
+        vertical: "REALTOR" | "DEALER";
+      };
+    }>("admin.enroll", {
+      actorUserId: admin.id,
+      zipId: parsed.data.zipId,
+      fullName: parsed.data.fullName,
+      companyName: parsed.data.companyName,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      licenseNumber: parsed.data.licenseNumber || null,
+      website: parsed.data.website || null,
+      leadRoutingEmail: parsed.data.leadRoutingEmail,
+      leadRoutingPhone: parsed.data.leadRoutingPhone,
+      headshotUrl,
+      logoUrl,
     });
 
-    if (zip.status === "SOLD" || (zip.status === "RESERVED" && zip.assignedClientId)) {
-      await reassignZipToClientAdmin(zip.id, createdClient.client.id, admin.id);
-    } else {
-      await assignZipToClientAdmin(zip.id, createdClient.client.id, admin.id);
-    }
-
-    const setup = await issuePasswordSetupToken(createdClient.user.id);
-    const setupUrl = `${process.env.APP_URL || "http://localhost:3000"}/set-password?token=${setup.token}`;
+    const setupUrl = `${process.env.APP_URL || "http://localhost:3000"}/set-password?token=${result.invite.token}`;
 
     try {
       await sendEmail(
-        createdClient.user.email,
+        result.invite.email,
         "Set your Kross Cares Territories password",
         [
-          `Hi ${createdClient.user.fullName},`,
+          `Hi ${result.invite.fullName},`,
           "",
-          `Your ${zip.vertical.toLowerCase()} account for ZIP ${zip.zipCode} is enrolled and active.`,
+          `Your ${result.zip.vertical.toLowerCase()} account for ZIP ${result.zip.zipCode} is enrolled and active.`,
           "Use the link below to set your password:",
           setupUrl,
           "",
-          `This link expires on ${setup.expiresAt.toISOString()}.`,
+          `This link expires on ${new Date(result.invite.expiresAt).toISOString()}.`,
         ].join("\n"),
       );
     } catch {
@@ -165,6 +112,6 @@ export async function POST(request: Request) {
     return NextResponse.redirect(appUrl("/dashboard/admin/zips?assigned=1&invited=1"));
   } catch (error) {
     const message = error instanceof Error ? error.message : "Enrollment failed.";
-    return NextResponse.redirect(appUrl(`/dashboard/admin/enroll/${zip.id}?error=${encodeURIComponent(message)}`));
+    return NextResponse.redirect(appUrl(`/dashboard/admin/enroll/${rawZipId}?error=${encodeURIComponent(message)}`));
   }
 }

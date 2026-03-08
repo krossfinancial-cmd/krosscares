@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { callBackendApi } from "@/lib/backend-api";
 import { uploadFile } from "@/lib/storage";
-import { attemptActivation, completeOnboarding } from "@/lib/workflows";
 import { appUrl } from "@/lib/app-url";
 
 function ensureFile(file: unknown, label: string) {
@@ -17,9 +16,6 @@ export async function POST(request: Request) {
     return NextResponse.redirect(appUrl("/login"));
   }
   const basePath = user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
-
-  const client = await prisma.client.findUnique({ where: { userId: user.id } });
-  if (!client) return NextResponse.redirect(appUrl(`${basePath}?error=client`));
 
   const territoriesPath = `${basePath}/territories`;
   try {
@@ -36,51 +32,27 @@ export async function POST(request: Request) {
       return NextResponse.redirect(appUrl(`${territoriesPath}?error=zip-not-assigned`));
     }
 
-    const zip = await prisma.zipInventory.findUnique({
-      where: { id: zipId },
-    });
-    if (!zip || zip.assignedClientId !== client.id) {
-      return NextResponse.redirect(appUrl(`${territoriesPath}?error=zip-not-assigned`));
-    }
-
     const headshot = ensureFile(formData.get("headshot"), "Headshot");
     const logo = ensureFile(formData.get("logo"), "Logo");
 
     const [headshotUrl, logoUrl] = await Promise.all([uploadFile(headshot, "headshots"), uploadFile(logo, "logos")]);
 
-    await prisma.$transaction(async (tx) => {
-      await tx.user.update({
-        where: { id: user.id },
-        data: {
-          fullName,
-          companyName,
-        },
-      });
-
-      await tx.client.update({
-        where: { id: client.id },
-        data: {
-          licenseNumber,
-          website: website || null,
-          headshotUrl,
-          logoUrl,
-          leadRoutingEmail,
-          leadRoutingPhone,
-        },
-      });
+    const result = await callBackendApi<{ ok: boolean; activated: boolean }>("onboarding.finalize", {
+      zipId,
+      userId: user.id,
+      fullName,
+      companyName,
+      licenseNumber,
+      website: website || null,
+      leadRoutingEmail,
+      leadRoutingPhone,
+      headshotUrl,
+      logoUrl,
     });
 
-    await completeOnboarding(zipId, { userId: user.id, clientId: client.id });
-    try {
-      await attemptActivation(zipId, { userId: user.id, clientId: client.id });
-    } catch (error) {
-      const message = error instanceof Error ? error.message.trim() : "Activation requirements are not complete.";
-      if (message === "Activation requirements are not complete.") {
-        return NextResponse.redirect(appUrl(`${basePath}/contract/${zipId}?info=onboarding-complete`));
-      }
-      throw error;
+    if (!result.activated) {
+      return NextResponse.redirect(appUrl(`${basePath}/contract/${zipId}?info=onboarding-complete`));
     }
-
     return NextResponse.redirect(appUrl(`${basePath}?onboarding=complete`));
   } catch (error) {
     const rawMessage = error instanceof Error ? error.message.trim() : "Onboarding failed.";

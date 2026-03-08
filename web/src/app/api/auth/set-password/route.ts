@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { appUrl } from "@/lib/app-url";
-import { setPasswordFromToken } from "@/lib/password-setup";
+import { callBackendApi } from "@/lib/backend-api";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
@@ -24,8 +24,12 @@ export async function POST(request: Request) {
     return NextResponse.redirect(appUrl(`/set-password?token=${encodeURIComponent(token)}&error=password-mismatch`));
   }
 
-  const user = await setPasswordFromToken(token, password);
-  if (!user) {
+  try {
+    await callBackendApi("auth.set_password", {
+      token,
+      password,
+    });
+  } catch {
     return NextResponse.redirect(appUrl("/set-password?error=invalid-token"));
   }
 

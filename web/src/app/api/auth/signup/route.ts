@@ -1,10 +1,8 @@
-import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { UserRole, Vertical } from "@prisma/client";
 import { z } from "zod";
 import { appUrl } from "@/lib/app-url";
-import { createSession } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { setSessionCookie } from "@/lib/auth";
+import { callBackendApi } from "@/lib/backend-api";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 
 const SignupSchema = z
@@ -27,11 +25,7 @@ const SignupSchema = z
     }
   });
 
-function roleForVertical(vertical: Vertical): UserRole {
-  return vertical === "DEALER" ? "DEALER" : "REALTOR";
-}
-
-function dashboardForRole(role: UserRole) {
+function dashboardForRole(role: "REALTOR" | "DEALER") {
   return role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
 }
 
@@ -58,58 +52,27 @@ export async function POST(request: Request) {
   }
 
   const { fullName, email, phone, companyName, vertical, password } = parsed.data;
-  const role = roleForVertical(vertical);
-
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) {
-    return NextResponse.redirect(appUrl("/signup?error=email-exists"));
-  }
-
-  const passwordHash = await bcrypt.hash(password, 12);
 
   try {
-    const user = await prisma.$transaction(async (tx) => {
-      const createdUser = await tx.user.create({
-        data: {
-          fullName,
-          email,
-          phone,
-          companyName: companyName || null,
-          passwordHash,
-          role,
-        },
-      });
-
-      await tx.client.create({
-        data: {
-          userId: createdUser.id,
-          vertical,
-          leadRoutingEmail: email,
-          leadRoutingPhone: phone,
-          preferredContactMethod: "EMAIL",
-          onboardingStatus: "PENDING",
-          serviceState: "NC",
-        },
-      });
-
-      await tx.auditLog.create({
-        data: {
-          actorUserId: createdUser.id,
-          action: "auth.signup",
-          entityType: "user",
-          entityId: createdUser.id,
-          metadata: {
-            vertical,
-          },
-        },
-      });
-
-      return createdUser;
+    const result = await callBackendApi<{
+      ok: boolean;
+      role: "REALTOR" | "DEALER";
+      session: { token: string; expiresAt: string };
+    }>("auth.signup", {
+      fullName,
+      email,
+      phone,
+      companyName,
+      vertical,
+      password,
     });
-
-    await createSession(user.id);
-    return NextResponse.redirect(appUrl(`${dashboardForRole(user.role)}?welcome=1`));
-  } catch {
-    return NextResponse.redirect(appUrl("/signup?error=create-failed"));
+    await setSessionCookie(result.session.token, result.session.expiresAt);
+    return NextResponse.redirect(appUrl(`${dashboardForRole(result.role)}?welcome=1`));
+  } catch (error) {
+    const message = error instanceof Error ? error.message.toLowerCase() : "";
+    if (message.includes("already exists")) {
+      return NextResponse.redirect(appUrl("/signup?error=email-exists"));
+    }
+    return NextResponse.redirect(appUrl(`/signup?error=${encodeURIComponent("create-failed")}`));
   }
 }

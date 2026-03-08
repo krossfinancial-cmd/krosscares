@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { loginWithPassword } from "@/lib/auth";
+import { setSessionCookie } from "@/lib/auth";
+import { callBackendApi } from "@/lib/backend-api";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 import { appUrl } from "@/lib/app-url";
 
@@ -13,12 +14,20 @@ export async function POST(request: Request) {
   const email = String(formData.get("email") || "");
   const password = String(formData.get("password") || "");
 
-  const result = await loginWithPassword(email, password);
-  if (!result.ok) {
+  try {
+    const result = await callBackendApi<{
+      ok: boolean;
+      role: "ADMIN" | "REALTOR" | "DEALER";
+      session: { token: string; expiresAt: string };
+    }>("auth.login", {
+      email,
+      password,
+    });
+    await setSessionCookie(result.session.token, result.session.expiresAt);
+    const target =
+      result.role === "ADMIN" ? "/dashboard/admin" : result.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
+    return NextResponse.redirect(appUrl(target));
+  } catch {
     return NextResponse.redirect(appUrl("/login?error=invalid"));
   }
-
-  const target =
-    result.role === "ADMIN" ? "/dashboard/admin" : result.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
-  return NextResponse.redirect(appUrl(target));
 }
