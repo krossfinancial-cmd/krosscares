@@ -1,21 +1,51 @@
 import { getDashboardMetrics } from "@/lib/queries";
 import { formatCurrency } from "@/lib/format";
+import { isDatabaseUnavailableError } from "@/lib/database-errors";
 import { prisma } from "@/lib/prisma";
 
-export default async function AdminOverviewPage() {
-  const metrics = await getDashboardMetrics();
-  const recentPayments = await prisma.payment.findMany({
+async function getRecentPaidPayments() {
+  return prisma.payment.findMany({
     where: { status: "PAID" },
     include: { zip: true, client: { include: { user: true } } },
     orderBy: { paidAt: "desc" },
     take: 5,
   });
+}
+
+export default async function AdminOverviewPage() {
+  let inventoryUnavailable = false;
+  let metrics = {
+    totalZips: 0,
+    soldZips: 0,
+    reservedZips: 0,
+    availableZips: 0,
+    totalRevenueCents: 0,
+    upcomingRenewals: 0,
+  };
+  let recentPayments: Awaited<ReturnType<typeof getRecentPaidPayments>> = [];
+
+  try {
+    metrics = await getDashboardMetrics();
+    recentPayments = await getRecentPaidPayments();
+  } catch (error) {
+    if (!isDatabaseUnavailableError(error)) {
+      throw error;
+    }
+
+    inventoryUnavailable = true;
+    console.error("Admin dashboard metrics query failed because the database is unavailable.", error);
+  }
 
   return (
     <div className="space-y-5">
       <div className="card p-6">
         <h1 className="text-2xl font-bold text-blue-950">Admin Dashboard</h1>
         <p className="mt-2 text-sm text-blue-900/70">Marketplace performance and lifecycle operations.</p>
+        {inventoryUnavailable ? (
+          <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
+            Dashboard metrics are temporarily unavailable while the database reconnects. Please try again shortly.
+          </div>
+        ) : null}
       </div>
 
       <div className="grid gap-4 md:grid-cols-5">
@@ -46,6 +76,13 @@ export default async function AdminOverviewPage() {
                 <td className="py-3 text-blue-900">{payment.paidAt?.toDateString() || "-"}</td>
               </tr>
             ))}
+            {!recentPayments.length ? (
+              <tr className="border-t border-blue-100">
+                <td colSpan={4} className="py-6 text-center text-blue-700">
+                  {inventoryUnavailable ? "Recent purchases are temporarily unavailable." : "No paid purchases yet."}
+                </td>
+              </tr>
+            ) : null}
           </tbody>
         </table>
       </div>
