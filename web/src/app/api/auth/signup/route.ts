@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { appUrl } from "@/lib/app-url";
-import { setSessionCookie } from "@/lib/auth";
+import { setSessionCookie, setSessionIdentityCookie } from "@/lib/auth";
 import { callBackendApi } from "@/lib/backend-api";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 
@@ -67,6 +67,13 @@ export async function POST(request: Request) {
       password,
     });
     await setSessionCookie(result.session.token, result.session.expiresAt);
+    await setSessionIdentityCookie(
+      {
+        email,
+        role: result.role,
+      },
+      result.session.expiresAt,
+    );
     return NextResponse.redirect(appUrl(`${dashboardForRole(result.role)}?welcome=1`));
   } catch (error) {
     const message = error instanceof Error ? error.message.toLowerCase() : "";

@@ -1,5 +1,7 @@
 import { AnimatedCard } from "@/components/animated-card";
 import { LandingHero } from "@/components/landing-hero";
+import { Check, X } from "lucide-react";
+import type { ReactNode } from "react";
 import { RealtorProfitCalculator } from "@/components/realtor-profit-calculator";
 
 const HOW_IT_WORKS = [
@@ -23,29 +25,40 @@ const HOW_IT_WORKS = [
 
 const COMPARISON_ROWS = [
   {
-    category: "Exclusivity",
-    traditional: "Multiple agents can work the same lead or ZIP at the same time.",
-    territory: "One active partner per ZIP and vertical during the contract term.",
+    feature: "Exclusive Territory",
+    kross: { label: "Yes (1 agent per ZIP)", positive: true },
+    zillow: { label: "No", positive: false },
+    realtor: { label: "No", positive: false },
   },
   {
-    category: "Lead flow",
-    traditional: "You keep buying one lead at a time and hope speed wins.",
-    territory: "Qualified prospects route to your team for the ZIP you control.",
+    feature: "Competition per Lead",
+    kross: { label: "0" },
+    zillow: { label: "5-10 agents" },
+    realtor: { label: "3-6 agents" },
   },
   {
-    category: "Competition",
-    traditional: "You are competing against other buyers for the same demand.",
-    territory: "You secure the market instead of chasing the same shoppers.",
+    feature: "Price Predictability",
+    kross: { label: "Fixed yearly", positive: true },
+    zillow: { label: "Bidding system", positive: false },
+    realtor: { label: "Variable", positive: false },
   },
   {
-    category: "Cost model",
-    traditional: "Variable spend can rise as competition increases.",
-    territory: "Simple annual territory pricing with predictable renewal timing.",
+    feature: "Lead Ownership",
+    kross: { label: "Your territory", positive: true },
+    zillow: { label: "Shared leads", positive: false },
+    realtor: { label: "Shared leads", positive: false },
   },
   {
-    category: "Brand position",
-    traditional: "You rent attention inside someone else's marketplace.",
-    territory: "You become the designated local recipient for your territory.",
+    feature: "Relationship Building",
+    kross: { label: "Yes", positive: true },
+    zillow: { label: "Lead race", positive: false },
+    realtor: { label: "Lead race", positive: false },
+  },
+  {
+    feature: "Cost Per Month",
+    kross: { label: "$12-$25" },
+    zillow: { label: "$500-$3,000" },
+    realtor: { label: "$300-$1,500" },
   },
 ];
 
@@ -79,27 +92,59 @@ export default function Home() {
           Why compete for leads, when you can own the territory
         </h2>
         <p className="mt-3 max-w-3xl text-sm text-blue-900/75 md:text-base">
-          Traditional lead marketplaces sell access. Territories give your team a defined lane with exclusive ZIP coverage.
+          Compare Kross Concepts against the platforms agents already know and see the difference between buying leads and
+          controlling a market.
         </p>
-        <div className="mt-6 overflow-x-auto">
-          <table className="min-w-full border-separate border-spacing-0 overflow-hidden rounded-2xl border border-blue-100 bg-white">
+        <div className="mt-6 space-y-4 md:hidden">
+          {COMPARISON_ROWS.map((row) => (
+            <AnimatedCard key={row.feature} className="overflow-hidden p-0">
+              <div className="border-b border-blue-100 bg-blue-50/70 px-5 py-4">
+                <h3 className="text-lg font-semibold text-blue-950">{row.feature}</h3>
+              </div>
+              <div className="grid gap-3 p-5">
+                <ComparisonMobileRow label="Kross Concepts" emphasize>
+                  <ComparisonCell {...row.kross} />
+                </ComparisonMobileRow>
+                <ComparisonMobileRow label="Zillow">
+                  <ComparisonCell {...row.zillow} />
+                </ComparisonMobileRow>
+                <ComparisonMobileRow label="Realtor.com">
+                  <ComparisonCell {...row.realtor} />
+                </ComparisonMobileRow>
+              </div>
+            </AnimatedCard>
+          ))}
+        </div>
+        <div className="mt-6 hidden overflow-x-auto rounded-[28px] border border-blue-100 bg-gradient-to-b from-white to-blue-50/40 shadow-[0_18px_36px_rgba(13,37,91,0.07)] md:block">
+          <table className="min-w-[980px] border-separate border-spacing-0">
             <thead>
               <tr className="bg-blue-50/80">
-                <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-blue-700">Category</th>
-                <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-blue-700">
-                  Traditional lead platforms
+                <th className="px-6 py-5 text-left text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">Feature</th>
+                <th className="bg-blue-600/5 px-6 py-5 text-left text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
+                  Kross Concepts
                 </th>
-                <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-blue-700">
-                  Kross Concepts territories
-                </th>
+                <th className="px-6 py-5 text-left text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">Zillow</th>
+                <th className="px-6 py-5 text-left text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">Realtor.com</th>
               </tr>
             </thead>
             <tbody>
-              {COMPARISON_ROWS.map((row, index) => (
-                <tr key={row.category} className={index % 2 === 0 ? "bg-white" : "bg-blue-50/30"}>
-                  <td className="border-t border-blue-100 px-4 py-4 text-sm font-semibold text-blue-950">{row.category}</td>
-                  <td className="border-t border-blue-100 px-4 py-4 text-sm text-blue-900/75">{row.traditional}</td>
-                  <td className="border-t border-blue-100 px-4 py-4 text-sm text-blue-900/75">{row.territory}</td>
+              {COMPARISON_ROWS.map((row) => (
+                <tr
+                  key={row.feature}
+                  className="group transition-all duration-200 hover:bg-blue-50/80 hover:shadow-[inset_0_1px_0_rgba(18,88,255,0.08)]"
+                >
+                  <td className="border-t border-blue-100 px-6 py-5 text-base font-semibold text-blue-950 transition-transform duration-200 group-hover:translate-x-0.5">
+                    {row.feature}
+                  </td>
+                  <td className="border-t border-blue-100 bg-blue-600/[0.03] px-6 py-5 text-sm text-blue-900/75 transition-colors duration-200 group-hover:bg-blue-600/[0.06]">
+                    <ComparisonCell {...row.kross} emphasize />
+                  </td>
+                  <td className="border-t border-blue-100 px-6 py-5 text-sm text-blue-900/75">
+                    <ComparisonCell {...row.zillow} />
+                  </td>
+                  <td className="border-t border-blue-100 px-6 py-5 text-sm text-blue-900/75">
+                    <ComparisonCell {...row.realtor} />
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -217,6 +262,49 @@ export default function Home() {
           </a>
         </div>
       </section>
+    </div>
+  );
+}
+
+function ComparisonCell({
+  label,
+  positive,
+  emphasize = false,
+}: {
+  label: string;
+  positive?: boolean;
+  emphasize?: boolean;
+}) {
+  if (positive === undefined) {
+    return <span className={`text-base ${emphasize ? "font-semibold text-blue-950" : "text-blue-950"}`}>{label}</span>;
+  }
+
+  const Icon = positive ? Check : X;
+  const iconClassName = positive ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500";
+
+  return (
+    <span className={`inline-flex items-center gap-2 text-base text-blue-950 transition-transform duration-200 ${emphasize ? "font-semibold" : ""}`}>
+      <span className={`inline-flex h-7 w-7 items-center justify-center rounded-md shadow-sm ${iconClassName}`}>
+        <Icon size={18} strokeWidth={2.5} />
+      </span>
+      <span>{label}</span>
+    </span>
+  );
+}
+
+function ComparisonMobileRow({
+  label,
+  emphasize = false,
+  children,
+}: {
+  label: string;
+  emphasize?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <div className={`rounded-2xl border px-4 py-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${emphasize ? "border-blue-200 bg-blue-50/70" : "border-blue-100 bg-white/90"}`}>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-600">{label}</p>
+      <div className="mt-2">{children}</div>
     </div>
   );
 }

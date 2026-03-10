@@ -6,7 +6,13 @@ import { UserRole } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 const COOKIE_NAME = "kc_session";
+const IDENTITY_COOKIE_NAME = "kc_session_identity";
 const SESSION_DAYS = 30;
+
+export type SessionIdentity = {
+  email: string;
+  role: UserRole;
+};
 
 function homeForRole(role: UserRole) {
   if (role === "ADMIN") return "/dashboard/admin";
@@ -30,9 +36,43 @@ export async function setSessionCookie(token: string, expiresAt: Date | string) 
   });
 }
 
+export async function setSessionIdentityCookie(identity: SessionIdentity, expiresAt: Date | string) {
+  const expiry = typeof expiresAt === "string" ? new Date(expiresAt) : expiresAt;
+  const store = await cookies();
+  const payload = Buffer.from(JSON.stringify(identity), "utf8").toString("base64url");
+
+  store.set(IDENTITY_COOKIE_NAME, payload, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    expires: expiry,
+    path: "/",
+  });
+}
+
 export async function getSessionToken() {
   const store = await cookies();
   return store.get(COOKIE_NAME)?.value || null;
+}
+
+export async function getSessionIdentity() {
+  const store = await cookies();
+  const rawValue = store.get(IDENTITY_COOKIE_NAME)?.value;
+  if (!rawValue) return null;
+
+  try {
+    const decoded = Buffer.from(rawValue, "base64url").toString("utf8");
+    const parsed = JSON.parse(decoded) as Partial<SessionIdentity>;
+    if (!parsed.email || !parsed.role) return null;
+    if (parsed.role !== "ADMIN" && parsed.role !== "REALTOR" && parsed.role !== "DEALER") return null;
+
+    return {
+      email: parsed.email,
+      role: parsed.role,
+    } satisfies SessionIdentity;
+  } catch {
+    return null;
+  }
 }
 
 export async function clearSessionCookie() {
@@ -45,6 +85,14 @@ export async function clearSessionCookie() {
     path: "/",
   });
   store.delete(COOKIE_NAME);
+  store.set(IDENTITY_COOKIE_NAME, "", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    expires: new Date(0),
+    path: "/",
+  });
+  store.delete(IDENTITY_COOKIE_NAME);
 }
 
 export async function createSession(userId: string) {

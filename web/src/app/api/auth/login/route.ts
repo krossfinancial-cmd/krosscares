@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { setSessionCookie } from "@/lib/auth";
+import { setSessionCookie, setSessionIdentityCookie } from "@/lib/auth";
 import { callBackendApi } from "@/lib/backend-api";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 import { appUrl } from "@/lib/app-url";
@@ -24,6 +24,13 @@ export async function POST(request: Request) {
       password,
     });
     await setSessionCookie(result.session.token, result.session.expiresAt);
+    await setSessionIdentityCookie(
+      {
+        email: email.toLowerCase().trim(),
+        role: result.role,
+      },
+      result.session.expiresAt,
+    );
     const target =
       result.role === "ADMIN" ? "/dashboard/admin" : result.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
     return NextResponse.redirect(appUrl(target));

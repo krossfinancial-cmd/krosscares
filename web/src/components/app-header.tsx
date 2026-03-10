@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { LayoutDashboard, Search, ShieldCheck } from "lucide-react";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, getSessionIdentity, getSessionToken } from "@/lib/auth";
 import { BrandLogo } from "@/components/brand-logo";
 import { isDatabaseUnavailableError } from "@/lib/database-errors";
 import { LogoutButton } from "@/components/logout-button";
 
 export async function AppHeader() {
   let user: Awaited<ReturnType<typeof getCurrentUser>> = null;
+  const sessionToken = await getSessionToken();
+  const sessionIdentity = await getSessionIdentity();
 
   try {
     user = await getCurrentUser();
@@ -17,6 +19,12 @@ export async function AppHeader() {
 
     console.error("Header auth lookup failed because the database is unavailable.", error);
   }
+
+  const isAuthenticated = Boolean(user || sessionToken);
+  const effectiveRole = user?.role || sessionIdentity?.role || null;
+  const effectiveEmail = user?.email || sessionIdentity?.email || "Signed in";
+  const dashboardHref =
+    effectiveRole === "ADMIN" ? "/dashboard/admin" : effectiveRole === "DEALER" ? "/dashboard/dealer" : effectiveRole === "REALTOR" ? "/dashboard/realtor" : "/dashboard";
 
   return (
     <header className="glass sticky top-0 z-50 border-b border-blue-100">
@@ -29,7 +37,7 @@ export async function AppHeader() {
         </div>
 
         <nav className="hidden items-center gap-4 text-sm font-medium text-blue-900 md:flex">
-          {!user ? (
+          {!isAuthenticated ? (
             <>
               <a href="#how-it-works" className="rounded-lg px-3 py-2 hover:bg-blue-50">
                 How It Works
@@ -50,11 +58,8 @@ export async function AppHeader() {
               Marketplace
             </Link>
           )}
-          {user ? (
-            <Link
-              href={user.role === "ADMIN" ? "/dashboard/admin" : user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor"}
-              className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-blue-50"
-            >
+          {isAuthenticated ? (
+            <Link href={dashboardHref} className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-blue-50">
               <LayoutDashboard size={15} />
               Dashboard
             </Link>
@@ -62,7 +67,7 @@ export async function AppHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
-          {!user && (
+          {!isAuthenticated && (
             <>
               <Link href="/marketplace" className="primary-btn hidden text-sm md:inline-flex">
                 Check ZIP Availability
@@ -75,11 +80,11 @@ export async function AppHeader() {
               </Link>
             </>
           )}
-          {user && (
+          {isAuthenticated && (
             <>
               <span className="hidden items-center gap-2 rounded-lg bg-blue-100 px-3 py-2 text-xs font-semibold text-blue-800 md:flex">
-                {user.role === "ADMIN" ? <ShieldCheck size={14} /> : null}
-                {user.email}
+                {effectiveRole === "ADMIN" ? <ShieldCheck size={14} /> : null}
+                {effectiveEmail}
               </span>
               <LogoutButton />
             </>
