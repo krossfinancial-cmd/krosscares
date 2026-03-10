@@ -1,5 +1,6 @@
 import { AnimatedCard } from "@/components/animated-card";
 import { LandingHero } from "@/components/landing-hero";
+import { RealtorProfitCalculator } from "@/components/realtor-profit-calculator";
 
 const HOW_IT_WORKS = [
   {
@@ -120,6 +121,8 @@ export default function Home() {
         </div>
       </section>
 
+      <RealtorProfitCalculator />
+
       <section id="benefits" className="card p-7 md:p-8">
         <h2 className="text-2xl font-bold text-blue-950">Why Teams Buy Territories</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
@@ -155,17 +158,17 @@ export default function Home() {
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           <AnimatedCard className="p-5">
             <p className="text-sm font-semibold text-blue-700">Rural</p>
-            <p className="mt-2 text-3xl font-bold text-blue-950">$550</p>
+            <p className="mt-2 text-3xl font-bold text-blue-950">$520</p>
             <p className="text-sm text-blue-900/70">per year</p>
           </AnimatedCard>
           <AnimatedCard className="p-5">
             <p className="text-sm font-semibold text-blue-700">Standard</p>
-            <p className="mt-2 text-3xl font-bold text-blue-950">$1,000</p>
+            <p className="mt-2 text-3xl font-bold text-blue-950">$998</p>
             <p className="text-sm text-blue-900/70">per year</p>
           </AnimatedCard>
           <AnimatedCard className="p-5">
             <p className="text-sm font-semibold text-blue-700">Premium</p>
-            <p className="mt-2 text-3xl font-bold text-blue-950">$1,200</p>
+            <p className="mt-2 text-3xl font-bold text-blue-950">$1,120</p>
             <p className="text-sm text-blue-900/70">per year</p>
           </AnimatedCard>
         </div>
