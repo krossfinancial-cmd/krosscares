@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kross Cares | ZIP Territory Marketplace",
+  title: "Kross Concepts | ZIP Territory Marketplace",
   description: "Exclusive ZIP territory sales for realtor lead pipelines.",
 };
 
@@ -25,9 +25,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <AppHeader />
-        <main className="mx-auto min-h-[calc(100vh-74px)] w-full max-w-7xl px-6 py-10">{children}</main>
+      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
+        <div className="flex min-h-screen flex-col">
+          <AppHeader />
+          <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-10">{children}</main>
+          <footer className="border-t border-blue-100 bg-white/70">
+            <div className="mx-auto flex w-full max-w-7xl items-center justify-center px-6 py-5 text-sm text-blue-900/75">
+              <a
+                href="/terms-and-conditions.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-blue-700 hover:text-blue-900 hover:underline"
+              >
+                Terms and Conditions
+              </a>
+            </div>
+          </footer>
+        </div>
       </body>
     </html>
   );

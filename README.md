@@ -1,4 +1,4 @@
-# Kross Cares Territory SaaS (Local-First)
+# Kross Concepts Territory SaaS (Local-First)
 
 Premium blue/white Next.js SaaS for exclusive ZIP territory sales and lifecycle operations.
 

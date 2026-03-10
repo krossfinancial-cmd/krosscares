@@ -14,7 +14,7 @@ export async function AppHeader() {
             <Building2 size={18} />
           </div>
           <Link href="/" className="text-lg font-semibold text-blue-950">
-            Kross Cares Territories
+            Kross Concepts Territories
           </Link>
         </div>
 

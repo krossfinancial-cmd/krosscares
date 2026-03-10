@@ -40,7 +40,7 @@ async function main() {
       passwordHash: adminPassword,
       role: UserRole.ADMIN,
       fullName: "Platform Admin",
-      companyName: "Kross Cares",
+      companyName: "Kross Concepts",
       phone: "919-555-0101",
     },
     create: {
@@ -48,7 +48,7 @@ async function main() {
       passwordHash: adminPassword,
       role: UserRole.ADMIN,
       fullName: "Platform Admin",
-      companyName: "Kross Cares",
+      companyName: "Kross Concepts",
       phone: "919-555-0101",
     },
   });

@@ -92,7 +92,7 @@ export async function POST(request: Request) {
     try {
       await sendEmail(
         result.invite.email,
-        "Set your Kross Cares Territories password",
+        "Set your Kross Concepts Territories password",
         [
           `Hi ${result.invite.fullName},`,
           "",
