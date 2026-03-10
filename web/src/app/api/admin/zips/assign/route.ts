@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   }
 
   if (!zipId || !clientId) {
-    return NextResponse.redirect(appUrl("/dashboard/admin/zips?error=missing-input"));
+    return NextResponse.redirect(appUrl("/dashboard/admin/inventory-manager?error=missing-input"));
   }
 
   try {
@@ -25,9 +25,9 @@ export async function POST(request: Request) {
       clientId,
       actorUserId: user.id,
     });
-    return NextResponse.redirect(appUrl("/dashboard/admin/zips?assigned=1"));
+    return NextResponse.redirect(appUrl("/dashboard/admin/inventory-manager?assigned=1"));
   } catch (error) {
     const message = error instanceof Error ? error.message : "Assignment failed.";
-    return NextResponse.redirect(appUrl(`/dashboard/admin/zips?error=${encodeURIComponent(message)}`));
+    return NextResponse.redirect(appUrl(`/dashboard/admin/inventory-manager?error=${encodeURIComponent(message)}`));
   }
 }

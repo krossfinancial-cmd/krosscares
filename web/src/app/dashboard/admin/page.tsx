@@ -95,7 +95,7 @@ export default async function AdminOverviewPage() {
                 automatic start dates.
               </p>
             </div>
-            <Link href="/dashboard/admin/territory-tracker" className="primary-btn w-fit text-sm">
+            <Link href="/dashboard/admin/zips" className="primary-btn w-fit text-sm">
               Open Tracker
             </Link>
           </div>

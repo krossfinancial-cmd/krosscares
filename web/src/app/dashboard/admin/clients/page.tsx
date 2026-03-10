@@ -21,7 +21,7 @@ export default async function AdminClientsPage({ searchParams }: { searchParams:
     <div className="space-y-5">
       <div className="card p-6">
         <h1 className="text-xl font-bold text-blue-950">Client Management</h1>
-        <p className="mt-1 text-sm text-blue-900/70">Create clients here, then assign them from ZIP Inventory.</p>
+        <p className="mt-1 text-sm text-blue-900/70">Create clients here, then assign them from Inventory Manager.</p>
 
         {params.created === "1" ? (
           <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">

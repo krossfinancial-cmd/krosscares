@@ -105,11 +105,11 @@ export async function POST(request: Request) {
       );
     } catch {
       return NextResponse.redirect(
-        appUrl("/dashboard/admin/zips?assigned=1&error=Assigned%20but%20invite%20email%20failed%20to%20send."),
+        appUrl("/dashboard/admin/inventory-manager?assigned=1&error=Assigned%20but%20invite%20email%20failed%20to%20send."),
       );
     }
 
-    return NextResponse.redirect(appUrl("/dashboard/admin/zips?assigned=1&invited=1"));
+    return NextResponse.redirect(appUrl("/dashboard/admin/inventory-manager?assigned=1&invited=1"));
   } catch (error) {
     const message = error instanceof Error ? error.message : "Enrollment failed.";
     return NextResponse.redirect(appUrl(`/dashboard/admin/enroll/${rawZipId}?error=${encodeURIComponent(message)}`));

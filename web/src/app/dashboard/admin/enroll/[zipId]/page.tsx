@@ -27,7 +27,7 @@ export default async function AdminEnrollPage({
 
   const zip = await prisma.zipInventory.findUnique({ where: { id: zipId } });
   if (!zip) {
-    redirect("/dashboard/admin/zips?error=zip-not-found");
+    redirect("/dashboard/admin/inventory-manager?error=zip-not-found");
   }
 
   return (
@@ -39,8 +39,8 @@ export default async function AdminEnrollPage({
             ZIP {zip.zipCode} · {zip.city}, {zip.state} ({zip.vertical})
           </p>
         </div>
-        <Link href="/dashboard/admin/zips" className="secondary-btn text-sm">
-          Back to ZIP Inventory
+        <Link href="/dashboard/admin/inventory-manager" className="secondary-btn text-sm">
+          Back to Inventory Manager
         </Link>
       </div>
 

@@ -160,7 +160,7 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
                         Sign in to claim
                       </a>
                     ) : user.role === "ADMIN" ? (
-                      <a href="/dashboard/admin/zips" className="secondary-btn text-xs">
+                      <a href="/dashboard/admin/inventory-manager" className="secondary-btn text-xs">
                         Assign in Admin
                       </a>
                     ) : user.role !== zip.vertical ? (

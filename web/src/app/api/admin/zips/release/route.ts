@@ -14,5 +14,5 @@ export async function POST(request: Request) {
     actorUserId: user.id,
   });
 
-  return NextResponse.redirect(appUrl("/dashboard/admin/zips?released=1"));
+  return NextResponse.redirect(appUrl("/dashboard/admin/inventory-manager?released=1"));
 }

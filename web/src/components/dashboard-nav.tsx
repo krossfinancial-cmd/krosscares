@@ -9,8 +9,8 @@ export function DashboardNav({ role }: DashboardNavProps) {
     role === "ADMIN"
       ? [
           { href: "/dashboard/admin", label: "Overview" },
-          { href: "/dashboard/admin/territory-tracker", label: "Territory Tracker" },
-          { href: "/dashboard/admin/zips", label: "ZIP Inventory" },
+          { href: "/dashboard/admin/zips", label: "Territory Tracker" },
+          { href: "/dashboard/admin/inventory-manager", label: "Inventory Manager" },
           { href: "/dashboard/admin/clients", label: "Clients" },
           { href: "/dashboard/admin/renewals", label: "Renewals" },
         ]
