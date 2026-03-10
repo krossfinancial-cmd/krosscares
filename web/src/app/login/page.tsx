@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
+import { isDatabaseUnavailableError } from "@/lib/database-errors";
 
 type SearchParams = Promise<{
   error?: string;
@@ -15,7 +16,18 @@ function errorMessage(code?: string) {
 }
 
 export default async function LoginPage({ searchParams }: { searchParams: SearchParams }) {
-  const user = await getCurrentUser();
+  let user: Awaited<ReturnType<typeof getCurrentUser>> = null;
+
+  try {
+    user = await getCurrentUser();
+  } catch (error) {
+    if (!isDatabaseUnavailableError(error)) {
+      throw error;
+    }
+
+    console.error("Login page auth lookup failed because the database is unavailable.", error);
+  }
+
   if (user) {
     redirect(user.role === "ADMIN" ? "/dashboard/admin" : user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor");
   }
