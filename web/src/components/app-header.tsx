@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Building2, LayoutDashboard, Search, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, Search, ShieldCheck } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
+import { BrandLogo } from "@/components/brand-logo";
 import { isDatabaseUnavailableError } from "@/lib/database-errors";
 import { LogoutButton } from "@/components/logout-button";
 
@@ -20,12 +21,10 @@ export async function AppHeader() {
   return (
     <header className="glass sticky top-0 z-50 border-b border-blue-100">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-3">
-          <div className="rounded-xl bg-blue-600 p-2 text-white">
-            <Building2 size={18} />
-          </div>
-          <Link href="/" className="text-lg font-semibold text-blue-950">
-            Kross Concepts Territories
+        <div className="flex min-w-0 items-center">
+          <Link href="/" className="flex items-center" aria-label="Kross Concepts home">
+            <BrandLogo variant="mark" className="h-11 w-auto md:hidden" priority />
+            <BrandLogo variant="full" className="hidden h-14 w-auto md:block" priority />
           </Link>
         </div>
 

@@ -16,6 +16,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Kross Concepts | ZIP Territory Marketplace",
   description: "Exclusive ZIP territory sales for realtor lead pipelines.",
+  icons: {
+    apple: "/kc-mark.svg",
+    icon: "/kc-mark.svg",
+    shortcut: "/kc-mark.svg",
+  },
 };
 
 export default function RootLayout({

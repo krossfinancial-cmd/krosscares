@@ -20,6 +20,34 @@ const HOW_IT_WORKS = [
   },
 ];
 
+const COMPARISON_ROWS = [
+  {
+    category: "Exclusivity",
+    traditional: "Multiple agents can work the same lead or ZIP at the same time.",
+    territory: "One active partner per ZIP and vertical during the contract term.",
+  },
+  {
+    category: "Lead flow",
+    traditional: "You keep buying one lead at a time and hope speed wins.",
+    territory: "Qualified prospects route to your team for the ZIP you control.",
+  },
+  {
+    category: "Competition",
+    traditional: "You are competing against other buyers for the same demand.",
+    territory: "You secure the market instead of chasing the same shoppers.",
+  },
+  {
+    category: "Cost model",
+    traditional: "Variable spend can rise as competition increases.",
+    territory: "Simple annual territory pricing with predictable renewal timing.",
+  },
+  {
+    category: "Brand position",
+    traditional: "You rent attention inside someone else's marketplace.",
+    territory: "You become the designated local recipient for your territory.",
+  },
+];
+
 const BENEFITS = [
   {
     title: "True exclusivity",
@@ -43,6 +71,40 @@ export default function Home() {
   return (
     <div className="space-y-8 pb-10">
       <LandingHero />
+
+      <section className="card p-7 md:p-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">Comparison</p>
+        <h2 className="mt-3 max-w-3xl text-2xl font-bold text-blue-950 md:text-3xl">
+          Why compete for leads, when you can own the territory
+        </h2>
+        <p className="mt-3 max-w-3xl text-sm text-blue-900/75 md:text-base">
+          Traditional lead marketplaces sell access. Territories give your team a defined lane with exclusive ZIP coverage.
+        </p>
+        <div className="mt-6 overflow-x-auto">
+          <table className="min-w-full border-separate border-spacing-0 overflow-hidden rounded-2xl border border-blue-100 bg-white">
+            <thead>
+              <tr className="bg-blue-50/80">
+                <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-blue-700">Category</th>
+                <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-blue-700">
+                  Traditional lead platforms
+                </th>
+                <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-blue-700">
+                  Kross Concepts territories
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMPARISON_ROWS.map((row, index) => (
+                <tr key={row.category} className={index % 2 === 0 ? "bg-white" : "bg-blue-50/30"}>
+                  <td className="border-t border-blue-100 px-4 py-4 text-sm font-semibold text-blue-950">{row.category}</td>
+                  <td className="border-t border-blue-100 px-4 py-4 text-sm text-blue-900/75">{row.traditional}</td>
+                  <td className="border-t border-blue-100 px-4 py-4 text-sm text-blue-900/75">{row.territory}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       <section id="how-it-works" className="card p-7 md:p-8">
         <h2 className="text-2xl font-bold text-blue-950">How It Works</h2>

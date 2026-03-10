@@ -1,0 +1,39 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="kcMarkGold" x1="24" y1="170" x2="227" y2="95" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#A86B00"/>
+      <stop offset="0.22" stop-color="#D6A114"/>
+      <stop offset="0.5" stop-color="#FFF18A"/>
+      <stop offset="0.72" stop-color="#D89E12"/>
+      <stop offset="1" stop-color="#8A5800"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="48" fill="white"/>
+  <text
+    x="22"
+    y="157"
+    fill="#050505"
+    font-family="Arial Black, Helvetica, Arial, sans-serif"
+    font-size="142"
+    font-weight="900"
+    letter-spacing="-10"
+  >
+    KC
+  </text>
+  <path
+    d="M24 160C67 200 136 205 189 191C212 185 226 177 236 165"
+    stroke="url(#kcMarkGold)"
+    stroke-width="14"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path d="M214 170L244 160L227 186L223 175L214 170Z" fill="url(#kcMarkGold)"/>
+  <path
+    d="M212 169L244 160L228 183"
+    stroke="#A37000"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.55"
+  />
+</svg>

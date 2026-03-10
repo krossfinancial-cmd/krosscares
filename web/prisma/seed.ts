@@ -1,7 +1,27 @@
-import { PrismaClient, UserRole, Vertical, ZipStatus, ZipTier } from "@prisma/client";
+import {
+  PrismaClient,
+  TerritoryTrackerStatus,
+  TerritoryTrackerTier,
+  UserRole,
+  Vertical,
+  ZipStatus,
+  ZipTier,
+} from "@prisma/client";
 import bcrypt from "bcryptjs";
+import territoryTrackerSeedData from "../src/data/territory-tracker-realtors.json";
 
 const prisma = new PrismaClient();
+
+type TerritoryTrackerSeedRow = {
+  zipCode: string;
+  city: string;
+  county: string;
+  population: number;
+  density: number;
+  tier: TerritoryTrackerTier;
+  status: TerritoryTrackerStatus;
+  statusDate: string | null;
+};
 
 const SAMPLE_ZIPS = [
   { zipCode: "28207", city: "Charlotte", county: "Mecklenburg", tier: ZipTier.PREMIUM, price: 150000 },
@@ -29,9 +49,28 @@ async function main() {
     await prisma.waitlist.deleteMany();
     await prisma.renewalReminder.deleteMany();
     await prisma.auditLog.deleteMany();
+    await prisma.territoryTrackerEntry.deleteMany();
     await prisma.zipInventory.deleteMany();
     await prisma.client.deleteMany();
     await prisma.user.deleteMany();
+  }
+
+  const existingTerritoryTrackerEntries = await prisma.territoryTrackerEntry.count();
+  if (existingTerritoryTrackerEntries < territoryTrackerSeedData.length) {
+    const trackerRows = territoryTrackerSeedData as TerritoryTrackerSeedRow[];
+    await prisma.territoryTrackerEntry.createMany({
+      data: trackerRows.map((entry) => ({
+        zipCode: entry.zipCode,
+        city: entry.city,
+        county: entry.county,
+        population: entry.population,
+        density: entry.density,
+        tier: entry.tier,
+        status: entry.status,
+        statusDate: entry.statusDate ? new Date(entry.statusDate) : null,
+      })),
+      skipDuplicates: true,
+    });
   }
 
   const adminUser = await prisma.user.upsert({

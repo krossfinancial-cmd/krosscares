@@ -1,0 +1,8082 @@
+[
+  {
+    "zipCode": "27006",
+    "city": "Advance",
+    "county": "Davie",
+    "population": 14150,
+    "density": 85.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27007",
+    "city": "Ararat",
+    "county": "Surry",
+    "population": 2162,
+    "density": 39.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27009",
+    "city": "Belews Creek",
+    "county": "Forsyth",
+    "population": 2647,
+    "density": 64.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27011",
+    "city": "Boonville",
+    "county": "Yadkin",
+    "population": 5497,
+    "density": 39.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27012",
+    "city": "Clemmons",
+    "county": "Forsyth",
+    "population": 25461,
+    "density": 234.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27013",
+    "city": "Cleveland",
+    "county": "Rowan",
+    "population": 6057,
+    "density": 31.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27014",
+    "city": "Cooleemee",
+    "county": "Davie",
+    "population": 840,
+    "density": 518.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27016",
+    "city": "Danbury",
+    "county": "Stokes",
+    "population": 1936,
+    "density": 18.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27017",
+    "city": "Dobson",
+    "county": "Surry",
+    "population": 9597,
+    "density": 34.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27018",
+    "city": "East Bend",
+    "county": "Yadkin",
+    "population": 7655,
+    "density": 36.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27019",
+    "city": "Germanton",
+    "county": "Stokes",
+    "population": 4032,
+    "density": 44.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27020",
+    "city": "Hamptonville",
+    "county": "Yadkin",
+    "population": 6421,
+    "density": 33.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27021",
+    "city": "King",
+    "county": "Stokes",
+    "population": 18106,
+    "density": 131.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27022",
+    "city": "Lawsonville",
+    "county": "Stokes",
+    "population": 1560,
+    "density": 18.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27023",
+    "city": "Lewisville",
+    "county": "Forsyth",
+    "population": 11873,
+    "density": 165.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27024",
+    "city": "Lowgap",
+    "county": "Surry",
+    "population": 2733,
+    "density": 23.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27025",
+    "city": "Madison",
+    "county": "Rockingham",
+    "population": 11138,
+    "density": 43.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27027",
+    "city": "Mayodan",
+    "county": "Rockingham",
+    "population": 4385,
+    "density": 77.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27028",
+    "city": "Mocksville",
+    "county": "Davie",
+    "population": 25839,
+    "density": 51.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27030",
+    "city": "Mount Airy",
+    "county": "Surry",
+    "population": 38374,
+    "density": 86.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27040",
+    "city": "Pfafftown",
+    "county": "Forsyth",
+    "population": 10893,
+    "density": 157.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27041",
+    "city": "Pilot Mountain",
+    "county": "Surry",
+    "population": 7554,
+    "density": 49.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27042",
+    "city": "Pine Hall",
+    "county": "Stokes",
+    "population": 834,
+    "density": 37.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27043",
+    "city": "Pinnacle",
+    "county": "Stokes",
+    "population": 6615,
+    "density": 35.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27045",
+    "city": "Rural Hall",
+    "county": "Forsyth",
+    "population": 8536,
+    "density": 142.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27046",
+    "city": "Sandy Ridge",
+    "county": "Stokes",
+    "population": 2024,
+    "density": 19.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27047",
+    "city": "Siloam",
+    "county": "Surry",
+    "population": 1191,
+    "density": 22.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27048",
+    "city": "Stoneville",
+    "county": "Rockingham",
+    "population": 8609,
+    "density": 40.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27050",
+    "city": "Tobaccoville",
+    "county": "Forsyth",
+    "population": 3893,
+    "density": 60.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27051",
+    "city": "Walkertown",
+    "county": "Forsyth",
+    "population": 7369,
+    "density": 154.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27052",
+    "city": "Walnut Cove",
+    "county": "Stokes",
+    "population": 10624,
+    "density": 39.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27053",
+    "city": "Westfield",
+    "county": "Stokes",
+    "population": 3007,
+    "density": 17.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27054",
+    "city": "Woodleaf",
+    "county": "Rowan",
+    "population": 2567,
+    "density": 34.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27055",
+    "city": "Yadkinville",
+    "county": "Yadkin",
+    "population": 14200,
+    "density": 51.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27101",
+    "city": "Winston Salem",
+    "county": "Forsyth",
+    "population": 18901,
+    "density": 571.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27103",
+    "city": "Winston Salem",
+    "county": "Forsyth",
+    "population": 33208,
+    "density": 691.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27104",
+    "city": "Winston Salem",
+    "county": "Forsyth",
+    "population": 28485,
+    "density": 892.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27105",
+    "city": "Winston Salem",
+    "county": "Forsyth",
+    "population": 39568,
+    "density": 454.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27106",
+    "city": "Winston Salem",
+    "county": "Forsyth",
+    "population": 45015,
+    "density": 606.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27107",
+    "city": "Winston Salem",
+    "county": "Forsyth",
+    "population": 46963,
+    "density": 278.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27109",
+    "city": "Winston Salem",
+    "county": "Forsyth",
+    "population": 2539,
+    "density": 5058.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27110",
+    "city": "Winston Salem",
+    "county": "Forsyth",
+    "population": 2127,
+    "density": 4353.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27127",
+    "city": "Winston Salem",
+    "county": "Forsyth",
+    "population": 34138,
+    "density": 443.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27201",
+    "city": "Alamance",
+    "county": "Alamance",
+    "population": 63,
+    "density": 184.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27203",
+    "city": "Asheboro",
+    "county": "Randolph",
+    "population": 21108,
+    "density": 372.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27205",
+    "city": "Asheboro",
+    "county": "Randolph",
+    "population": 33216,
+    "density": 57.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27207",
+    "city": "Bear Creek",
+    "county": "Chatham",
+    "population": 3795,
+    "density": 17.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27208",
+    "city": "Bennett",
+    "county": "Chatham",
+    "population": 1676,
+    "density": 16.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27209",
+    "city": "Biscoe",
+    "county": "Montgomery",
+    "population": 3933,
+    "density": 33.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27212",
+    "city": "Blanch",
+    "county": "Caswell",
+    "population": 2580,
+    "density": 20.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27214",
+    "city": "Browns Summit",
+    "county": "Guilford",
+    "population": 10294,
+    "density": 82.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27215",
+    "city": "Burlington",
+    "county": "Alamance",
+    "population": 38807,
+    "density": 240.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27217",
+    "city": "Burlington",
+    "county": "Alamance",
+    "population": 36954,
+    "density": 115.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27229",
+    "city": "Candor",
+    "county": "Montgomery",
+    "population": 3929,
+    "density": 17.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27231",
+    "city": "Cedar Grove",
+    "county": "Orange",
+    "population": 2148,
+    "density": 22.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27233",
+    "city": "Climax",
+    "county": "Randolph",
+    "population": 3390,
+    "density": 53.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27235",
+    "city": "Colfax",
+    "county": "Guilford",
+    "population": 4136,
+    "density": 117.8,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27239",
+    "city": "Denton",
+    "county": "Davidson",
+    "population": 9079,
+    "density": 23.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27242",
+    "city": "Eagle Springs",
+    "county": "Moore",
+    "population": 2100,
+    "density": 15.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27243",
+    "city": "Efland",
+    "county": "Orange",
+    "population": 4337,
+    "density": 42.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27244",
+    "city": "Elon",
+    "county": "Alamance",
+    "population": 14173,
+    "density": 108.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27248",
+    "city": "Franklinville",
+    "county": "Randolph",
+    "population": 4524,
+    "density": 50.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27249",
+    "city": "Gibsonville",
+    "county": "Guilford",
+    "population": 12486,
+    "density": 83.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27252",
+    "city": "Goldston",
+    "county": "Chatham",
+    "population": 2003,
+    "density": 18.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27253",
+    "city": "Graham",
+    "county": "Alamance",
+    "population": 29827,
+    "density": 130.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27258",
+    "city": "Haw River",
+    "county": "Alamance",
+    "population": 6006,
+    "density": 136.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27260",
+    "city": "High Point",
+    "county": "Guilford",
+    "population": 24023,
+    "density": 763.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27262",
+    "city": "High Point",
+    "county": "Guilford",
+    "population": 23934,
+    "density": 702.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27263",
+    "city": "High Point",
+    "county": "Randolph",
+    "population": 21414,
+    "density": 212.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27265",
+    "city": "High Point",
+    "county": "Guilford",
+    "population": 46690,
+    "density": 428.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27278",
+    "city": "Hillsborough",
+    "county": "Orange",
+    "population": 24286,
+    "density": 92.5,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27281",
+    "city": "Jackson Springs",
+    "county": "Moore",
+    "population": 3100,
+    "density": 23.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27282",
+    "city": "Jamestown",
+    "county": "Guilford",
+    "population": 15906,
+    "density": 445.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27283",
+    "city": "Julian",
+    "county": "Guilford",
+    "population": 3141,
+    "density": 46.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27284",
+    "city": "Kernersville",
+    "county": "Forsyth",
+    "population": 51136,
+    "density": 247.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27288",
+    "city": "Eden",
+    "county": "Rockingham",
+    "population": 24071,
+    "density": 137.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27291",
+    "city": "Leasburg",
+    "county": "Caswell",
+    "population": 1662,
+    "density": 12.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27292",
+    "city": "Lexington",
+    "county": "Davidson",
+    "population": 39787,
+    "density": 105.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27295",
+    "city": "Lexington",
+    "county": "Davidson",
+    "population": 37211,
+    "density": 112.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27298",
+    "city": "Liberty",
+    "county": "Randolph",
+    "population": 10336,
+    "density": 42.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27299",
+    "city": "Linwood",
+    "county": "Davidson",
+    "population": 5190,
+    "density": 72.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27301",
+    "city": "Mc Leansville",
+    "county": "Guilford",
+    "population": 8750,
+    "density": 101.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27302",
+    "city": "Mebane",
+    "county": "Alamance",
+    "population": 26412,
+    "density": 87.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27305",
+    "city": "Milton",
+    "county": "Caswell",
+    "population": 1685,
+    "density": 24.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27306",
+    "city": "Mount Gilead",
+    "county": "Montgomery",
+    "population": 6176,
+    "density": 13.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27310",
+    "city": "Oak Ridge",
+    "county": "Guilford",
+    "population": 6710,
+    "density": 161.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27311",
+    "city": "Pelham",
+    "county": "Caswell",
+    "population": 3402,
+    "density": 28.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27312",
+    "city": "Pittsboro",
+    "county": "Chatham",
+    "population": 18306,
+    "density": 41.6,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27313",
+    "city": "Pleasant Garden",
+    "county": "Guilford",
+    "population": 6962,
+    "density": 94.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27314",
+    "city": "Prospect Hill",
+    "county": "Caswell",
+    "population": 1051,
+    "density": 15.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27315",
+    "city": "Providence",
+    "county": "Caswell",
+    "population": 2243,
+    "density": 32.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27316",
+    "city": "Ramseur",
+    "county": "Randolph",
+    "population": 6650,
+    "density": 37.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27317",
+    "city": "Randleman",
+    "county": "Randolph",
+    "population": 16959,
+    "density": 122.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27320",
+    "city": "Reidsville",
+    "county": "Rockingham",
+    "population": 39351,
+    "density": 60.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27325",
+    "city": "Robbins",
+    "county": "Moore",
+    "population": 6704,
+    "density": 29.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27326",
+    "city": "Ruffin",
+    "county": "Rockingham",
+    "population": 4008,
+    "density": 21.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27330",
+    "city": "Sanford",
+    "county": "Lee",
+    "population": 37947,
+    "density": 71.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27332",
+    "city": "Sanford",
+    "county": "Lee",
+    "population": 30236,
+    "density": 111.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27340",
+    "city": "Saxapahaw",
+    "county": "Alamance",
+    "population": 120,
+    "density": 819.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27341",
+    "city": "Seagrove",
+    "county": "Randolph",
+    "population": 5360,
+    "density": 21.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27343",
+    "city": "Semora",
+    "county": "Person",
+    "population": 1716,
+    "density": 14.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27344",
+    "city": "Siler City",
+    "county": "Chatham",
+    "population": 18022,
+    "density": 42.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27349",
+    "city": "Snow Camp",
+    "county": "Alamance",
+    "population": 5511,
+    "density": 34.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27350",
+    "city": "Sophia",
+    "county": "Randolph",
+    "population": 6530,
+    "density": 67.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27355",
+    "city": "Staley",
+    "county": "Randolph",
+    "population": 2660,
+    "density": 29.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27356",
+    "city": "Star",
+    "county": "Montgomery",
+    "population": 3205,
+    "density": 22.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27357",
+    "city": "Stokesdale",
+    "county": "Rockingham",
+    "population": 7894,
+    "density": 71.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27358",
+    "city": "Summerfield",
+    "county": "Guilford",
+    "population": 14075,
+    "density": 99.8,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27360",
+    "city": "Thomasville",
+    "county": "Davidson",
+    "population": 46084,
+    "density": 201.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27370",
+    "city": "Trinity",
+    "county": "Randolph",
+    "population": 15052,
+    "density": 96.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27371",
+    "city": "Troy",
+    "county": "Montgomery",
+    "population": 8132,
+    "density": 19.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27376",
+    "city": "West End",
+    "county": "Moore",
+    "population": 9386,
+    "density": 52.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27377",
+    "city": "Whitsett",
+    "county": "Guilford",
+    "population": 7104,
+    "density": 107.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27379",
+    "city": "Yanceyville",
+    "county": "Caswell",
+    "population": 4661,
+    "density": 21.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27401",
+    "city": "Greensboro",
+    "county": "Guilford",
+    "population": 21932,
+    "density": 1363.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27403",
+    "city": "Greensboro",
+    "county": "Guilford",
+    "population": 21958,
+    "density": 1406.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27405",
+    "city": "Greensboro",
+    "county": "Guilford",
+    "population": 44567,
+    "density": 554.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27406",
+    "city": "Greensboro",
+    "county": "Guilford",
+    "population": 56458,
+    "density": 313.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27407",
+    "city": "Greensboro",
+    "county": "Guilford",
+    "population": 46242,
+    "density": 588.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27408",
+    "city": "Greensboro",
+    "county": "Guilford",
+    "population": 17296,
+    "density": 875.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27409",
+    "city": "Greensboro",
+    "county": "Guilford",
+    "population": 15621,
+    "density": 310.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27410",
+    "city": "Greensboro",
+    "county": "Guilford",
+    "population": 52388,
+    "density": 618.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27455",
+    "city": "Greensboro",
+    "county": "Guilford",
+    "population": 28706,
+    "density": 373.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27501",
+    "city": "Angier",
+    "county": "Harnett",
+    "population": 17571,
+    "density": 110.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27502",
+    "city": "Apex",
+    "county": "Wake",
+    "population": 30831,
+    "density": 420.1,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27503",
+    "city": "Bahama",
+    "county": "Durham",
+    "population": 3471,
+    "density": 36.7,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27504",
+    "city": "Benson",
+    "county": "Johnston",
+    "population": 14566,
+    "density": 62.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27505",
+    "city": "Broadway",
+    "county": "Harnett",
+    "population": 5896,
+    "density": 40.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27507",
+    "city": "Bullock",
+    "county": "Granville",
+    "population": 1929,
+    "density": 15.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27508",
+    "city": "Bunn",
+    "county": "Franklin",
+    "population": 2053,
+    "density": 75.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27509",
+    "city": "Butner",
+    "county": "Granville",
+    "population": 10167,
+    "density": 262.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27510",
+    "city": "Carrboro",
+    "county": "Orange",
+    "population": 14644,
+    "density": 1514.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27511",
+    "city": "Cary",
+    "county": "Wake",
+    "population": 32029,
+    "density": 1055.3,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27513",
+    "city": "Cary",
+    "county": "Wake",
+    "population": 40755,
+    "density": 995.7,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27514",
+    "city": "Chapel Hill",
+    "county": "Orange",
+    "population": 32110,
+    "density": 637.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27516",
+    "city": "Chapel Hill",
+    "county": "Orange",
+    "population": 36139,
+    "density": 150.1,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27517",
+    "city": "Chapel Hill",
+    "county": "Orange",
+    "population": 23346,
+    "density": 196.1,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27518",
+    "city": "Cary",
+    "county": "Wake",
+    "population": 19630,
+    "density": 788.0,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27519",
+    "city": "Cary",
+    "county": "Wake",
+    "population": 39178,
+    "density": 694.3,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27520",
+    "city": "Clayton",
+    "county": "Johnston",
+    "population": 36357,
+    "density": 192.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27521",
+    "city": "Coats",
+    "county": "Harnett",
+    "population": 6035,
+    "density": 89.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27522",
+    "city": "Creedmoor",
+    "county": "Granville",
+    "population": 12335,
+    "density": 65.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27523",
+    "city": "Apex",
+    "county": "Wake",
+    "population": 9552,
+    "density": 89.3,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27524",
+    "city": "Four Oaks",
+    "county": "Johnston",
+    "population": 12338,
+    "density": 36.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27525",
+    "city": "Franklinton",
+    "county": "Franklin",
+    "population": 13338,
+    "density": 55.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27526",
+    "city": "Fuquay Varina",
+    "county": "Wake",
+    "population": 38894,
+    "density": 154.9,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27527",
+    "city": "Clayton",
+    "county": "Johnston",
+    "population": 18216,
+    "density": 160.8,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27529",
+    "city": "Garner",
+    "county": "Wake",
+    "population": 42128,
+    "density": 281.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27530",
+    "city": "Goldsboro",
+    "county": "Wayne",
+    "population": 40117,
+    "density": 146.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27531",
+    "city": "Goldsboro",
+    "county": "Wayne",
+    "population": 594,
+    "density": 64.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27534",
+    "city": "Goldsboro",
+    "county": "Wayne",
+    "population": 31364,
+    "density": 167.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27536",
+    "city": "Henderson",
+    "county": "Vance",
+    "population": 17289,
+    "density": 522.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27537",
+    "city": "Henderson",
+    "county": "Vance",
+    "population": 24319,
+    "density": 49.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27539",
+    "city": "Apex",
+    "county": "Wake",
+    "population": 18692,
+    "density": 228.8,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27540",
+    "city": "Holly Springs",
+    "county": "Wake",
+    "population": 29363,
+    "density": 243.8,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27541",
+    "city": "Hurdle Mills",
+    "county": "Person",
+    "population": 3770,
+    "density": 20.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27542",
+    "city": "Kenly",
+    "county": "Johnston",
+    "population": 9133,
+    "density": 41.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27544",
+    "city": "Kittrell",
+    "county": "Vance",
+    "population": 4449,
+    "density": 28.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27545",
+    "city": "Knightdale",
+    "county": "Wake",
+    "population": 23006,
+    "density": 306.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27546",
+    "city": "Lillington",
+    "county": "Harnett",
+    "population": 19471,
+    "density": 60.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27549",
+    "city": "Louisburg",
+    "county": "Franklin",
+    "population": 24112,
+    "density": 38.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27551",
+    "city": "Macon",
+    "county": "Warren",
+    "population": 1962,
+    "density": 9.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27553",
+    "city": "Manson",
+    "county": "Warren",
+    "population": 2937,
+    "density": 30.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27555",
+    "city": "Micro",
+    "county": "Johnston",
+    "population": 441,
+    "density": 458.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27556",
+    "city": "Middleburg",
+    "county": "Vance",
+    "population": 346,
+    "density": 69.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27557",
+    "city": "Middlesex",
+    "county": "Nash",
+    "population": 7509,
+    "density": 47.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27559",
+    "city": "Moncure",
+    "county": "Chatham",
+    "population": 2288,
+    "density": 18.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27560",
+    "city": "Morrisville",
+    "county": "Wake",
+    "population": 22623,
+    "density": 298.7,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27562",
+    "city": "New Hill",
+    "county": "Chatham",
+    "population": 1938,
+    "density": 13.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27563",
+    "city": "Norlina",
+    "county": "Warren",
+    "population": 5008,
+    "density": 27.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27565",
+    "city": "Oxford",
+    "county": "Granville",
+    "population": 25255,
+    "density": 29.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27568",
+    "city": "Pine Level",
+    "county": "Johnston",
+    "population": 480,
+    "density": 789.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27569",
+    "city": "Princeton",
+    "county": "Johnston",
+    "population": 8022,
+    "density": 38.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27571",
+    "city": "Rolesville",
+    "county": "Wake",
+    "population": 3893,
+    "density": 340.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27572",
+    "city": "Rougemont",
+    "county": "Granville",
+    "population": 6546,
+    "density": 24.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27573",
+    "city": "Roxboro",
+    "county": "Person",
+    "population": 11414,
+    "density": 247.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27574",
+    "city": "Roxboro",
+    "county": "Person",
+    "population": 14373,
+    "density": 29.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27576",
+    "city": "Selma",
+    "county": "Johnston",
+    "population": 17091,
+    "density": 79.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27577",
+    "city": "Smithfield",
+    "county": "Johnston",
+    "population": 22911,
+    "density": 84.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27581",
+    "city": "Stem",
+    "county": "Granville",
+    "population": 3049,
+    "density": 34.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27582",
+    "city": "Stovall",
+    "county": "Granville",
+    "population": 289,
+    "density": 35.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27583",
+    "city": "Timberlake",
+    "county": "Person",
+    "population": 6921,
+    "density": 57.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27587",
+    "city": "Wake Forest",
+    "county": "Wake",
+    "population": 53078,
+    "density": 195.8,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27589",
+    "city": "Warrenton",
+    "county": "Warren",
+    "population": 8370,
+    "density": 18.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27591",
+    "city": "Wendell",
+    "county": "Wake",
+    "population": 19589,
+    "density": 114.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27592",
+    "city": "Willow Spring",
+    "county": "Wake",
+    "population": 15244,
+    "density": 141.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27596",
+    "city": "Youngsville",
+    "county": "Franklin",
+    "population": 15619,
+    "density": 108.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27597",
+    "city": "Zebulon",
+    "county": "Wake",
+    "population": 22181,
+    "density": 69.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27601",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 9450,
+    "density": 2033.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27603",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 47033,
+    "density": 351.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27604",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 42204,
+    "density": 754.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27605",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 4495,
+    "density": 1758.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27606",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 43210,
+    "density": 672.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27607",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 25188,
+    "density": 604.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27608",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 10429,
+    "density": 1252.2,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27609",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 32964,
+    "density": 1139.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27610",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 65648,
+    "density": 593.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27612",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 35028,
+    "density": 720.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27613",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 42690,
+    "density": 669.9,
+    "tier": "PREMIER",
+    "status": "RESERVED",
+    "statusDate": "46091"
+  },
+  {
+    "zipCode": "27614",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 31516,
+    "density": 448.3,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27615",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 42166,
+    "density": 842.2,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27616",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 42294,
+    "density": 734.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27617",
+    "city": "Raleigh",
+    "county": "Wake",
+    "population": 15199,
+    "density": 701.4,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27701",
+    "city": "Durham",
+    "county": "Durham",
+    "population": 21288,
+    "density": 1553.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27703",
+    "city": "Durham",
+    "county": "Durham",
+    "population": 41937,
+    "density": 296.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27704",
+    "city": "Durham",
+    "county": "Durham",
+    "population": 34517,
+    "density": 330.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27705",
+    "city": "Durham",
+    "county": "Durham",
+    "population": 46282,
+    "density": 408.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27707",
+    "city": "Durham",
+    "county": "Durham",
+    "population": 45023,
+    "density": 816.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27709",
+    "city": "Durham",
+    "county": "Durham",
+    "population": 1047,
+    "density": 1034.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27712",
+    "city": "Durham",
+    "county": "Durham",
+    "population": 20035,
+    "density": 230.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27713",
+    "city": "Durham",
+    "county": "Durham",
+    "population": 46660,
+    "density": 552.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27801",
+    "city": "Rocky Mount",
+    "county": "Edgecombe",
+    "population": 21740,
+    "density": 120.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27803",
+    "city": "Rocky Mount",
+    "county": "Nash",
+    "population": 21227,
+    "density": 203.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27804",
+    "city": "Rocky Mount",
+    "county": "Nash",
+    "population": 29058,
+    "density": 265.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27805",
+    "city": "Aulander",
+    "county": "Hertford",
+    "population": 3992,
+    "density": 13.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27806",
+    "city": "Aurora",
+    "county": "Beaufort",
+    "population": 2331,
+    "density": 6.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27807",
+    "city": "Bailey",
+    "county": "Nash",
+    "population": 6629,
+    "density": 51.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27808",
+    "city": "Bath",
+    "county": "Beaufort",
+    "population": 2225,
+    "density": 20.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27809",
+    "city": "Battleboro",
+    "county": "Nash",
+    "population": 5091,
+    "density": 26.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27810",
+    "city": "Belhaven",
+    "county": "Beaufort",
+    "population": 4377,
+    "density": 13.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27812",
+    "city": "Bethel",
+    "county": "Pitt",
+    "population": 2593,
+    "density": 16.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27813",
+    "city": "Black Creek",
+    "county": "Wilson",
+    "population": 747,
+    "density": 259.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27814",
+    "city": "Blounts Creek",
+    "county": "Beaufort",
+    "population": 1676,
+    "density": 10.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27816",
+    "city": "Castalia",
+    "county": "Nash",
+    "population": 2516,
+    "density": 16.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27817",
+    "city": "Chocowinity",
+    "county": "Beaufort",
+    "population": 7358,
+    "density": 25.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27818",
+    "city": "Como",
+    "county": "Hertford",
+    "population": 1344,
+    "density": 8.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27819",
+    "city": "Conetoe",
+    "county": "Edgecombe",
+    "population": 330,
+    "density": 118.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27820",
+    "city": "Conway",
+    "county": "Northampton",
+    "population": 3088,
+    "density": 21.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27821",
+    "city": "Edward",
+    "county": "Beaufort",
+    "population": 358,
+    "density": 21.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27822",
+    "city": "Elm City",
+    "county": "Wilson",
+    "population": 8143,
+    "density": 34.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27823",
+    "city": "Enfield",
+    "county": "Halifax",
+    "population": 8201,
+    "density": 16.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27824",
+    "city": "Engelhard",
+    "county": "Hyde",
+    "population": 1476,
+    "density": 5.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27825",
+    "city": "Everetts",
+    "county": "Martin",
+    "population": 103,
+    "density": 84.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27826",
+    "city": "Fairfield",
+    "county": "Hyde",
+    "population": 1379,
+    "density": 7.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27827",
+    "city": "Falkland",
+    "county": "Pitt",
+    "population": 33,
+    "density": 133.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27828",
+    "city": "Farmville",
+    "county": "Pitt",
+    "population": 9071,
+    "density": 45.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27829",
+    "city": "Fountain",
+    "county": "Pitt",
+    "population": 1930,
+    "density": 15.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27830",
+    "city": "Fremont",
+    "county": "Wayne",
+    "population": 4755,
+    "density": 30.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27831",
+    "city": "Garysburg",
+    "county": "Northampton",
+    "population": 3908,
+    "density": 23.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27832",
+    "city": "Gaston",
+    "county": "Northampton",
+    "population": 2847,
+    "density": 36.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27834",
+    "city": "Greenville",
+    "county": "Pitt",
+    "population": 52914,
+    "density": 115.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27837",
+    "city": "Grimesland",
+    "county": "Pitt",
+    "population": 5903,
+    "density": 38.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27839",
+    "city": "Halifax",
+    "county": "Halifax",
+    "population": 4001,
+    "density": 10.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27840",
+    "city": "Hamilton",
+    "county": "Martin",
+    "population": 514,
+    "density": 15.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27841",
+    "city": "Hassell",
+    "county": "Martin",
+    "population": 84,
+    "density": 122.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27842",
+    "city": "Henrico",
+    "county": "Northampton",
+    "population": 1493,
+    "density": 53.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27843",
+    "city": "Hobgood",
+    "county": "Halifax",
+    "population": 1157,
+    "density": 7.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27844",
+    "city": "Hollister",
+    "county": "Halifax",
+    "population": 2950,
+    "density": 26.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27845",
+    "city": "Jackson",
+    "county": "Northampton",
+    "population": 2394,
+    "density": 9.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27846",
+    "city": "Jamesville",
+    "county": "Martin",
+    "population": 2988,
+    "density": 12.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27847",
+    "city": "Kelford",
+    "county": "Bertie",
+    "population": 936,
+    "density": 9.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27849",
+    "city": "Lewiston Woodville",
+    "county": "Bertie",
+    "population": 1544,
+    "density": 7.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27850",
+    "city": "Littleton",
+    "county": "Halifax",
+    "population": 7247,
+    "density": 15.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27851",
+    "city": "Lucama",
+    "county": "Wilson",
+    "population": 5268,
+    "density": 45.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27852",
+    "city": "Macclesfield",
+    "county": "Edgecombe",
+    "population": 2977,
+    "density": 23.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27853",
+    "city": "Margarettsville",
+    "county": "Northampton",
+    "population": 673,
+    "density": 6.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27855",
+    "city": "Murfreesboro",
+    "county": "Hertford",
+    "population": 6456,
+    "density": 45.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27856",
+    "city": "Nashville",
+    "county": "Nash",
+    "population": 17141,
+    "density": 51.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27857",
+    "city": "Oak City",
+    "county": "Martin",
+    "population": 1298,
+    "density": 7.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27858",
+    "city": "Greenville",
+    "county": "Pitt",
+    "population": 55781,
+    "density": 357.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27860",
+    "city": "Pantego",
+    "county": "Beaufort",
+    "population": 2246,
+    "density": 6.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27861",
+    "city": "Parmele",
+    "county": "Martin",
+    "population": 71,
+    "density": 45.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27862",
+    "city": "Pendleton",
+    "county": "Northampton",
+    "population": 877,
+    "density": 8.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27863",
+    "city": "Pikeville",
+    "county": "Wayne",
+    "population": 11735,
+    "density": 67.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27864",
+    "city": "Pinetops",
+    "county": "Edgecombe",
+    "population": 4779,
+    "density": 45.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27865",
+    "city": "Pinetown",
+    "county": "Beaufort",
+    "population": 1927,
+    "density": 8.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27866",
+    "city": "Pleasant Hill",
+    "county": "Northampton",
+    "population": 855,
+    "density": 12.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27869",
+    "city": "Rich Square",
+    "county": "Northampton",
+    "population": 2258,
+    "density": 10.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27870",
+    "city": "Roanoke Rapids",
+    "county": "Halifax",
+    "population": 27236,
+    "density": 154.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27871",
+    "city": "Robersonville",
+    "county": "Martin",
+    "population": 4619,
+    "density": 18.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27872",
+    "city": "Roxobel",
+    "county": "Bertie",
+    "population": 375,
+    "density": 11.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27873",
+    "city": "Saratoga",
+    "county": "Wilson",
+    "population": 397,
+    "density": 245.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27874",
+    "city": "Scotland Neck",
+    "county": "Halifax",
+    "population": 4861,
+    "density": 14.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27875",
+    "city": "Scranton",
+    "county": "Hyde",
+    "population": 517,
+    "density": 3.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27876",
+    "city": "Seaboard",
+    "county": "Northampton",
+    "population": 1302,
+    "density": 12.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27878",
+    "city": "Sharpsburg",
+    "county": "Edgecombe",
+    "population": 1931,
+    "density": 405.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27879",
+    "city": "Simpson",
+    "county": "Pitt",
+    "population": 311,
+    "density": 408.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27880",
+    "city": "Sims",
+    "county": "Wilson",
+    "population": 3304,
+    "density": 49.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27881",
+    "city": "Speed",
+    "county": "Edgecombe",
+    "population": 61,
+    "density": 34.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27882",
+    "city": "Spring Hope",
+    "county": "Nash",
+    "population": 7413,
+    "density": 28.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27883",
+    "city": "Stantonsburg",
+    "county": "Wilson",
+    "population": 3565,
+    "density": 18.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27884",
+    "city": "Stokes",
+    "county": "Pitt",
+    "population": 1282,
+    "density": 15.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27885",
+    "city": "Swanquarter",
+    "county": "Hyde",
+    "population": 984,
+    "density": 3.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27886",
+    "city": "Tarboro",
+    "county": "Edgecombe",
+    "population": 21591,
+    "density": 43.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27888",
+    "city": "Walstonburg",
+    "county": "Greene",
+    "population": 2560,
+    "density": 20.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27889",
+    "city": "Washington",
+    "county": "Beaufort",
+    "population": 27468,
+    "density": 53.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27890",
+    "city": "Weldon",
+    "county": "Halifax",
+    "population": 2521,
+    "density": 108.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27891",
+    "city": "Whitakers",
+    "county": "Nash",
+    "population": 5227,
+    "density": 14.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27892",
+    "city": "Williamston",
+    "county": "Martin",
+    "population": 15182,
+    "density": 30.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27893",
+    "city": "Wilson",
+    "county": "Wilson",
+    "population": 39723,
+    "density": 139.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27896",
+    "city": "Wilson",
+    "county": "Wilson",
+    "population": 20130,
+    "density": 224.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27897",
+    "city": "Woodland",
+    "county": "Northampton",
+    "population": 2265,
+    "density": 20.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27909",
+    "city": "Elizabeth City",
+    "county": "Pasquotank",
+    "population": 40699,
+    "density": 69.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27910",
+    "city": "Ahoskie",
+    "county": "Hertford",
+    "population": 12007,
+    "density": 34.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27915",
+    "city": "Avon",
+    "county": "Dare",
+    "population": 777,
+    "density": 38.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27916",
+    "city": "Aydlett",
+    "county": "Currituck",
+    "population": 747,
+    "density": 37.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27917",
+    "city": "Barco",
+    "county": "Currituck",
+    "population": 833,
+    "density": 16.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27919",
+    "city": "Belvidere",
+    "county": "Perquimans",
+    "population": 1130,
+    "density": 7.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27920",
+    "city": "Buxton",
+    "county": "Dare",
+    "population": 1326,
+    "density": 140.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27921",
+    "city": "Camden",
+    "county": "Camden",
+    "population": 4805,
+    "density": 25.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27922",
+    "city": "Cofield",
+    "county": "Hertford",
+    "population": 1030,
+    "density": 9.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27923",
+    "city": "Coinjock",
+    "county": "Currituck",
+    "population": 598,
+    "density": 32.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27924",
+    "city": "Colerain",
+    "county": "Bertie",
+    "population": 3140,
+    "density": 12.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27925",
+    "city": "Columbia",
+    "county": "Tyrrell",
+    "population": 4217,
+    "density": 6.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27926",
+    "city": "Corapeake",
+    "county": "Gates",
+    "population": 1915,
+    "density": 20.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27927",
+    "city": "Corolla",
+    "county": "Currituck",
+    "population": 542,
+    "density": 7.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27928",
+    "city": "Creswell",
+    "county": "Washington",
+    "population": 1986,
+    "density": 11.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27929",
+    "city": "Currituck",
+    "county": "Currituck",
+    "population": 1166,
+    "density": 76.0,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27932",
+    "city": "Edenton",
+    "county": "Chowan",
+    "population": 12562,
+    "density": 41.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27935",
+    "city": "Eure",
+    "county": "Gates",
+    "population": 1698,
+    "density": 10.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27936",
+    "city": "Frisco",
+    "county": "Dare",
+    "population": 1091,
+    "density": 44.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27937",
+    "city": "Gates",
+    "county": "Gates",
+    "population": 4333,
+    "density": 19.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27938",
+    "city": "Gatesville",
+    "county": "Gates",
+    "population": 1505,
+    "density": 11.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27939",
+    "city": "Grandy",
+    "county": "Currituck",
+    "population": 2361,
+    "density": 137.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27941",
+    "city": "Harbinger",
+    "county": "Currituck",
+    "population": 536,
+    "density": 65.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27942",
+    "city": "Harrellsville",
+    "county": "Hertford",
+    "population": 901,
+    "density": 10.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27943",
+    "city": "Hatteras",
+    "county": "Dare",
+    "population": 504,
+    "density": 72.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27944",
+    "city": "Hertford",
+    "county": "Perquimans",
+    "population": 11909,
+    "density": 24.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27946",
+    "city": "Hobbsville",
+    "county": "Gates",
+    "population": 1207,
+    "density": 10.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27947",
+    "city": "Jarvisburg",
+    "county": "Currituck",
+    "population": 1230,
+    "density": 39.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27948",
+    "city": "Kill Devil Hills",
+    "county": "Dare",
+    "population": 10862,
+    "density": 453.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27949",
+    "city": "Kitty Hawk",
+    "county": "Dare",
+    "population": 6947,
+    "density": 176.6,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27950",
+    "city": "Knotts Island",
+    "county": "Currituck",
+    "population": 2006,
+    "density": 26.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27953",
+    "city": "Manns Harbor",
+    "county": "Dare",
+    "population": 1021,
+    "density": 1.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27954",
+    "city": "Manteo",
+    "county": "Dare",
+    "population": 6111,
+    "density": 267.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27956",
+    "city": "Maple",
+    "county": "Currituck",
+    "population": 340,
+    "density": 28.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27957",
+    "city": "Merry Hill",
+    "county": "Bertie",
+    "population": 1356,
+    "density": 12.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27958",
+    "city": "Moyock",
+    "county": "Currituck",
+    "population": 10144,
+    "density": 44.3,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27959",
+    "city": "Nags Head",
+    "county": "Dare",
+    "population": 2789,
+    "density": 73.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27960",
+    "city": "Ocracoke",
+    "county": "Hyde",
+    "population": 948,
+    "density": 42.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27962",
+    "city": "Plymouth",
+    "county": "Washington",
+    "population": 7792,
+    "density": 33.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27964",
+    "city": "Point Harbor",
+    "county": "Currituck",
+    "population": 545,
+    "density": 142.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27965",
+    "city": "Poplar Branch",
+    "county": "Currituck",
+    "population": 527,
+    "density": 12.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27966",
+    "city": "Powells Point",
+    "county": "Currituck",
+    "population": 1052,
+    "density": 39.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27967",
+    "city": "Powellsville",
+    "county": "Bertie",
+    "population": 366,
+    "density": 38.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27968",
+    "city": "Rodanthe",
+    "county": "Dare",
+    "population": 298,
+    "density": 14.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27970",
+    "city": "Roper",
+    "county": "Washington",
+    "population": 3409,
+    "density": 11.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27972",
+    "city": "Salvo",
+    "county": "Dare",
+    "population": 244,
+    "density": 66.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27973",
+    "city": "Shawboro",
+    "county": "Currituck",
+    "population": 1323,
+    "density": 13.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27974",
+    "city": "Shiloh",
+    "county": "Camden",
+    "population": 1285,
+    "density": 10.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27976",
+    "city": "South Mills",
+    "county": "Camden",
+    "population": 3449,
+    "density": 12.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27978",
+    "city": "Stumpy Point",
+    "county": "Dare",
+    "population": 225,
+    "density": 5.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27979",
+    "city": "Sunbury",
+    "county": "Gates",
+    "population": 1719,
+    "density": 9.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27980",
+    "city": "Tyner",
+    "county": "Chowan",
+    "population": 2182,
+    "density": 16.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27981",
+    "city": "Wanchese",
+    "county": "Dare",
+    "population": 1643,
+    "density": 80.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27982",
+    "city": "Waves",
+    "county": "Dare",
+    "population": 82,
+    "density": 99.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27983",
+    "city": "Windsor",
+    "county": "Bertie",
+    "population": 10416,
+    "density": 12.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27985",
+    "city": "Winfall",
+    "county": "Perquimans",
+    "population": 283,
+    "density": 117.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "27986",
+    "city": "Winton",
+    "county": "Hertford",
+    "population": 2430,
+    "density": 61.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28001",
+    "city": "Albemarle",
+    "county": "Stanly",
+    "population": 26760,
+    "density": 77.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28006",
+    "city": "Alexis",
+    "county": "Gaston",
+    "population": 1130,
+    "density": 81.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28007",
+    "city": "Ansonville",
+    "county": "Anson",
+    "population": 611,
+    "density": 179.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28009",
+    "city": "Badin",
+    "county": "Stanly",
+    "population": 1121,
+    "density": 151.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28012",
+    "city": "Belmont",
+    "county": "Gaston",
+    "population": 20048,
+    "density": 283.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28016",
+    "city": "Bessemer City",
+    "county": "Gaston",
+    "population": 13463,
+    "density": 120.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28017",
+    "city": "Boiling Springs",
+    "county": "Cleveland",
+    "population": 695,
+    "density": 1562.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28018",
+    "city": "Bostic",
+    "county": "Rutherford",
+    "population": 5562,
+    "density": 21.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28019",
+    "city": "Caroleen",
+    "county": "Rutherford",
+    "population": 123,
+    "density": 316.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28020",
+    "city": "Casar",
+    "county": "Cleveland",
+    "population": 2322,
+    "density": 20.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28021",
+    "city": "Cherryville",
+    "county": "Gaston",
+    "population": 13612,
+    "density": 83.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28023",
+    "city": "China Grove",
+    "county": "Rowan",
+    "population": 14175,
+    "density": 118.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28025",
+    "city": "Concord",
+    "county": "Cabarrus",
+    "population": 49160,
+    "density": 174.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28027",
+    "city": "Concord",
+    "county": "Cabarrus",
+    "population": 55435,
+    "density": 311.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28031",
+    "city": "Cornelius",
+    "county": "Mecklenburg",
+    "population": 24390,
+    "density": 671.8,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28032",
+    "city": "Cramerton",
+    "county": "Gaston",
+    "population": 3105,
+    "density": 514.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28033",
+    "city": "Crouse",
+    "county": "Lincoln",
+    "population": 2749,
+    "density": 68.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28034",
+    "city": "Dallas",
+    "county": "Gaston",
+    "population": 16642,
+    "density": 141.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28036",
+    "city": "Davidson",
+    "county": "Mecklenburg",
+    "population": 14654,
+    "density": 250.6,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28037",
+    "city": "Denver",
+    "county": "Lincoln",
+    "population": 18287,
+    "density": 159.2,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28039",
+    "city": "East Spencer",
+    "county": "Rowan",
+    "population": 116,
+    "density": 526.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28040",
+    "city": "Ellenboro",
+    "county": "Rutherford",
+    "population": 7969,
+    "density": 43.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28043",
+    "city": "Forest City",
+    "county": "Rutherford",
+    "population": 21055,
+    "density": 128.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28052",
+    "city": "Gastonia",
+    "county": "Gaston",
+    "population": 34932,
+    "density": 320.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28054",
+    "city": "Gastonia",
+    "county": "Gaston",
+    "population": 36270,
+    "density": 700.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28056",
+    "city": "Gastonia",
+    "county": "Gaston",
+    "population": 31418,
+    "density": 255.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28071",
+    "city": "Gold Hill",
+    "county": "Rowan",
+    "population": 2802,
+    "density": 23.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28072",
+    "city": "Granite Quarry",
+    "county": "Rowan",
+    "population": 1357,
+    "density": 482.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28073",
+    "city": "Grover",
+    "county": "Cleveland",
+    "population": 5621,
+    "density": 85.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28075",
+    "city": "Harrisburg",
+    "county": "Cabarrus",
+    "population": 16143,
+    "density": 295.0,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28076",
+    "city": "Henrietta",
+    "county": "Rutherford",
+    "population": 722,
+    "density": 208.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28077",
+    "city": "High Shoals",
+    "county": "Gaston",
+    "population": 482,
+    "density": 318.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28078",
+    "city": "Huntersville",
+    "county": "Mecklenburg",
+    "population": 52133,
+    "density": 315.5,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28079",
+    "city": "Indian Trail",
+    "county": "Union",
+    "population": 31979,
+    "density": 281.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28080",
+    "city": "Iron Station",
+    "county": "Lincoln",
+    "population": 7299,
+    "density": 71.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28081",
+    "city": "Kannapolis",
+    "county": "Cabarrus",
+    "population": 25190,
+    "density": 319.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28083",
+    "city": "Kannapolis",
+    "county": "Cabarrus",
+    "population": 23820,
+    "density": 458.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28086",
+    "city": "Kings Mountain",
+    "county": "Cleveland",
+    "population": 25895,
+    "density": 113.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28088",
+    "city": "Landis",
+    "county": "Rowan",
+    "population": 2862,
+    "density": 417.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28089",
+    "city": "Lattimore",
+    "county": "Cleveland",
+    "population": 248,
+    "density": 385.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28090",
+    "city": "Lawndale",
+    "county": "Cleveland",
+    "population": 8342,
+    "density": 34.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28091",
+    "city": "Lilesville",
+    "county": "Anson",
+    "population": 2158,
+    "density": 8.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28092",
+    "city": "Lincolnton",
+    "county": "Lincoln",
+    "population": 38570,
+    "density": 121.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28097",
+    "city": "Locust",
+    "county": "Stanly",
+    "population": 5369,
+    "density": 68.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28098",
+    "city": "Lowell",
+    "county": "Gaston",
+    "population": 3579,
+    "density": 406.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28101",
+    "city": "Mc Adenville",
+    "county": "Gaston",
+    "population": 698,
+    "density": 301.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28102",
+    "city": "Mc Farlan",
+    "county": "Anson",
+    "population": 78,
+    "density": 59.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28103",
+    "city": "Marshville",
+    "county": "Union",
+    "population": 10311,
+    "density": 25.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28104",
+    "city": "Matthews",
+    "county": "Union",
+    "population": 28040,
+    "density": 370.4,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28105",
+    "city": "Matthews",
+    "county": "Mecklenburg",
+    "population": 39586,
+    "density": 641.7,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28107",
+    "city": "Midland",
+    "county": "Cabarrus",
+    "population": 6422,
+    "density": 50.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28108",
+    "city": "Mineral Springs",
+    "county": "Union",
+    "population": 54,
+    "density": 104.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28109",
+    "city": "Misenheimer",
+    "county": "Stanly",
+    "population": 387,
+    "density": 88.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28110",
+    "city": "Monroe",
+    "county": "Union",
+    "population": 50365,
+    "density": 150.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28112",
+    "city": "Monroe",
+    "county": "Union",
+    "population": 26311,
+    "density": 76.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28114",
+    "city": "Mooresboro",
+    "county": "Rutherford",
+    "population": 7554,
+    "density": 44.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28115",
+    "city": "Mooresville",
+    "county": "Iredell",
+    "population": 34339,
+    "density": 179.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28117",
+    "city": "Mooresville",
+    "county": "Iredell",
+    "population": 35454,
+    "density": 343.1,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28119",
+    "city": "Morven",
+    "county": "Anson",
+    "population": 2801,
+    "density": 16.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28120",
+    "city": "Mount Holly",
+    "county": "Gaston",
+    "population": 19807,
+    "density": 251.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28124",
+    "city": "Mount Pleasant",
+    "county": "Cabarrus",
+    "population": 6622,
+    "density": 44.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28125",
+    "city": "Mount Ulla",
+    "county": "Rowan",
+    "population": 2525,
+    "density": 25.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28127",
+    "city": "New London",
+    "county": "Stanly",
+    "population": 7594,
+    "density": 42.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28128",
+    "city": "Norwood",
+    "county": "Stanly",
+    "population": 7476,
+    "density": 42.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28129",
+    "city": "Oakboro",
+    "county": "Stanly",
+    "population": 5399,
+    "density": 48.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28133",
+    "city": "Peachland",
+    "county": "Anson",
+    "population": 2878,
+    "density": 13.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28134",
+    "city": "Pineville",
+    "county": "Mecklenburg",
+    "population": 9453,
+    "density": 425.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28135",
+    "city": "Polkton",
+    "county": "Anson",
+    "population": 6123,
+    "density": 23.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28137",
+    "city": "Richfield",
+    "county": "Stanly",
+    "population": 3120,
+    "density": 27.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28138",
+    "city": "Rockwell",
+    "county": "Rowan",
+    "population": 10495,
+    "density": 91.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28139",
+    "city": "Rutherfordton",
+    "county": "Rutherford",
+    "population": 20111,
+    "density": 44.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28144",
+    "city": "Salisbury",
+    "county": "Rowan",
+    "population": 24734,
+    "density": 319.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28146",
+    "city": "Salisbury",
+    "county": "Rowan",
+    "population": 27614,
+    "density": 107.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28147",
+    "city": "Salisbury",
+    "county": "Rowan",
+    "population": 24697,
+    "density": 121.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28150",
+    "city": "Shelby",
+    "county": "Cleveland",
+    "population": 28098,
+    "density": 101.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28152",
+    "city": "Shelby",
+    "county": "Cleveland",
+    "population": 24735,
+    "density": 115.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28159",
+    "city": "Spencer",
+    "county": "Rowan",
+    "population": 3108,
+    "density": 486.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28160",
+    "city": "Spindale",
+    "county": "Rutherford",
+    "population": 3929,
+    "density": 270.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28163",
+    "city": "Stanfield",
+    "county": "Stanly",
+    "population": 5233,
+    "density": 57.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28164",
+    "city": "Stanley",
+    "county": "Gaston",
+    "population": 14085,
+    "density": 129.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28166",
+    "city": "Troutman",
+    "county": "Iredell",
+    "population": 8619,
+    "density": 115.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28167",
+    "city": "Union Mills",
+    "county": "Rutherford",
+    "population": 2362,
+    "density": 12.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28168",
+    "city": "Vale",
+    "county": "Lincoln",
+    "population": 10230,
+    "density": 45.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28169",
+    "city": "Waco",
+    "county": "Cleveland",
+    "population": 173,
+    "density": 119.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28170",
+    "city": "Wadesboro",
+    "county": "Anson",
+    "population": 12355,
+    "density": 25.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28173",
+    "city": "Waxhaw",
+    "county": "Union",
+    "population": 45097,
+    "density": 161.8,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28174",
+    "city": "Wingate",
+    "county": "Union",
+    "population": 8608,
+    "density": 92.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28202",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 11195,
+    "density": 2396.2,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28203",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 11315,
+    "density": 1316.9,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28204",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 4796,
+    "density": 1071.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28205",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 43931,
+    "density": 1434.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28206",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 11898,
+    "density": 651.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28207",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 9280,
+    "density": 1423.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28208",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 34167,
+    "density": 599.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28209",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 20317,
+    "density": 1430.7,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28210",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 42263,
+    "density": 1284.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28211",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 28523,
+    "density": 1022.0,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28212",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 38457,
+    "density": 1606.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28213",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 37309,
+    "density": 1040.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28214",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 34721,
+    "density": 409.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28215",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 53629,
+    "density": 677.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28216",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 47208,
+    "density": 609.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28217",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 24204,
+    "density": 630.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28226",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 37286,
+    "density": 965.4,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28227",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 49635,
+    "density": 495.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28244",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 0,
+    "density": 0.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28262",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 37547,
+    "density": 669.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28269",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 71048,
+    "density": 900.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28270",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 31525,
+    "density": 964.9,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28273",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 31478,
+    "density": 557.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28277",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 59664,
+    "density": 984.4,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28278",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 19283,
+    "density": 261.4,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28280",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 10,
+    "density": 510.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28282",
+    "city": "Charlotte",
+    "county": "Mecklenburg",
+    "population": 0,
+    "density": 0.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28301",
+    "city": "Fayetteville",
+    "county": "Cumberland",
+    "population": 17165,
+    "density": 539.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28303",
+    "city": "Fayetteville",
+    "county": "Cumberland",
+    "population": 30909,
+    "density": 712.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28304",
+    "city": "Fayetteville",
+    "county": "Cumberland",
+    "population": 37147,
+    "density": 869.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28305",
+    "city": "Fayetteville",
+    "county": "Cumberland",
+    "population": 6073,
+    "density": 901.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28306",
+    "city": "Fayetteville",
+    "county": "Cumberland",
+    "population": 39683,
+    "density": 223.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28307",
+    "city": "Fort Bragg",
+    "county": "Cumberland",
+    "population": 17631,
+    "density": 581.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28308",
+    "city": "Pope Army Airfield",
+    "county": "Cumberland",
+    "population": 405,
+    "density": 42.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28310",
+    "city": "Fort Bragg",
+    "county": "Cumberland",
+    "population": 3459,
+    "density": 293.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28311",
+    "city": "Fayetteville",
+    "county": "Cumberland",
+    "population": 34567,
+    "density": 355.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28312",
+    "city": "Fayetteville",
+    "county": "Cumberland",
+    "population": 18538,
+    "density": 42.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28314",
+    "city": "Fayetteville",
+    "county": "Cumberland",
+    "population": 54520,
+    "density": 912.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28315",
+    "city": "Aberdeen",
+    "county": "Moore",
+    "population": 11681,
+    "density": 70.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28318",
+    "city": "Autryville",
+    "county": "Sampson",
+    "population": 4627,
+    "density": 22.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28320",
+    "city": "Bladenboro",
+    "county": "Bladen",
+    "population": 9229,
+    "density": 29.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28323",
+    "city": "Bunnlevel",
+    "county": "Harnett",
+    "population": 3182,
+    "density": 32.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28325",
+    "city": "Calypso",
+    "county": "Duplin",
+    "population": 508,
+    "density": 230.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28326",
+    "city": "Cameron",
+    "county": "Harnett",
+    "population": 17646,
+    "density": 58.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28327",
+    "city": "Carthage",
+    "county": "Moore",
+    "population": 15433,
+    "density": 31.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28328",
+    "city": "Clinton",
+    "county": "Sampson",
+    "population": 27042,
+    "density": 40.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28330",
+    "city": "Cordova",
+    "county": "Richmond",
+    "population": 346,
+    "density": 539.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28332",
+    "city": "Dublin",
+    "county": "Bladen",
+    "population": 482,
+    "density": 94.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28333",
+    "city": "Dudley",
+    "county": "Wayne",
+    "population": 11830,
+    "density": 96.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28334",
+    "city": "Dunn",
+    "county": "Harnett",
+    "population": 24908,
+    "density": 60.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28337",
+    "city": "Elizabethtown",
+    "county": "Bladen",
+    "population": 10670,
+    "density": 25.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28338",
+    "city": "Ellerbe",
+    "county": "Richmond",
+    "population": 4607,
+    "density": 12.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28339",
+    "city": "Erwin",
+    "county": "Harnett",
+    "population": 6751,
+    "density": 72.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28340",
+    "city": "Fairmont",
+    "county": "Robeson",
+    "population": 10765,
+    "density": 33.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28341",
+    "city": "Faison",
+    "county": "Duplin",
+    "population": 4257,
+    "density": 17.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28342",
+    "city": "Falcon",
+    "county": "Cumberland",
+    "population": 298,
+    "density": 92.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28343",
+    "city": "Gibson",
+    "county": "Scotland",
+    "population": 1685,
+    "density": 36.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28344",
+    "city": "Godwin",
+    "county": "Sampson",
+    "population": 3415,
+    "density": 34.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28345",
+    "city": "Hamlet",
+    "county": "Richmond",
+    "population": 12592,
+    "density": 68.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28347",
+    "city": "Hoffman",
+    "county": "Richmond",
+    "population": 1983,
+    "density": 14.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28348",
+    "city": "Hope Mills",
+    "county": "Cumberland",
+    "population": 33307,
+    "density": 289.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28349",
+    "city": "Kenansville",
+    "county": "Duplin",
+    "population": 3724,
+    "density": 21.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28350",
+    "city": "Lakeview",
+    "county": "Moore",
+    "population": 305,
+    "density": 182.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28351",
+    "city": "Laurel Hill",
+    "county": "Scotland",
+    "population": 4759,
+    "density": 32.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28352",
+    "city": "Laurinburg",
+    "county": "Scotland",
+    "population": 25641,
+    "density": 79.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28356",
+    "city": "Linden",
+    "county": "Cumberland",
+    "population": 5018,
+    "density": 35.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28357",
+    "city": "Lumber Bridge",
+    "county": "Robeson",
+    "population": 3125,
+    "density": 34.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28358",
+    "city": "Lumberton",
+    "county": "Robeson",
+    "population": 38738,
+    "density": 74.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28360",
+    "city": "Lumberton",
+    "county": "Robeson",
+    "population": 14263,
+    "density": 83.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28363",
+    "city": "Marston",
+    "county": "Scotland",
+    "population": 1202,
+    "density": 8.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28364",
+    "city": "Maxton",
+    "county": "Robeson",
+    "population": 14809,
+    "density": 42.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28365",
+    "city": "Mount Olive",
+    "county": "Wayne",
+    "population": 17144,
+    "density": 34.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28366",
+    "city": "Newton Grove",
+    "county": "Sampson",
+    "population": 5061,
+    "density": 23.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28367",
+    "city": "Norman",
+    "county": "Richmond",
+    "population": 87,
+    "density": 118.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28369",
+    "city": "Orrum",
+    "county": "Robeson",
+    "population": 2652,
+    "density": 13.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28371",
+    "city": "Parkton",
+    "county": "Robeson",
+    "population": 6519,
+    "density": 72.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28372",
+    "city": "Pembroke",
+    "county": "Robeson",
+    "population": 14783,
+    "density": 130.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28373",
+    "city": "Pinebluff",
+    "county": "Moore",
+    "population": 2150,
+    "density": 64.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28374",
+    "city": "Pinehurst",
+    "county": "Moore",
+    "population": 15990,
+    "density": 278.7,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28375",
+    "city": "Proctorville",
+    "county": "Robeson",
+    "population": 102,
+    "density": 137.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28376",
+    "city": "Raeford",
+    "county": "Hoke",
+    "population": 37991,
+    "density": 101.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28377",
+    "city": "Red Springs",
+    "county": "Robeson",
+    "population": 12666,
+    "density": 48.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28379",
+    "city": "Rockingham",
+    "county": "Richmond",
+    "population": 26388,
+    "density": 65.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28382",
+    "city": "Roseboro",
+    "county": "Sampson",
+    "population": 7056,
+    "density": 23.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28383",
+    "city": "Rowland",
+    "county": "Robeson",
+    "population": 8080,
+    "density": 29.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28384",
+    "city": "Saint Pauls",
+    "county": "Robeson",
+    "population": 12097,
+    "density": 48.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28385",
+    "city": "Salemburg",
+    "county": "Sampson",
+    "population": 3029,
+    "density": 29.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28386",
+    "city": "Shannon",
+    "county": "Robeson",
+    "population": 6319,
+    "density": 54.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28387",
+    "city": "Southern Pines",
+    "county": "Moore",
+    "population": 13921,
+    "density": 184.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28390",
+    "city": "Spring Lake",
+    "county": "Harnett",
+    "population": 19942,
+    "density": 130.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28391",
+    "city": "Stedman",
+    "county": "Cumberland",
+    "population": 5302,
+    "density": 57.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28392",
+    "city": "Tar Heel",
+    "county": "Bladen",
+    "population": 1579,
+    "density": 15.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28393",
+    "city": "Turkey",
+    "county": "Sampson",
+    "population": 2005,
+    "density": 17.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28394",
+    "city": "Vass",
+    "county": "Moore",
+    "population": 5164,
+    "density": 45.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28395",
+    "city": "Wade",
+    "county": "Cumberland",
+    "population": 2375,
+    "density": 19.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28396",
+    "city": "Wagram",
+    "county": "Scotland",
+    "population": 2732,
+    "density": 21.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28398",
+    "city": "Warsaw",
+    "county": "Duplin",
+    "population": 8112,
+    "density": 32.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28399",
+    "city": "White Oak",
+    "county": "Bladen",
+    "population": 2140,
+    "density": 8.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28401",
+    "city": "Wilmington",
+    "county": "New Hanover",
+    "population": 22094,
+    "density": 353.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28403",
+    "city": "Wilmington",
+    "county": "New Hanover",
+    "population": 36063,
+    "density": 989.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28405",
+    "city": "Wilmington",
+    "county": "New Hanover",
+    "population": 29152,
+    "density": 467.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28409",
+    "city": "Wilmington",
+    "county": "New Hanover",
+    "population": 31296,
+    "density": 506.8,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28411",
+    "city": "Wilmington",
+    "county": "New Hanover",
+    "population": 31962,
+    "density": 294.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28412",
+    "city": "Wilmington",
+    "county": "New Hanover",
+    "population": 35573,
+    "density": 631.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28420",
+    "city": "Ash",
+    "county": "Brunswick",
+    "population": 3886,
+    "density": 10.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28421",
+    "city": "Atkinson",
+    "county": "Pender",
+    "population": 1521,
+    "density": 10.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28422",
+    "city": "Bolivia",
+    "county": "Brunswick",
+    "population": 6641,
+    "density": 27.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28423",
+    "city": "Bolton",
+    "county": "Columbus",
+    "population": 2290,
+    "density": 11.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28424",
+    "city": "Brunswick",
+    "county": "Columbus",
+    "population": 128,
+    "density": 333.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28425",
+    "city": "Burgaw",
+    "county": "Pender",
+    "population": 10906,
+    "density": 28.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28428",
+    "city": "Carolina Beach",
+    "county": "New Hanover",
+    "population": 6033,
+    "density": 452.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28429",
+    "city": "Castle Hayne",
+    "county": "New Hanover",
+    "population": 8026,
+    "density": 79.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28430",
+    "city": "Cerro Gordo",
+    "county": "Columbus",
+    "population": 1900,
+    "density": 18.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28431",
+    "city": "Chadbourn",
+    "county": "Columbus",
+    "population": 7102,
+    "density": 36.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28432",
+    "city": "Clarendon",
+    "county": "Columbus",
+    "population": 1968,
+    "density": 21.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28433",
+    "city": "Clarkton",
+    "county": "Bladen",
+    "population": 5050,
+    "density": 17.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28434",
+    "city": "Council",
+    "county": "Bladen",
+    "population": 1329,
+    "density": 6.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28435",
+    "city": "Currie",
+    "county": "Pender",
+    "population": 2490,
+    "density": 10.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28436",
+    "city": "Delco",
+    "county": "Columbus",
+    "population": 2203,
+    "density": 22.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28438",
+    "city": "Evergreen",
+    "county": "Columbus",
+    "population": 1845,
+    "density": 15.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28439",
+    "city": "Fair Bluff",
+    "county": "Columbus",
+    "population": 1595,
+    "density": 25.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28441",
+    "city": "Garland",
+    "county": "Sampson",
+    "population": 3198,
+    "density": 9.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28442",
+    "city": "Hallsboro",
+    "county": "Columbus",
+    "population": 1647,
+    "density": 11.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28443",
+    "city": "Hampstead",
+    "county": "Pender",
+    "population": 17512,
+    "density": 58.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28444",
+    "city": "Harrells",
+    "county": "Sampson",
+    "population": 2085,
+    "density": 9.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28445",
+    "city": "Holly Ridge",
+    "county": "Onslow",
+    "population": 5676,
+    "density": 42.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28447",
+    "city": "Ivanhoe",
+    "county": "Sampson",
+    "population": 1391,
+    "density": 4.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28448",
+    "city": "Kelly",
+    "county": "Bladen",
+    "population": 1243,
+    "density": 5.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28449",
+    "city": "Kure Beach",
+    "county": "New Hanover",
+    "population": 1692,
+    "density": 164.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28450",
+    "city": "Lake Waccamaw",
+    "county": "Columbus",
+    "population": 2438,
+    "density": 24.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28451",
+    "city": "Leland",
+    "county": "Brunswick",
+    "population": 27112,
+    "density": 74.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28452",
+    "city": "Longwood",
+    "county": "Brunswick",
+    "population": 694,
+    "density": 46.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28453",
+    "city": "Magnolia",
+    "county": "Duplin",
+    "population": 3829,
+    "density": 17.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28454",
+    "city": "Maple Hill",
+    "county": "Onslow",
+    "population": 2545,
+    "density": 15.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28455",
+    "city": "Nakina",
+    "county": "Columbus",
+    "population": 2117,
+    "density": 10.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28456",
+    "city": "Riegelwood",
+    "county": "Brunswick",
+    "population": 3658,
+    "density": 21.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28457",
+    "city": "Rocky Point",
+    "county": "Pender",
+    "population": 9905,
+    "density": 29.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28458",
+    "city": "Rose Hill",
+    "county": "Duplin",
+    "population": 6444,
+    "density": 22.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28460",
+    "city": "Sneads Ferry",
+    "county": "Onslow",
+    "population": 7652,
+    "density": 84.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28461",
+    "city": "Southport",
+    "county": "Brunswick",
+    "population": 16126,
+    "density": 82.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28462",
+    "city": "Supply",
+    "county": "Brunswick",
+    "population": 11680,
+    "density": 48.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28463",
+    "city": "Tabor City",
+    "county": "Columbus",
+    "population": 9799,
+    "density": 32.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28464",
+    "city": "Teachey",
+    "county": "Duplin",
+    "population": 2457,
+    "density": 41.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28465",
+    "city": "Oak Island",
+    "county": "Brunswick",
+    "population": 6531,
+    "density": 238.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28466",
+    "city": "Wallace",
+    "county": "Duplin",
+    "population": 10103,
+    "density": 20.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28467",
+    "city": "Calabash",
+    "county": "Brunswick",
+    "population": 8703,
+    "density": 186.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28468",
+    "city": "Sunset Beach",
+    "county": "Brunswick",
+    "population": 4375,
+    "density": 96.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28469",
+    "city": "Ocean Isle Beach",
+    "county": "Brunswick",
+    "population": 5839,
+    "density": 101.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28470",
+    "city": "Shallotte",
+    "county": "Brunswick",
+    "population": 10644,
+    "density": 86.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28472",
+    "city": "Whiteville",
+    "county": "Columbus",
+    "population": 19658,
+    "density": 41.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28478",
+    "city": "Willard",
+    "county": "Pender",
+    "population": 4588,
+    "density": 14.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28479",
+    "city": "Winnabow",
+    "county": "Brunswick",
+    "population": 4903,
+    "density": 20.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28480",
+    "city": "Wrightsville Beach",
+    "county": "New Hanover",
+    "population": 2473,
+    "density": 326.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28501",
+    "city": "Kinston",
+    "county": "Lenoir",
+    "population": 20389,
+    "density": 74.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28504",
+    "city": "Kinston",
+    "county": "Lenoir",
+    "population": 21642,
+    "density": 67.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28508",
+    "city": "Albertson",
+    "county": "Duplin",
+    "population": 2737,
+    "density": 29.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28510",
+    "city": "Arapahoe",
+    "county": "Pamlico",
+    "population": 1502,
+    "density": 28.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28511",
+    "city": "Atlantic",
+    "county": "Carteret",
+    "population": 694,
+    "density": 32.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28512",
+    "city": "Atlantic Beach",
+    "county": "Carteret",
+    "population": 2896,
+    "density": 194.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28513",
+    "city": "Ayden",
+    "county": "Pitt",
+    "population": 10346,
+    "density": 44.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28515",
+    "city": "Bayboro",
+    "county": "Pamlico",
+    "population": 2915,
+    "density": 20.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28516",
+    "city": "Beaufort",
+    "county": "Carteret",
+    "population": 11431,
+    "density": 21.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28518",
+    "city": "Beulaville",
+    "county": "Duplin",
+    "population": 7909,
+    "density": 32.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28519",
+    "city": "Bridgeton",
+    "county": "Craven",
+    "population": 404,
+    "density": 508.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28520",
+    "city": "Cedar Island",
+    "county": "Carteret",
+    "population": 327,
+    "density": 5.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28521",
+    "city": "Chinquapin",
+    "county": "Duplin",
+    "population": 2287,
+    "density": 21.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28523",
+    "city": "Cove City",
+    "county": "Craven",
+    "population": 2456,
+    "density": 16.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28524",
+    "city": "Davis",
+    "county": "Carteret",
+    "population": 426,
+    "density": 29.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28525",
+    "city": "Deep Run",
+    "county": "Lenoir",
+    "population": 3132,
+    "density": 27.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28526",
+    "city": "Dover",
+    "county": "Craven",
+    "population": 2489,
+    "density": 11.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28527",
+    "city": "Ernul",
+    "county": "Craven",
+    "population": 1140,
+    "density": 7.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28528",
+    "city": "Gloucester",
+    "county": "Carteret",
+    "population": 644,
+    "density": 85.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28529",
+    "city": "Grantsboro",
+    "county": "Pamlico",
+    "population": 2193,
+    "density": 20.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28530",
+    "city": "Grifton",
+    "county": "Craven",
+    "population": 7332,
+    "density": 39.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28531",
+    "city": "Harkers Island",
+    "county": "Carteret",
+    "population": 1207,
+    "density": 207.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28532",
+    "city": "Havelock",
+    "county": "Craven",
+    "population": 23320,
+    "density": 54.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28533",
+    "city": "Cherry Point",
+    "county": "Craven",
+    "population": 2952,
+    "density": 2564.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28537",
+    "city": "Hobucken",
+    "county": "Pamlico",
+    "population": 137,
+    "density": 2.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28538",
+    "city": "Hookerton",
+    "county": "Greene",
+    "population": 2175,
+    "density": 29.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28539",
+    "city": "Hubert",
+    "county": "Onslow",
+    "population": 15469,
+    "density": 121.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28540",
+    "city": "Jacksonville",
+    "county": "Onslow",
+    "population": 49252,
+    "density": 184.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28543",
+    "city": "Tarawa Terrace",
+    "county": "Onslow",
+    "population": 4699,
+    "density": 887.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28544",
+    "city": "Midway Park",
+    "county": "Onslow",
+    "population": 5368,
+    "density": 182.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28546",
+    "city": "Jacksonville",
+    "county": "Onslow",
+    "population": 42696,
+    "density": 294.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28547",
+    "city": "Camp Lejeune",
+    "county": "Onslow",
+    "population": 21884,
+    "density": 325.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28551",
+    "city": "La Grange",
+    "county": "Greene",
+    "population": 14093,
+    "density": 41.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28552",
+    "city": "Lowland",
+    "county": "Pamlico",
+    "population": 254,
+    "density": 6.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28553",
+    "city": "Marshallberg",
+    "county": "Carteret",
+    "population": 454,
+    "density": 142.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28554",
+    "city": "Maury",
+    "county": "Greene",
+    "population": 243,
+    "density": 336.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28555",
+    "city": "Maysville",
+    "county": "Onslow",
+    "population": 5175,
+    "density": 13.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28556",
+    "city": "Merritt",
+    "county": "Pamlico",
+    "population": 963,
+    "density": 8.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28557",
+    "city": "Morehead City",
+    "county": "Carteret",
+    "population": 14429,
+    "density": 392.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28560",
+    "city": "New Bern",
+    "county": "Craven",
+    "population": 28921,
+    "density": 95.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28562",
+    "city": "New Bern",
+    "county": "Craven",
+    "population": 36176,
+    "density": 90.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28570",
+    "city": "Newport",
+    "county": "Carteret",
+    "population": 21432,
+    "density": 66.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28571",
+    "city": "Oriental",
+    "county": "Pamlico",
+    "population": 2585,
+    "density": 19.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28572",
+    "city": "Pink Hill",
+    "county": "Duplin",
+    "population": 6531,
+    "density": 23.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28573",
+    "city": "Pollocksville",
+    "county": "Jones",
+    "population": 2176,
+    "density": 11.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28574",
+    "city": "Richlands",
+    "county": "Onslow",
+    "population": 15102,
+    "density": 45.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28575",
+    "city": "Salter Path",
+    "county": "Carteret",
+    "population": 316,
+    "density": 203.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28577",
+    "city": "Sealevel",
+    "county": "Carteret",
+    "population": 522,
+    "density": 76.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28578",
+    "city": "Seven Springs",
+    "county": "Wayne",
+    "population": 6363,
+    "density": 38.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28579",
+    "city": "Smyrna",
+    "county": "Carteret",
+    "population": 622,
+    "density": 62.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28580",
+    "city": "Snow Hill",
+    "county": "Greene",
+    "population": 12657,
+    "density": 42.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28581",
+    "city": "Stacy",
+    "county": "Carteret",
+    "population": 214,
+    "density": 9.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28582",
+    "city": "Stella",
+    "county": "Onslow",
+    "population": 1588,
+    "density": 37.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28583",
+    "city": "Stonewall",
+    "county": "Pamlico",
+    "population": 281,
+    "density": 63.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28584",
+    "city": "Swansboro",
+    "county": "Carteret",
+    "population": 11396,
+    "density": 75.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28585",
+    "city": "Trenton",
+    "county": "Jones",
+    "population": 3942,
+    "density": 8.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28586",
+    "city": "Vanceboro",
+    "county": "Craven",
+    "population": 8218,
+    "density": 24.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28587",
+    "city": "Vandemere",
+    "county": "Pamlico",
+    "population": 369,
+    "density": 41.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28589",
+    "city": "Williston",
+    "county": "Carteret",
+    "population": 180,
+    "density": 6.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28590",
+    "city": "Winterville",
+    "county": "Pitt",
+    "population": 23407,
+    "density": 216.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28594",
+    "city": "Emerald Isle",
+    "county": "Carteret",
+    "population": 3655,
+    "density": 246.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28601",
+    "city": "Hickory",
+    "county": "Catawba",
+    "population": 50026,
+    "density": 419.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28602",
+    "city": "Hickory",
+    "county": "Catawba",
+    "population": 28981,
+    "density": 160.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28604",
+    "city": "Banner Elk",
+    "county": "Watauga",
+    "population": 6249,
+    "density": 36.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28605",
+    "city": "Blowing Rock",
+    "county": "Watauga",
+    "population": 3412,
+    "density": 45.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28606",
+    "city": "Boomer",
+    "county": "Wilkes",
+    "population": 2158,
+    "density": 19.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28607",
+    "city": "Boone",
+    "county": "Watauga",
+    "population": 33059,
+    "density": 129.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28609",
+    "city": "Catawba",
+    "county": "Catawba",
+    "population": 5864,
+    "density": 50.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28610",
+    "city": "Claremont",
+    "county": "Catawba",
+    "population": 9913,
+    "density": 95.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28611",
+    "city": "Collettsville",
+    "county": "Caldwell",
+    "population": 885,
+    "density": 4.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28612",
+    "city": "Connelly Springs",
+    "county": "Burke",
+    "population": 12397,
+    "density": 57.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28613",
+    "city": "Conover",
+    "county": "Catawba",
+    "population": 22759,
+    "density": 205.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28615",
+    "city": "Creston",
+    "county": "Ashe",
+    "population": 1876,
+    "density": 10.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28616",
+    "city": "Crossnore",
+    "county": "Avery",
+    "population": 493,
+    "density": 70.5,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28617",
+    "city": "Crumpler",
+    "county": "Ashe",
+    "population": 2261,
+    "density": 25.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28618",
+    "city": "Deep Gap",
+    "county": "Watauga",
+    "population": 2352,
+    "density": 23.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28619",
+    "city": "Drexel",
+    "county": "Burke",
+    "population": 1520,
+    "density": 491.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28621",
+    "city": "Elkin",
+    "county": "Surry",
+    "population": 10472,
+    "density": 57.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28622",
+    "city": "Elk Park",
+    "county": "Avery",
+    "population": 2527,
+    "density": 31.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28623",
+    "city": "Ennice",
+    "county": "Alleghany",
+    "population": 1653,
+    "density": 22.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28624",
+    "city": "Ferguson",
+    "county": "Wilkes",
+    "population": 1639,
+    "density": 10.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28625",
+    "city": "Statesville",
+    "county": "Iredell",
+    "population": 36189,
+    "density": 71.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28626",
+    "city": "Fleetwood",
+    "county": "Ashe",
+    "population": 2714,
+    "density": 32.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28627",
+    "city": "Glade Valley",
+    "county": "Alleghany",
+    "population": 1152,
+    "density": 22.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28628",
+    "city": "Glen Alpine",
+    "county": "Burke",
+    "population": 479,
+    "density": 358.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28629",
+    "city": "Glendale Springs",
+    "county": "Ashe",
+    "population": 75,
+    "density": 12.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28630",
+    "city": "Granite Falls",
+    "county": "Caldwell",
+    "population": 20041,
+    "density": 129.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28631",
+    "city": "Grassy Creek",
+    "county": "Ashe",
+    "population": 637,
+    "density": 9.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28634",
+    "city": "Harmony",
+    "county": "Iredell",
+    "population": 5225,
+    "density": 32.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28635",
+    "city": "Hays",
+    "county": "Wilkes",
+    "population": 3901,
+    "density": 35.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28636",
+    "city": "Hiddenite",
+    "county": "Alexander",
+    "population": 5522,
+    "density": 35.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28637",
+    "city": "Hildebran",
+    "county": "Burke",
+    "population": 1746,
+    "density": 234.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28638",
+    "city": "Hudson",
+    "county": "Caldwell",
+    "population": 12302,
+    "density": 234.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28640",
+    "city": "Jefferson",
+    "county": "Ashe",
+    "population": 4719,
+    "density": 46.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28642",
+    "city": "Jonesville",
+    "county": "Yadkin",
+    "population": 5745,
+    "density": 60.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28643",
+    "city": "Lansing",
+    "county": "Ashe",
+    "population": 3521,
+    "density": 19.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28644",
+    "city": "Laurel Springs",
+    "county": "Alleghany",
+    "population": 1494,
+    "density": 8.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28645",
+    "city": "Lenoir",
+    "county": "Caldwell",
+    "population": 47703,
+    "density": 55.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28646",
+    "city": "Linville",
+    "county": "Avery",
+    "population": 342,
+    "density": 6.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28647",
+    "city": "Linville Falls",
+    "county": "Avery",
+    "population": 89,
+    "density": 5.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28649",
+    "city": "Mc Grady",
+    "county": "Wilkes",
+    "population": 993,
+    "density": 11.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28650",
+    "city": "Maiden",
+    "county": "Catawba",
+    "population": 11883,
+    "density": 102.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28651",
+    "city": "Millers Creek",
+    "county": "Wilkes",
+    "population": 7132,
+    "density": 31.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28652",
+    "city": "Minneapolis",
+    "county": "Avery",
+    "population": 46,
+    "density": 220.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28654",
+    "city": "Moravian Falls",
+    "county": "Wilkes",
+    "population": 3495,
+    "density": 21.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28655",
+    "city": "Morganton",
+    "county": "Burke",
+    "population": 54996,
+    "density": 66.8,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28657",
+    "city": "Newland",
+    "county": "Avery",
+    "population": 9488,
+    "density": 22.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28658",
+    "city": "Newton",
+    "county": "Catawba",
+    "population": 27022,
+    "density": 141.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28659",
+    "city": "North Wilkesboro",
+    "county": "Wilkes",
+    "population": 21134,
+    "density": 80.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28660",
+    "city": "Olin",
+    "county": "Iredell",
+    "population": 2249,
+    "density": 27.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28662",
+    "city": "Pineola",
+    "county": "Avery",
+    "population": 140,
+    "density": 30.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28663",
+    "city": "Piney Creek",
+    "county": "Alleghany",
+    "population": 614,
+    "density": 13.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28665",
+    "city": "Purlear",
+    "county": "Wilkes",
+    "population": 2571,
+    "density": 15.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28666",
+    "city": "Icard",
+    "county": "Burke",
+    "population": 368,
+    "density": 305.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28667",
+    "city": "Rhodhiss",
+    "county": "Caldwell",
+    "population": 559,
+    "density": 359.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28668",
+    "city": "Roaring Gap",
+    "county": "Alleghany",
+    "population": 300,
+    "density": 8.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28669",
+    "city": "Roaring River",
+    "county": "Wilkes",
+    "population": 3146,
+    "density": 26.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28670",
+    "city": "Ronda",
+    "county": "Wilkes",
+    "population": 2719,
+    "density": 28.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28671",
+    "city": "Rutherford College",
+    "county": "Burke",
+    "population": 597,
+    "density": 310.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28672",
+    "city": "Scottville",
+    "county": "Ashe",
+    "population": 35,
+    "density": 6.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28673",
+    "city": "Sherrills Ford",
+    "county": "Catawba",
+    "population": 5919,
+    "density": 89.9,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28675",
+    "city": "Sparta",
+    "county": "Alleghany",
+    "population": 6621,
+    "density": 22.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28676",
+    "city": "State Road",
+    "county": "Surry",
+    "population": 3483,
+    "density": 47.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28677",
+    "city": "Statesville",
+    "county": "Iredell",
+    "population": 32940,
+    "density": 154.3,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28678",
+    "city": "Stony Point",
+    "county": "Alexander",
+    "population": 5226,
+    "density": 45.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28679",
+    "city": "Sugar Grove",
+    "county": "Watauga",
+    "population": 2064,
+    "density": 30.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28681",
+    "city": "Taylorsville",
+    "county": "Alexander",
+    "population": 25910,
+    "density": 59.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28682",
+    "city": "Terrell",
+    "county": "Catawba",
+    "population": 1129,
+    "density": 134.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28683",
+    "city": "Thurmond",
+    "county": "Surry",
+    "population": 1697,
+    "density": 19.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28684",
+    "city": "Todd",
+    "county": "Ashe",
+    "population": 2141,
+    "density": 15.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28685",
+    "city": "Traphill",
+    "county": "Wilkes",
+    "population": 2076,
+    "density": 13.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28689",
+    "city": "Union Grove",
+    "county": "Iredell",
+    "population": 1712,
+    "density": 14.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28690",
+    "city": "Valdese",
+    "county": "Burke",
+    "population": 9295,
+    "density": 166.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28692",
+    "city": "Vilas",
+    "county": "Watauga",
+    "population": 4067,
+    "density": 40.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28693",
+    "city": "Warrensville",
+    "county": "Ashe",
+    "population": 1700,
+    "density": 25.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28694",
+    "city": "West Jefferson",
+    "county": "Ashe",
+    "population": 7744,
+    "density": 45.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28697",
+    "city": "Wilkesboro",
+    "county": "Wilkes",
+    "population": 12930,
+    "density": 78.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28698",
+    "city": "Zionville",
+    "county": "Watauga",
+    "population": 2256,
+    "density": 34.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28701",
+    "city": "Alexander",
+    "county": "Buncombe",
+    "population": 3635,
+    "density": 78.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28702",
+    "city": "Almond",
+    "county": "Graham",
+    "population": 366,
+    "density": 7.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28704",
+    "city": "Arden",
+    "county": "Buncombe",
+    "population": 18821,
+    "density": 219.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28705",
+    "city": "Bakersville",
+    "county": "Mitchell",
+    "population": 6715,
+    "density": 20.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28707",
+    "city": "Balsam",
+    "county": "Jackson",
+    "population": 94,
+    "density": 3.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28708",
+    "city": "Balsam Grove",
+    "county": "Transylvania",
+    "population": 754,
+    "density": 6.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28709",
+    "city": "Barnardsville",
+    "county": "Buncombe",
+    "population": 2225,
+    "density": 16.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28711",
+    "city": "Black Mountain",
+    "county": "Buncombe",
+    "population": 13209,
+    "density": 51.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28712",
+    "city": "Brevard",
+    "county": "Transylvania",
+    "population": 19347,
+    "density": 59.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28713",
+    "city": "Bryson City",
+    "county": "Swain",
+    "population": 8686,
+    "density": 24.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28714",
+    "city": "Burnsville",
+    "county": "Yancey",
+    "population": 16753,
+    "density": 22.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28715",
+    "city": "Candler",
+    "county": "Buncombe",
+    "population": 24582,
+    "density": 122.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28716",
+    "city": "Canton",
+    "county": "Haywood",
+    "population": 17477,
+    "density": 42.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28717",
+    "city": "Cashiers",
+    "county": "Jackson",
+    "population": 1729,
+    "density": 13.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28718",
+    "city": "Cedar Mountain",
+    "county": "Transylvania",
+    "population": 553,
+    "density": 12.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28719",
+    "city": "Cherokee",
+    "county": "Swain",
+    "population": 8048,
+    "density": 23.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28720",
+    "city": "Chimney Rock",
+    "county": "Rutherford",
+    "population": 114,
+    "density": 13.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28721",
+    "city": "Clyde",
+    "county": "Haywood",
+    "population": 10063,
+    "density": 35.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28722",
+    "city": "Columbus",
+    "county": "Polk",
+    "population": 6371,
+    "density": 54.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28723",
+    "city": "Cullowhee",
+    "county": "Jackson",
+    "population": 11329,
+    "density": 39.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28725",
+    "city": "Dillsboro",
+    "county": "Jackson",
+    "population": 43,
+    "density": 60.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28726",
+    "city": "East Flat Rock",
+    "county": "Henderson",
+    "population": 3203,
+    "density": 518.9,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28729",
+    "city": "Etowah",
+    "county": "Henderson",
+    "population": 2894,
+    "density": 255.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28730",
+    "city": "Fairview",
+    "county": "Buncombe",
+    "population": 9133,
+    "density": 71.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28731",
+    "city": "Flat Rock",
+    "county": "Henderson",
+    "population": 7778,
+    "density": 111.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28732",
+    "city": "Fletcher",
+    "county": "Henderson",
+    "population": 16491,
+    "density": 149.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28733",
+    "city": "Fontana Dam",
+    "county": "Graham",
+    "population": 21,
+    "density": 1.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28734",
+    "city": "Franklin",
+    "county": "Macon",
+    "population": 27040,
+    "density": 34.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28735",
+    "city": "Gerton",
+    "county": "Henderson",
+    "population": 256,
+    "density": 26.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28736",
+    "city": "Glenville",
+    "county": "Jackson",
+    "population": 787,
+    "density": 8.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28739",
+    "city": "Hendersonville",
+    "county": "Henderson",
+    "population": 19786,
+    "density": 113.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28740",
+    "city": "Green Mountain",
+    "county": "Yancey",
+    "population": 1364,
+    "density": 9.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28741",
+    "city": "Highlands",
+    "county": "Macon",
+    "population": 3197,
+    "density": 14.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28742",
+    "city": "Horse Shoe",
+    "county": "Henderson",
+    "population": 2710,
+    "density": 42.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28743",
+    "city": "Hot Springs",
+    "county": "Madison",
+    "population": 2125,
+    "density": 6.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28745",
+    "city": "Lake Junaluska",
+    "county": "Haywood",
+    "population": 551,
+    "density": 341.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28746",
+    "city": "Lake Lure",
+    "county": "Rutherford",
+    "population": 2388,
+    "density": 19.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28747",
+    "city": "Lake Toxaway",
+    "county": "Transylvania",
+    "population": 2198,
+    "density": 16.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28748",
+    "city": "Leicester",
+    "county": "Buncombe",
+    "population": 11334,
+    "density": 51.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28749",
+    "city": "Little Switzerland",
+    "county": "McDowell",
+    "population": 50,
+    "density": 18.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28751",
+    "city": "Maggie Valley",
+    "county": "Haywood",
+    "population": 2916,
+    "density": 25.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28752",
+    "city": "Marion",
+    "county": "McDowell",
+    "population": 30600,
+    "density": 48.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28753",
+    "city": "Marshall",
+    "county": "Madison",
+    "population": 11670,
+    "density": 17.1,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28754",
+    "city": "Mars Hill",
+    "county": "Madison",
+    "population": 7679,
+    "density": 34.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28756",
+    "city": "Mill Spring",
+    "county": "Polk",
+    "population": 4504,
+    "density": 19.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28757",
+    "city": "Montreat",
+    "county": "Buncombe",
+    "population": 280,
+    "density": 88.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28759",
+    "city": "Mills River",
+    "county": "Henderson",
+    "population": 6922,
+    "density": 115.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28761",
+    "city": "Nebo",
+    "county": "McDowell",
+    "population": 7816,
+    "density": 28.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28762",
+    "city": "Old Fort",
+    "county": "McDowell",
+    "population": 6857,
+    "density": 26.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28763",
+    "city": "Otto",
+    "county": "Macon",
+    "population": 2725,
+    "density": 19.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28766",
+    "city": "Penrose",
+    "county": "Transylvania",
+    "population": 1262,
+    "density": 83.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28768",
+    "city": "Pisgah Forest",
+    "county": "Transylvania",
+    "population": 6813,
+    "density": 31.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28771",
+    "city": "Robbinsville",
+    "county": "Graham",
+    "population": 8558,
+    "density": 12.2,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28772",
+    "city": "Rosman",
+    "county": "Transylvania",
+    "population": 1239,
+    "density": 38.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28773",
+    "city": "Saluda",
+    "county": "Polk",
+    "population": 3378,
+    "density": 23.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28774",
+    "city": "Sapphire",
+    "county": "Transylvania",
+    "population": 1013,
+    "density": 8.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28775",
+    "city": "Scaly Mountain",
+    "county": "Macon",
+    "population": 296,
+    "density": 11.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28777",
+    "city": "Spruce Pine",
+    "county": "Mitchell",
+    "population": 10638,
+    "density": 60.2,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28778",
+    "city": "Swannanoa",
+    "county": "Buncombe",
+    "population": 10381,
+    "density": 116.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28779",
+    "city": "Sylva",
+    "county": "Jackson",
+    "population": 16111,
+    "density": 58.0,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28781",
+    "city": "Topton",
+    "county": "Macon",
+    "population": 939,
+    "density": 4.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28782",
+    "city": "Tryon",
+    "county": "Polk",
+    "population": 6584,
+    "density": 51.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28783",
+    "city": "Tuckasegee",
+    "county": "Jackson",
+    "population": 1593,
+    "density": 9.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28785",
+    "city": "Waynesville",
+    "county": "Haywood",
+    "population": 7338,
+    "density": 18.6,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28786",
+    "city": "Waynesville",
+    "county": "Haywood",
+    "population": 20714,
+    "density": 107.5,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28787",
+    "city": "Weaverville",
+    "county": "Buncombe",
+    "population": 19718,
+    "density": 95.7,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28789",
+    "city": "Whittier",
+    "county": "Jackson",
+    "population": 5097,
+    "density": 34.5,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28790",
+    "city": "Zirconia",
+    "county": "Henderson",
+    "population": 3205,
+    "density": 29.5,
+    "tier": "PREMIER",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28791",
+    "city": "Hendersonville",
+    "county": "Henderson",
+    "population": 14171,
+    "density": 332.6,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28792",
+    "city": "Hendersonville",
+    "county": "Henderson",
+    "population": 32689,
+    "density": 125.4,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28801",
+    "city": "Asheville",
+    "county": "Buncombe",
+    "population": 15019,
+    "density": 1142.1,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28803",
+    "city": "Asheville",
+    "county": "Buncombe",
+    "population": 28693,
+    "density": 289.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28804",
+    "city": "Asheville",
+    "county": "Buncombe",
+    "population": 20507,
+    "density": 297.9,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28805",
+    "city": "Asheville",
+    "county": "Buncombe",
+    "population": 17620,
+    "density": 262.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28806",
+    "city": "Asheville",
+    "county": "Buncombe",
+    "population": 38550,
+    "density": 392.0,
+    "tier": "STANDARD",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28901",
+    "city": "Andrews",
+    "county": "Cherokee",
+    "population": 5354,
+    "density": 32.7,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28902",
+    "city": "Brasstown",
+    "county": "Clay",
+    "population": 1373,
+    "density": 23.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28904",
+    "city": "Hayesville",
+    "county": "Clay",
+    "population": 8533,
+    "density": 17.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28905",
+    "city": "Marble",
+    "county": "Cherokee",
+    "population": 3129,
+    "density": 26.8,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28906",
+    "city": "Murphy",
+    "county": "Cherokee",
+    "population": 18475,
+    "density": 21.4,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  },
+  {
+    "zipCode": "28909",
+    "city": "Warne",
+    "county": "Clay",
+    "population": 1030,
+    "density": 40.3,
+    "tier": "RURAL",
+    "status": "AVAILABLE",
+    "statusDate": null
+  }
+]

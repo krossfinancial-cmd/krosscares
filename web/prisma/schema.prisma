@@ -26,6 +26,18 @@ enum ZipTier {
   PREMIUM
 }
 
+enum TerritoryTrackerTier {
+  PREMIER
+  STANDARD
+  RURAL
+}
+
+enum TerritoryTrackerStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+}
+
 enum PaymentStatus {
   PENDING
   PAID
@@ -160,6 +172,25 @@ model ZipInventory {
   @@index([vertical, status])
   @@index([state, city])
   @@index([tier, status])
+}
+
+model TerritoryTrackerEntry {
+  id         String                 @id @default(uuid()) @db.Uuid
+  zipCode    String                 @unique @db.VarChar(5)
+  city       String
+  county     String
+  population Int
+  density    Float
+  tier       TerritoryTrackerTier
+  status     TerritoryTrackerStatus @default(AVAILABLE)
+  statusDate DateTime?
+  createdAt  DateTime               @default(now())
+  updatedAt  DateTime               @updatedAt
+
+  @@index([status])
+  @@index([tier])
+  @@index([county])
+  @@index([city])
 }
 
 model Payment {
