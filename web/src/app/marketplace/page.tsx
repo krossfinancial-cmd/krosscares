@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 import { ZipActionButton } from "@/components/zip-action-button";
+import { isDatabaseUnavailableError } from "@/lib/database-errors";
 import { formatCurrency, zipStatusColor } from "@/lib/format";
 import { getCurrentUser } from "@/lib/auth";
 import { getMarketplaceZips } from "@/lib/queries";
@@ -14,19 +15,48 @@ type SearchParams = Promise<{
 export default async function MarketplacePage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const now = new Date();
-  const user = await getCurrentUser();
+  let user: Awaited<ReturnType<typeof getCurrentUser>> = null;
+  let inventoryUnavailable = false;
+
+  try {
+    user = await getCurrentUser();
+  } catch (error) {
+    if (!isDatabaseUnavailableError(error)) {
+      throw error;
+    }
+
+    inventoryUnavailable = true;
+    console.error("Marketplace auth lookup failed because the database is unavailable.", error);
+  }
+
   const lockedVertical = user?.role === "DEALER" ? "DEALER" : user?.role === "REALTOR" ? "REALTOR" : undefined;
   const effectiveVertical = lockedVertical ?? params.vertical ?? "ALL";
-  const zips = await getMarketplaceZips({
-    ...params,
-    vertical: effectiveVertical,
-  });
+  let zips: Awaited<ReturnType<typeof getMarketplaceZips>> = [];
+
+  try {
+    zips = await getMarketplaceZips({
+      ...params,
+      vertical: effectiveVertical,
+    });
+  } catch (error) {
+    if (!isDatabaseUnavailableError(error)) {
+      throw error;
+    }
+
+    inventoryUnavailable = true;
+    console.error("Marketplace inventory query failed because the database is unavailable.", error);
+  }
 
   return (
     <div className="space-y-6">
       <div className="card p-6">
         <h1 className="text-2xl font-bold text-blue-950">ZIP Territory Marketplace</h1>
         <p className="mt-2 text-sm text-blue-900/70">One active owner per ZIP. Once sold, it moves to waitlist mode.</p>
+        {inventoryUnavailable ? (
+          <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
+            Marketplace inventory is temporarily unavailable while the database reconnects. Please try again shortly.
+          </div>
+        ) : null}
         {lockedVertical ? (
           <p className="mt-2 inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
             Showing {lockedVertical.toLowerCase()} territories for your account
@@ -151,7 +181,7 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
             {!zips.length && (
               <tr>
               <td colSpan={7} className="px-4 py-8 text-center text-sm text-blue-700">
-                No ZIPs match your filters.
+                {inventoryUnavailable ? "Marketplace inventory is temporarily unavailable." : "No ZIPs match your filters."}
               </td>
               </tr>
             )}

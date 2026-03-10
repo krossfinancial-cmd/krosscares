@@ -8,7 +8,7 @@ const schema = z.object({
 });
 
 function normalize(value: string | undefined) {
-  return typeof value === "string" ? value.trim() : value;
+  return typeof value === "string" ? value.replace(/\\n+$/g, "").trim() : value;
 }
 
 export const env = schema.parse({
