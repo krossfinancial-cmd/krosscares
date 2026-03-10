@@ -8,16 +8,16 @@ type BrandLogoProps = {
 
 const LOGO_CONFIG = {
   full: {
-    alt: "KC Building Your Future logo",
-    height: 260,
-    src: "/kc-logo.svg",
-    width: 820,
+    alt: "Kross Concepts logo",
+    height: 1100,
+    src: "/kc-logo.png",
+    width: 1600,
   },
   mark: {
-    alt: "KC logo mark",
-    height: 256,
-    src: "/kc-mark.svg",
-    width: 256,
+    alt: "Kross Concepts logo mark",
+    height: 1200,
+    src: "/kc-mark.png",
+    width: 1200,
   },
 } as const;
 

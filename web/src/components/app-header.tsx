@@ -23,8 +23,8 @@ export async function AppHeader() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <div className="flex min-w-0 items-center">
           <Link href="/" className="flex items-center" aria-label="Kross Concepts home">
-            <BrandLogo variant="mark" className="h-11 w-auto md:hidden" priority />
-            <BrandLogo variant="full" className="hidden h-14 w-auto md:block" priority />
+            <BrandLogo variant="mark" className="h-12 w-auto md:hidden" priority />
+            <BrandLogo variant="full" className="hidden h-16 w-auto md:block" priority />
           </Link>
         </div>
 

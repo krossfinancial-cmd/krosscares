@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   title: "Kross Concepts | ZIP Territory Marketplace",
   description: "Exclusive ZIP territory sales for realtor lead pipelines.",
   icons: {
-    apple: "/kc-mark.svg",
-    icon: "/kc-mark.svg",
-    shortcut: "/kc-mark.svg",
+    apple: "/kc-mark.png",
+    icon: "/kc-mark.png",
+    shortcut: "/kc-mark.png",
   },
 };
 
