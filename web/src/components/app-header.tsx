@@ -1,10 +1,21 @@
 import Link from "next/link";
 import { Building2, LayoutDashboard, Search, ShieldCheck } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
+import { isDatabaseUnavailableError } from "@/lib/database-errors";
 import { LogoutButton } from "@/components/logout-button";
 
 export async function AppHeader() {
-  const user = await getCurrentUser();
+  let user: Awaited<ReturnType<typeof getCurrentUser>> = null;
+
+  try {
+    user = await getCurrentUser();
+  } catch (error) {
+    if (!isDatabaseUnavailableError(error)) {
+      throw error;
+    }
+
+    console.error("Header auth lookup failed because the database is unavailable.", error);
+  }
 
   return (
     <header className="glass sticky top-0 z-50 border-b border-blue-100">
