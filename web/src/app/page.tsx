@@ -92,18 +92,18 @@ export default function Home() {
         <p className="mt-2 text-sm text-blue-900/70">Annual pricing by territory demand and lead velocity.</p>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           <AnimatedCard className="p-5">
-            <p className="text-sm font-semibold text-blue-700">Standard</p>
-            <p className="mt-2 text-3xl font-bold text-blue-950">$500</p>
+            <p className="text-sm font-semibold text-blue-700">Rural</p>
+            <p className="mt-2 text-3xl font-bold text-blue-950">$550</p>
             <p className="text-sm text-blue-900/70">per year</p>
           </AnimatedCard>
           <AnimatedCard className="p-5">
-            <p className="text-sm font-semibold text-blue-700">High Demand</p>
+            <p className="text-sm font-semibold text-blue-700">Standard</p>
             <p className="mt-2 text-3xl font-bold text-blue-950">$1,000</p>
             <p className="text-sm text-blue-900/70">per year</p>
           </AnimatedCard>
           <AnimatedCard className="p-5">
             <p className="text-sm font-semibold text-blue-700">Premium</p>
-            <p className="mt-2 text-3xl font-bold text-blue-950">$1,500</p>
+            <p className="mt-2 text-3xl font-bold text-blue-950">$1,200</p>
             <p className="text-sm text-blue-900/70">per year</p>
           </AnimatedCard>
         </div>
@@ -147,7 +147,7 @@ export default function Home() {
           <a href="/marketplace" className="primary-btn">
             Check ZIP Availability
           </a>
-          <a href="mailto:sales@krossfinancials.com?subject=Talk%20to%20Sales" className="secondary-btn">
+          <a href="mailto:krossfinancials@gmail.com?subject=Talk%20to%20Sales" className="secondary-btn">
             Talk to Sales
           </a>
         </div>
