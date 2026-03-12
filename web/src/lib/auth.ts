@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 import { UserRole } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
@@ -120,9 +121,9 @@ export async function clearSession() {
   await clearSessionCookie();
 }
 
-export async function getCurrentUser() {
+const loadCurrentUser = cache(async () => {
   const store = await cookies();
-  const token = await getSessionToken();
+  const token = store.get(COOKIE_NAME)?.value || null;
   if (!token) return null;
 
   const session = await prisma.session.findUnique({
@@ -144,6 +145,10 @@ export async function getCurrentUser() {
   }
 
   return session.user;
+});
+
+export async function getCurrentUser() {
+  return loadCurrentUser();
 }
 
 export async function requireUser(role?: UserRole) {
