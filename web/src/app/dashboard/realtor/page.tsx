@@ -49,7 +49,7 @@ export default async function RealtorOverviewPage() {
       <div className="card p-6">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-blue-950">My Territories</h2>
-          <Link href="/marketplace" className="secondary-btn text-xs">
+          <Link href="/marketplace" className="cta-btn text-xs">
             Claim New ZIP
           </Link>
         </div>

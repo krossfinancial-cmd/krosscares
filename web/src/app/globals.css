@@ -78,6 +78,20 @@ textarea:focus {
   box-shadow: 0 10px 18px rgba(18, 88, 255, 0.25);
 }
 
+.cta-btn {
+  background: linear-gradient(140deg, #16a34a 0%, #15803d 100%);
+  color: #fff;
+  border: 1px solid #15803d;
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+}
+
+.cta-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(22, 163, 74, 0.24);
+}
+
 .secondary-btn {
   background: #fff;
   border: 1px solid #cfe0ff;

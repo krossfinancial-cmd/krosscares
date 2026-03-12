@@ -87,13 +87,6 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
           </button>
         </form>
 
-        <div className="mt-6 rounded-xl bg-blue-50 p-4 text-xs text-blue-800">
-          <p className="font-semibold">Demo Credentials</p>
-          <p className="mt-1">Admin: admin@krosscares.local / Admin#2026!</p>
-          <p>Realtor: realtor@krosscares.local / Realtor#2026!</p>
-          <p>Dealer: dealer@krosscares.local / Dealer#2026!</p>
-        </div>
-
         <div className="mt-5 flex items-center justify-between text-sm">
           <Link href="/marketplace" className="font-semibold text-blue-700 hover:text-blue-900">
             Back to marketplace

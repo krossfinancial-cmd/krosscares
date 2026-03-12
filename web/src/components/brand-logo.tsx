@@ -9,7 +9,7 @@ type BrandLogoProps = {
 const LOGO_CONFIG = {
   full: {
     alt: "Kross Concepts logo",
-    height: 1100,
+    height: 1240,
     src: "/kc-logo.png",
     width: 1600,
   },
