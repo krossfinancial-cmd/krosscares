@@ -5,6 +5,7 @@ import {
   TERRITORY_TRACKER_METHODOLOGY,
   TERRITORY_TRACKER_REFERENCE_SUMMARY,
 } from "@/lib/territory-tracker-meta";
+import { isDatabaseUnavailableError } from "@/lib/database-errors";
 import { getTerritoryTrackerEntries } from "@/lib/territory-tracker";
 
 type AdminTerritoryTrackerContentProps = {
@@ -14,7 +15,19 @@ type AdminTerritoryTrackerContentProps = {
 export async function AdminTerritoryTrackerContent({
   showBackLink = false,
 }: AdminTerritoryTrackerContentProps) {
-  const entries = await getTerritoryTrackerEntries();
+  let trackerUnavailable = false;
+  let entries: Awaited<ReturnType<typeof getTerritoryTrackerEntries>> = [];
+
+  try {
+    entries = await getTerritoryTrackerEntries();
+  } catch (error) {
+    if (!isDatabaseUnavailableError(error)) {
+      throw error;
+    }
+
+    trackerUnavailable = true;
+    console.error("Territory tracker page query failed because the database is unavailable.", error);
+  }
 
   return (
     <div className="space-y-5">
@@ -36,7 +49,15 @@ export async function AdminTerritoryTrackerContent({
         </div>
       </div>
 
-      <TerritoryTrackerTable initialEntries={entries} />
+      {trackerUnavailable ? (
+        <div className="card p-6">
+          <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
+            Territory tracker data is temporarily unavailable while the database reconnects or pending schema updates finish.
+          </div>
+        </div>
+      ) : (
+        <TerritoryTrackerTable initialEntries={entries} />
+      )}
 
       <div className="grid gap-4 xl:grid-cols-[1.35fr_1fr]">
         <div className="card p-6">

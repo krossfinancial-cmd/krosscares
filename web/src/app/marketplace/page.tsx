@@ -141,8 +141,9 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
 
   const lockedVertical = user?.role === "DEALER" ? "DEALER" : user?.role === "REALTOR" ? "REALTOR" : undefined;
   const effectiveVertical = lockedVertical ?? params.vertical ?? "ALL";
-  const guestZipSearch = !user && isExactZipSearch(rawSearch);
-  const shouldLoadZips = !!user || guestZipSearch;
+  const canBrowseFullMarketplace = user?.role === "ADMIN";
+  const canSearchSpecificZip = isExactZipSearch(rawSearch);
+  const shouldLoadZips = canBrowseFullMarketplace || canSearchSpecificZip;
   const sortField = safeSortField(params.sort);
   const sortDirection = safeSortDirection(params.direction);
   let zips: Awaited<ReturnType<typeof getMarketplaceZips>> = [];
@@ -209,11 +210,11 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
         ) : null}
         {lockedVertical ? (
           <p className="mt-2 inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
-            Showing {lockedVertical.toLowerCase()} territories for your account
+            Search a specific {lockedVertical.toLowerCase()} ZIP to check availability.
           </p>
-        ) : !user ? (
+        ) : !canBrowseFullMarketplace ? (
           <p className="mt-2 inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
-            Search a specific ZIP to check availability. Sign in to browse the full marketplace.
+            Search a specific ZIP to check availability. Only admins can browse the full marketplace.
           </p>
         ) : null}
         <a href="/marketplace/scarcity" className="mt-3 inline-block text-sm font-semibold text-blue-700 hover:text-blue-900">
@@ -222,7 +223,7 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
         <form className="mt-5 grid gap-3 md:grid-cols-4">
           <label className="md:col-span-2">
             <span className="mb-1 block text-xs font-semibold uppercase text-blue-700">
-              {user ? "Search ZIP / City" : "Search ZIP"}
+              {canBrowseFullMarketplace ? "Search ZIP / City" : "Search ZIP"}
             </span>
             <div className="flex items-center rounded-xl border border-blue-200 bg-white px-3 py-2">
               <Search size={16} className="text-blue-500" />
@@ -230,7 +231,7 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
                 name="search"
                 defaultValue={rawSearch}
                 className="ml-2 w-full bg-transparent text-sm text-blue-950"
-                placeholder={user ? "27519 or Cary" : "Enter a 5-digit ZIP"}
+                placeholder={canBrowseFullMarketplace ? "27519 or Cary" : "Enter a 5-digit ZIP"}
               />
             </div>
           </label>
@@ -345,7 +346,9 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
         </div>
       ) : (
         <div className="card p-8 text-center text-sm text-blue-700">
-          {rawSearch ? "Enter a full 5-digit ZIP code to search availability." : "Enter a ZIP code above to check one territory, or sign in to browse the full marketplace."}
+          {rawSearch
+            ? "Enter a full 5-digit ZIP code to search availability."
+            : "Enter a ZIP code above to check one territory. Full marketplace browsing is limited to admins."}
         </div>
       )}
     </div>
