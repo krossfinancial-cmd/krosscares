@@ -66,11 +66,15 @@ export async function getMarketplaceZips(filters: { search?: string; status?: st
 }
 
 export async function getDashboardMetrics() {
-  const [totalZips, soldZips, reservedZips, availableZips, totalRevenue, upcomingRenewals] = await Promise.all([
-    prisma.zipInventory.count(),
-    prisma.zipInventory.count({ where: { status: "SOLD" } }),
-    prisma.zipInventory.count({ where: { status: "RESERVED" } }),
-    prisma.zipInventory.count({ where: { status: "AVAILABLE" } }),
+  const now = new Date();
+  const renewalWindowEnd = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
+
+  const [zipCounts, totalRevenue, upcomingRenewals] = await prisma.$transaction([
+    prisma.zipInventory.groupBy({
+      by: ["status"],
+      orderBy: { status: "asc" },
+      _count: { status: true },
+    }),
     prisma.payment.aggregate({
       where: { status: "PAID" },
       _sum: { amountCents: true },
@@ -79,18 +83,41 @@ export async function getDashboardMetrics() {
       where: {
         status: "SOLD",
         renewalDate: {
-          gte: new Date(),
-          lte: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
+          gte: now,
+          lte: renewalWindowEnd,
         },
       },
     }),
   ]);
 
+  const countsByStatus = zipCounts.reduce<Record<ZipStatus, number>>(
+    (accumulator, entry) => {
+      const groupedCount =
+        typeof entry._count === "object" &&
+        entry._count !== null &&
+        "status" in entry._count &&
+        typeof entry._count.status === "number"
+          ? entry._count.status
+          : 0;
+
+      accumulator[entry.status] = groupedCount;
+      return accumulator;
+    },
+    {
+      AVAILABLE: 0,
+      RESERVED: 0,
+      SOLD: 0,
+      BLOCKED: 0,
+    },
+  );
+
+  const totalZips = Object.values(countsByStatus).reduce((sum, count) => sum + count, 0);
+
   return {
     totalZips,
-    soldZips,
-    reservedZips,
-    availableZips,
+    soldZips: countsByStatus.SOLD,
+    reservedZips: countsByStatus.RESERVED,
+    availableZips: countsByStatus.AVAILABLE,
     totalRevenueCents: totalRevenue._sum.amountCents ?? 0,
     upcomingRenewals,
   };
