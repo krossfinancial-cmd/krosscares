@@ -1,16 +1,121 @@
-import { Search } from "lucide-react";
+import Link from "next/link";
+import { ArrowDown, ArrowUp, ArrowUpDown, Search } from "lucide-react";
+import type { ZipStatus } from "@prisma/client";
 import { ZipActionButton } from "@/components/zip-action-button";
 import { isDatabaseUnavailableError } from "@/lib/database-errors";
 import { formatCurrency, zipStatusColor } from "@/lib/format";
 import { getCurrentUser } from "@/lib/auth";
 import { getMarketplaceZips } from "@/lib/queries";
 
+type MarketplaceSortField = "zip" | "city" | "tier" | "vertical" | "price" | "status";
+type MarketplaceSortDirection = "asc" | "desc";
+
 type SearchParams = Promise<{
   search?: string;
   status?: string;
   tier?: string;
   vertical?: string;
+  sort?: string;
+  direction?: string;
 }>;
+
+const SORT_FIELDS = new Set<MarketplaceSortField>(["zip", "city", "tier", "vertical", "price", "status"]);
+const SORT_DIRECTIONS = new Set<MarketplaceSortDirection>(["asc", "desc"]);
+const TIER_ORDER: Record<string, number> = {
+  STANDARD: 0,
+  HIGH_DEMAND: 1,
+  PREMIUM: 2,
+};
+const STATUS_ORDER: Record<string, number> = {
+  AVAILABLE: 0,
+  RESERVED: 1,
+  SOLD: 2,
+  BLOCKED: 3,
+};
+
+function safeSortField(value: string | undefined): MarketplaceSortField | null {
+  return value && SORT_FIELDS.has(value as MarketplaceSortField) ? (value as MarketplaceSortField) : null;
+}
+
+function safeSortDirection(value: string | undefined): MarketplaceSortDirection {
+  return value && SORT_DIRECTIONS.has(value as MarketplaceSortDirection) ? (value as MarketplaceSortDirection) : "asc";
+}
+
+function displayZipStatus(zip: { status: ZipStatus; reservationExpiresAt: Date | null }, now: Date): ZipStatus {
+  return zip.status === "RESERVED" && zip.reservationExpiresAt && zip.reservationExpiresAt <= now ? "AVAILABLE" : zip.status;
+}
+
+function compareText(left: string, right: string) {
+  return left.localeCompare(right, undefined, { numeric: true, sensitivity: "base" });
+}
+
+function buildSortHref(
+  params: Awaited<SearchParams>,
+  field: MarketplaceSortField,
+  lockedVertical: string | undefined,
+  activeField: MarketplaceSortField | null,
+  activeDirection: MarketplaceSortDirection,
+) {
+  const nextDirection: MarketplaceSortDirection = activeField === field && activeDirection === "asc" ? "desc" : "asc";
+  const nextParams = new URLSearchParams();
+
+  if (params.search) nextParams.set("search", params.search);
+  if (params.status) nextParams.set("status", params.status);
+  if (params.tier) nextParams.set("tier", params.tier);
+  if (lockedVertical) {
+    nextParams.set("vertical", lockedVertical);
+  } else if (params.vertical) {
+    nextParams.set("vertical", params.vertical);
+  }
+
+  nextParams.set("sort", field);
+  nextParams.set("direction", nextDirection);
+
+  const query = nextParams.toString();
+  return query ? `/marketplace?${query}` : "/marketplace";
+}
+
+function SortHeader({
+  label,
+  field,
+  params,
+  lockedVertical,
+  activeField,
+  activeDirection,
+  align = "left",
+}: {
+  label: string;
+  field: MarketplaceSortField;
+  params: Awaited<SearchParams>;
+  lockedVertical: string | undefined;
+  activeField: MarketplaceSortField | null;
+  activeDirection: MarketplaceSortDirection;
+  align?: "left" | "right";
+}) {
+  const isActive = activeField === field;
+  const href = buildSortHref(params, field, lockedVertical, activeField, activeDirection);
+  const iconClassName = isActive ? "text-blue-700" : "text-blue-400";
+
+  return (
+    <th className={`px-4 py-3 ${align === "right" ? "text-right" : "text-left"}`}>
+      <Link
+        href={href}
+        className={`inline-flex items-center gap-1.5 ${align === "right" ? "justify-end" : "justify-start"} hover:text-blue-900`}
+      >
+        <span>{label}</span>
+        {isActive ? (
+          activeDirection === "asc" ? (
+            <ArrowUp size={14} className={iconClassName} />
+          ) : (
+            <ArrowDown size={14} className={iconClassName} />
+          )
+        ) : (
+          <ArrowUpDown size={14} className={iconClassName} />
+        )}
+      </Link>
+    </th>
+  );
+}
 
 export default async function MarketplacePage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
@@ -31,6 +136,8 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
 
   const lockedVertical = user?.role === "DEALER" ? "DEALER" : user?.role === "REALTOR" ? "REALTOR" : undefined;
   const effectiveVertical = lockedVertical ?? params.vertical ?? "ALL";
+  const sortField = safeSortField(params.sort);
+  const sortDirection = safeSortDirection(params.direction);
   let zips: Awaited<ReturnType<typeof getMarketplaceZips>> = [];
 
   try {
@@ -46,6 +153,39 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
     inventoryUnavailable = true;
     console.error("Marketplace inventory query failed because the database is unavailable.", error);
   }
+
+  const sortedZips = [...zips].sort((left, right) => {
+    if (!sortField) return 0;
+
+    let result = 0;
+
+    switch (sortField) {
+      case "zip":
+        result = compareText(left.zipCode, right.zipCode);
+        break;
+      case "city":
+        result = compareText(left.city, right.city);
+        break;
+      case "tier":
+        result = (TIER_ORDER[left.tier] ?? 0) - (TIER_ORDER[right.tier] ?? 0);
+        break;
+      case "vertical":
+        result = compareText(left.vertical, right.vertical);
+        break;
+      case "price":
+        result = left.annualPriceCents - right.annualPriceCents;
+        break;
+      case "status":
+        result = (STATUS_ORDER[displayZipStatus(left, now)] ?? 99) - (STATUS_ORDER[displayZipStatus(right, now)] ?? 99);
+        break;
+    }
+
+    if (result === 0) {
+      result = compareText(left.zipCode, right.zipCode);
+    }
+
+    return sortDirection === "desc" ? -result : result;
+  });
 
   return (
     <div className="space-y-6">
@@ -127,20 +267,18 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
         <table className="w-full text-left text-sm">
           <thead className="bg-blue-50 text-xs uppercase text-blue-700">
             <tr>
-              <th className="px-4 py-3">ZIP</th>
-              <th className="px-4 py-3">City</th>
-              <th className="px-4 py-3">Tier</th>
-              <th className="px-4 py-3">Vertical</th>
-              <th className="px-4 py-3">Annual Price</th>
-              <th className="px-4 py-3">Status</th>
+              <SortHeader label="ZIP" field="zip" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
+              <SortHeader label="City" field="city" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
+              <SortHeader label="Tier" field="tier" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
+              <SortHeader label="Vertical" field="vertical" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
+              <SortHeader label="Annual Price" field="price" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
+              <SortHeader label="Status" field="status" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
               <th className="px-4 py-3 text-right">Action</th>
             </tr>
           </thead>
           <tbody>
-            {zips.map((zip) => {
-              const expiredReservation =
-                zip.status === "RESERVED" && !!zip.reservationExpiresAt && zip.reservationExpiresAt <= now;
-              const displayStatus = expiredReservation ? "AVAILABLE" : zip.status;
+            {sortedZips.map((zip) => {
+              const displayStatus = displayZipStatus(zip, now);
 
               return (
                 <tr key={zip.id} className="border-t border-blue-100 hover:bg-blue-50/60">
