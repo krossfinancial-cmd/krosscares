@@ -3,6 +3,7 @@ import { z } from "zod";
 import { appUrl } from "@/lib/app-url";
 import { setSessionCookie, setSessionIdentityCookie } from "@/lib/auth";
 import { callBackendApi } from "@/lib/backend-api";
+import { sendEmail } from "@/lib/mailer";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 
 const SignupSchema = z
@@ -27,6 +28,15 @@ const SignupSchema = z
 
 function dashboardForRole(role: "REALTOR" | "DEALER") {
   return role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
 
 export async function POST(request: Request) {
@@ -66,6 +76,50 @@ export async function POST(request: Request) {
       vertical,
       password,
     });
+
+    const notifyEmail = process.env.NEW_ACCOUNT_NOTIFY_EMAIL?.trim();
+    if (notifyEmail) {
+      try {
+        const signupFields = [
+          ["Full Name", fullName],
+          ["Email Address", email],
+          ["Phone", phone],
+          ["Business Type", result.role === "DEALER" ? "Dealer" : "Realtor"],
+          ["Company Name", companyName || "-"],
+        ] as const;
+
+        await sendEmail(
+          notifyEmail,
+          `New Zip Client - ${fullName}`,
+          {
+            html: `
+              <table style="border-collapse:collapse;width:100%;max-width:720px;font-family:Arial,sans-serif;font-size:14px;">
+                <tbody>
+                  ${signupFields
+                    .map(
+                      ([label, value]) => `
+                        <tr>
+                          <th style="border:1px solid #d9e2f2;background:#f5f8ff;padding:10px 12px;text-align:left;width:220px;">
+                            ${escapeHtml(label)}
+                          </th>
+                          <td style="border:1px solid #d9e2f2;padding:10px 12px;">
+                            ${escapeHtml(value)}
+                          </td>
+                        </tr>
+                      `,
+                    )
+                    .join("")}
+                </tbody>
+              </table>
+            `,
+            text: signupFields.map(([label, value]) => `${label}: ${value}`).join("\n"),
+          },
+        );
+      } catch (error) {
+        console.error("Signup notification email failed.", error);
+      }
+    }
+
     await setSessionCookie(result.session.token, result.session.expiresAt);
     await setSessionIdentityCookie(
       {
