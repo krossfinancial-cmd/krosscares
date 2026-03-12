@@ -39,18 +39,18 @@ export async function AppHeader() {
         <nav className="hidden items-center gap-4 text-sm font-medium text-blue-900 md:flex">
           {!isAuthenticated ? (
             <>
-              <a href="#how-it-works" className="rounded-lg px-3 py-2 hover:bg-blue-50">
+              <Link href="/#how-it-works" className="rounded-lg px-3 py-2 hover:bg-blue-50">
                 How It Works
-              </a>
-              <a href="#benefits" className="rounded-lg px-3 py-2 hover:bg-blue-50">
+              </Link>
+              <Link href="/#benefits" className="rounded-lg px-3 py-2 hover:bg-blue-50">
                 Benefits
-              </a>
-              <a href="#pricing" className="rounded-lg px-3 py-2 hover:bg-blue-50">
+              </Link>
+              <Link href="/#pricing" className="rounded-lg px-3 py-2 hover:bg-blue-50">
                 Pricing
-              </a>
-              <a href="#faq" className="rounded-lg px-3 py-2 hover:bg-blue-50">
+              </Link>
+              <Link href="/#faq" className="rounded-lg px-3 py-2 hover:bg-blue-50">
                 FAQ
-              </a>
+              </Link>
             </>
           ) : (
             <Link href="/marketplace" className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-blue-50">
