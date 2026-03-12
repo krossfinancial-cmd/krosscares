@@ -26,8 +26,8 @@ export default async function DealerOverviewPage() {
     <div className="space-y-6">
       <div className="card p-6">
         <h1 className="text-2xl font-bold text-blue-950">Welcome, {user.fullName}</h1>
-        <p className="mt-2 text-sm text-blue-900/70">
-          Manage your territory lifecycle from checkout to activation and renewals.
+        <p className="mt-2 text-sm font-bold text-red-600">
+          Check your email within 24 hours for account activation steps
         </p>
       </div>
 
