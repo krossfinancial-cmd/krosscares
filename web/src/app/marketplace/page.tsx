@@ -49,6 +49,10 @@ function compareText(left: string, right: string) {
   return left.localeCompare(right, undefined, { numeric: true, sensitivity: "base" });
 }
 
+function isExactZipSearch(value: string | undefined) {
+  return /^\d{5}$/.test(value?.trim() || "");
+}
+
 function buildSortHref(
   params: Awaited<SearchParams>,
   field: MarketplaceSortField,
@@ -120,6 +124,7 @@ function SortHeader({
 export default async function MarketplacePage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const now = new Date();
+  const rawSearch = params.search?.trim() || "";
   let user: Awaited<ReturnType<typeof getCurrentUser>> = null;
   let inventoryUnavailable = false;
 
@@ -136,22 +141,27 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
 
   const lockedVertical = user?.role === "DEALER" ? "DEALER" : user?.role === "REALTOR" ? "REALTOR" : undefined;
   const effectiveVertical = lockedVertical ?? params.vertical ?? "ALL";
+  const guestZipSearch = !user && isExactZipSearch(rawSearch);
+  const shouldLoadZips = !!user || guestZipSearch;
   const sortField = safeSortField(params.sort);
   const sortDirection = safeSortDirection(params.direction);
   let zips: Awaited<ReturnType<typeof getMarketplaceZips>> = [];
 
-  try {
-    zips = await getMarketplaceZips({
-      ...params,
-      vertical: effectiveVertical,
-    });
-  } catch (error) {
-    if (!isDatabaseUnavailableError(error)) {
-      throw error;
-    }
+  if (shouldLoadZips) {
+    try {
+      zips = await getMarketplaceZips({
+        ...params,
+        search: rawSearch,
+        vertical: effectiveVertical,
+      });
+    } catch (error) {
+      if (!isDatabaseUnavailableError(error)) {
+        throw error;
+      }
 
-    inventoryUnavailable = true;
-    console.error("Marketplace inventory query failed because the database is unavailable.", error);
+      inventoryUnavailable = true;
+      console.error("Marketplace inventory query failed because the database is unavailable.", error);
+    }
   }
 
   const sortedZips = [...zips].sort((left, right) => {
@@ -201,20 +211,26 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
           <p className="mt-2 inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
             Showing {lockedVertical.toLowerCase()} territories for your account
           </p>
+        ) : !user ? (
+          <p className="mt-2 inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
+            Search a specific ZIP to check availability. Sign in to browse the full marketplace.
+          </p>
         ) : null}
         <a href="/marketplace/scarcity" className="mt-3 inline-block text-sm font-semibold text-blue-700 hover:text-blue-900">
           View scarcity map
         </a>
         <form className="mt-5 grid gap-3 md:grid-cols-4">
           <label className="md:col-span-2">
-            <span className="mb-1 block text-xs font-semibold uppercase text-blue-700">Search ZIP / City</span>
+            <span className="mb-1 block text-xs font-semibold uppercase text-blue-700">
+              {user ? "Search ZIP / City" : "Search ZIP"}
+            </span>
             <div className="flex items-center rounded-xl border border-blue-200 bg-white px-3 py-2">
               <Search size={16} className="text-blue-500" />
               <input
                 name="search"
-                defaultValue={params.search || ""}
+                defaultValue={rawSearch}
                 className="ml-2 w-full bg-transparent text-sm text-blue-950"
-                placeholder="27519 or Cary"
+                placeholder={user ? "27519 or Cary" : "Enter a 5-digit ZIP"}
               />
             </div>
           </label>
@@ -263,69 +279,75 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
         </form>
       </div>
 
-      <div className="card overflow-hidden">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-blue-50 text-xs uppercase text-blue-700">
-            <tr>
-              <SortHeader label="ZIP" field="zip" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
-              <SortHeader label="City" field="city" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
-              <SortHeader label="Tier" field="tier" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
-              <SortHeader label="Vertical" field="vertical" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
-              <SortHeader label="Annual Price" field="price" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
-              <SortHeader label="Status" field="status" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
-              <th className="px-4 py-3 text-right">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedZips.map((zip) => {
-              const displayStatus = displayZipStatus(zip, now);
+      {shouldLoadZips ? (
+        <div className="card overflow-hidden">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-blue-50 text-xs uppercase text-blue-700">
+              <tr>
+                <SortHeader label="ZIP" field="zip" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
+                <SortHeader label="City" field="city" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
+                <SortHeader label="Tier" field="tier" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
+                <SortHeader label="Vertical" field="vertical" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
+                <SortHeader label="Annual Price" field="price" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
+                <SortHeader label="Status" field="status" params={params} lockedVertical={lockedVertical} activeField={sortField} activeDirection={sortDirection} />
+                <th className="px-4 py-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedZips.map((zip) => {
+                const displayStatus = displayZipStatus(zip, now);
 
-              return (
-                <tr key={zip.id} className="border-t border-blue-100 hover:bg-blue-50/60">
-                  <td className="px-4 py-3 font-semibold text-blue-950">{zip.zipCode}</td>
-                  <td className="px-4 py-3 text-blue-900">{zip.city}, {zip.state}</td>
-                  <td className="px-4 py-3 text-blue-900">{zip.tier.replace("_", " ")}</td>
-                  <td className="px-4 py-3 text-blue-900">{zip.vertical}</td>
-                  <td className="px-4 py-3 font-semibold text-blue-950">{formatCurrency(zip.annualPriceCents)}</td>
-                  <td className="px-4 py-3">
-                    <span className={`rounded-full px-2 py-1 text-xs font-semibold ${zipStatusColor(displayStatus)}`}>
-                      {displayStatus}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    {!user ? (
-                      <a href="/login" className="secondary-btn text-xs">
-                        Sign in to claim
-                      </a>
-                    ) : user.role === "ADMIN" ? (
-                      <a href="/dashboard/admin/inventory-manager" className="secondary-btn text-xs">
-                        Assign in Admin
-                      </a>
-                    ) : user.role !== zip.vertical ? (
-                      <span className="text-xs text-blue-700/70">Not your vertical</span>
-                    ) : (
-                      <ZipActionButton
-                        zipId={zip.id}
-                        zipCode={zip.zipCode}
-                        vertical={zip.vertical}
-                        dashboardPath={user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor"}
-                        status={displayStatus}
-                      />
-                    )}
+                return (
+                  <tr key={zip.id} className="border-t border-blue-100 hover:bg-blue-50/60">
+                    <td className="px-4 py-3 font-semibold text-blue-950">{zip.zipCode}</td>
+                    <td className="px-4 py-3 text-blue-900">{zip.city}, {zip.state}</td>
+                    <td className="px-4 py-3 text-blue-900">{zip.tier.replace("_", " ")}</td>
+                    <td className="px-4 py-3 text-blue-900">{zip.vertical}</td>
+                    <td className="px-4 py-3 font-semibold text-blue-950">{formatCurrency(zip.annualPriceCents)}</td>
+                    <td className="px-4 py-3">
+                      <span className={`rounded-full px-2 py-1 text-xs font-semibold ${zipStatusColor(displayStatus)}`}>
+                        {displayStatus}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {!user ? (
+                        <a href="/login" className="secondary-btn text-xs">
+                          Sign in to claim
+                        </a>
+                      ) : user.role === "ADMIN" ? (
+                        <a href="/dashboard/admin/inventory-manager" className="secondary-btn text-xs">
+                          Assign in Admin
+                        </a>
+                      ) : user.role !== zip.vertical ? (
+                        <span className="text-xs text-blue-700/70">Not your vertical</span>
+                      ) : (
+                        <ZipActionButton
+                          zipId={zip.id}
+                          zipCode={zip.zipCode}
+                          vertical={zip.vertical}
+                          dashboardPath={user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor"}
+                          status={displayStatus}
+                        />
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+              {!zips.length && (
+                <tr>
+                  <td colSpan={7} className="px-4 py-8 text-center text-sm text-blue-700">
+                    {inventoryUnavailable ? "Marketplace inventory is temporarily unavailable." : "No ZIPs match your filters."}
                   </td>
                 </tr>
-              );
-            })}
-            {!zips.length && (
-              <tr>
-              <td colSpan={7} className="px-4 py-8 text-center text-sm text-blue-700">
-                {inventoryUnavailable ? "Marketplace inventory is temporarily unavailable." : "No ZIPs match your filters."}
-              </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+              )}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className="card p-8 text-center text-sm text-blue-700">
+          {rawSearch ? "Enter a full 5-digit ZIP code to search availability." : "Enter a ZIP code above to check one territory, or sign in to browse the full marketplace."}
+        </div>
+      )}
     </div>
   );
 }
