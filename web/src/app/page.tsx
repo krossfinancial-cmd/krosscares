@@ -219,15 +219,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="card p-7 md:p-8">
-        <h2 className="text-2xl font-bold text-blue-950">Built for Accountability</h2>
-        <ul className="mt-4 space-y-2 text-sm text-blue-900/80">
-          <li>Exclusivity guarantee: no second active partner in the same ZIP/vertical.</li>
-          <li>Lead validity guarantee: invalid leads replaced under policy terms.</li>
-          <li>Delivery standard: credit/extension terms apply if minimum delivery terms are missed.</li>
-        </ul>
-      </section>
-
       <section id="faq" className="card p-7 md:p-8">
         <h2 className="text-2xl font-bold text-blue-950">FAQ</h2>
         <div className="mt-5 space-y-4">
