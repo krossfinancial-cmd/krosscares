@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
-import { getSupabasePublishableKey, getSupabaseUrl } from "@/lib/supabase/config";
+import { getOptionalSupabasePublicClientConfig, warnMissingSupabasePublicClientConfig } from "@/lib/supabase/config";
 
 export async function updateSupabaseSession(request: NextRequest) {
   let response = NextResponse.next({
@@ -8,8 +8,14 @@ export async function updateSupabaseSession(request: NextRequest) {
       headers: request.headers,
     },
   });
+  const config = getOptionalSupabasePublicClientConfig();
 
-  const supabase = createServerClient(getSupabaseUrl(), getSupabasePublishableKey(), {
+  if (!config) {
+    warnMissingSupabasePublicClientConfig("Skipping Supabase session refresh in proxy");
+    return response;
+  }
+
+  const supabase = createServerClient(config.url, config.publishableKey, {
     cookies: {
       getAll() {
         return request.cookies.getAll();

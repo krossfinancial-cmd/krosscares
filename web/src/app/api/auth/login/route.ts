@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 import { appUrl } from "@/lib/app-url";
 import { prisma } from "@/lib/prisma";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createOptionalServerSupabaseClient } from "@/lib/supabase/server";
 
 function dashboardForRole(role: "ADMIN" | "REALTOR" | "DEALER") {
   return role === "ADMIN" ? "/dashboard/admin" : role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
@@ -26,7 +26,13 @@ export async function POST(request: Request) {
   if (claimVertical) claimParams.set("claimVertical", claimVertical);
 
   try {
-    const supabase = await createServerSupabaseClient();
+    const supabase = await createOptionalServerSupabaseClient();
+
+    if (!supabase) {
+      claimParams.set("error", "auth-unavailable");
+      return NextResponse.redirect(appUrl(`/login?${claimParams.toString()}`));
+    }
+
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,

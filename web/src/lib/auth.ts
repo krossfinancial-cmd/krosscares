@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { cache } from "react";
 import { UserRole } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createOptionalServerSupabaseClient } from "@/lib/supabase/server";
 
 function homeForRole(role: UserRole) {
   if (role === "ADMIN") return "/dashboard/admin";
@@ -11,7 +11,12 @@ function homeForRole(role: UserRole) {
 }
 
 const loadCurrentUser = cache(async () => {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createOptionalServerSupabaseClient();
+
+  if (!supabase) {
+    return null;
+  }
+
   const { data, error } = await supabase.auth.getClaims();
   const claims = data?.claims;
 
@@ -28,7 +33,12 @@ const loadCurrentUser = cache(async () => {
 });
 
 export const loadCurrentAuthUser = cache(async () => {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createOptionalServerSupabaseClient();
+
+  if (!supabase) {
+    return null;
+  }
+
   const {
     data: { user },
     error,

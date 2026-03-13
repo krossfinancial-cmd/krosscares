@@ -7,7 +7,8 @@ import { createSupabaseAuthUser, deleteSupabaseAuthUser } from "@/lib/auth-admin
 import { sendEmail } from "@/lib/mailer";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { hasSupabasePublicClientConfig } from "@/lib/supabase/config";
+import { createOptionalServerSupabaseClient } from "@/lib/supabase/server";
 
 const SignupSchema = z
   .object({
@@ -87,6 +88,11 @@ export async function POST(request: Request) {
   let claimedZip: string | null = null;
   let claimError: string | null = null;
   const role: UserRole = vertical === "DEALER" ? "DEALER" : "REALTOR";
+
+  if (!hasSupabasePublicClientConfig()) {
+    claimParams.set("error", "auth-unavailable");
+    return NextResponse.redirect(appUrl(`/signup?${claimParams.toString()}`));
+  }
 
   try {
     const authUser = await createSupabaseAuthUser({
@@ -196,7 +202,13 @@ export async function POST(request: Request) {
       }
     }
 
-    const supabase = await createServerSupabaseClient();
+    const supabase = await createOptionalServerSupabaseClient();
+
+    if (!supabase) {
+      claimParams.set("error", "auth-unavailable");
+      return NextResponse.redirect(appUrl(`/signup?${claimParams.toString()}`));
+    }
+
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,

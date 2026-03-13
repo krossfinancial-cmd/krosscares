@@ -15,6 +15,7 @@ type SearchParams = Promise<{
 function errorMessage(code?: string) {
   if (!code) return null;
   if (code === "invalid") return "Invalid email or password.";
+  if (code === "auth-unavailable") return "Sign in is temporarily unavailable. Please try again shortly.";
   return decodeURIComponent(code);
 }
 

@@ -1,11 +1,18 @@
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
-import { getSupabasePublishableKey, getSupabaseUrl } from "@/lib/supabase/config";
+import { getOptionalSupabasePublicClientConfig, warnMissingSupabasePublicClientConfig } from "@/lib/supabase/config";
 
-export async function createServerSupabaseClient() {
+export async function createOptionalServerSupabaseClient() {
+  const config = getOptionalSupabasePublicClientConfig();
+
+  if (!config) {
+    warnMissingSupabasePublicClientConfig("Skipping Supabase server client setup");
+    return null;
+  }
+
   const cookieStore = await cookies();
 
-  return createServerClient(getSupabaseUrl(), getSupabasePublishableKey(), {
+  return createServerClient(config.url, config.publishableKey, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -21,4 +28,14 @@ export async function createServerSupabaseClient() {
       },
     },
   });
+}
+
+export async function createServerSupabaseClient() {
+  const client = await createOptionalServerSupabaseClient();
+
+  if (!client) {
+    throw new Error("Supabase public client env is not configured.");
+  }
+
+  return client;
 }

@@ -15,6 +15,7 @@ function errorMessage(code?: string) {
 
   if (code === "email-exists") return "An account with this email already exists.";
   if (code === "rate-limit") return "Too many attempts. Please wait and retry.";
+  if (code === "auth-unavailable") return "Account creation is temporarily unavailable. Please try again shortly.";
   if (code === "create-failed") return "We could not create your account. Please try again.";
 
   return decodeURIComponent(code);
