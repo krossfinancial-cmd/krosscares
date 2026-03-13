@@ -769,7 +769,7 @@ async function ensurePortalContract(client: ClientRow, zip: ZipInventoryRow, pai
       .update({
         status: "SENT",
         sentAt: existing.sentAt ?? paidAt ?? current,
-        documentUrl: existing.documentUrl ?? "https://example.local/contracts/territory-agreement.pdf",
+        documentUrl: existing.documentUrl ?? "/terms-and-conditions.pdf",
       })
       .eq("id", existing.id);
 
@@ -787,7 +787,7 @@ async function ensurePortalContract(client: ClientRow, zip: ZipInventoryRow, pai
       clientId: client.id,
       zipId: zip.id,
       status: "SENT",
-      documentUrl: "https://example.local/contracts/territory-agreement.pdf",
+      documentUrl: "/terms-and-conditions.pdf",
       sentAt: paidAt ?? current,
       signedAt: null,
       createdAt: current,

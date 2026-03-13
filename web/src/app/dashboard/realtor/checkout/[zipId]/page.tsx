@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
+import { isProduction } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 import { formatCurrency } from "@/lib/format";
 import { ReservationCountdown } from "@/components/reservation-countdown";
@@ -34,7 +35,7 @@ export default async function CheckoutPage({ params, searchParams }: { params: P
     <div className="card p-6">
       <h1 className="text-xl font-bold text-blue-950">Checkout: ZIP {zip.zipCode}</h1>
       <p className="mt-2 text-sm text-blue-900/70">
-        This local environment uses mock payment completion. Stripe webhooks are wired for later phase cutover.
+        Payments are confirmed in Stripe and synced into your account after the Supabase webhook is processed.
       </p>
       {query.error ? (
         <div className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
@@ -60,13 +61,17 @@ export default async function CheckoutPage({ params, searchParams }: { params: P
         <p className="mt-5 text-sm font-semibold text-rose-700">
           Reservation expired. Go back to marketplace and reclaim if still available.
         </p>
+      ) : isProduction ? (
+        <p className="mt-5 text-sm font-semibold text-blue-900">
+          Complete payment in Stripe. This page will reflect the paid status automatically after the webhook is received.
+        </p>
       ) : (
-        <form action="/api/checkout/mock" method="post" className="mt-5">
-          <input type="hidden" name="zipId" value={zip.id} />
-          <button className="primary-btn" type="submit">
-            Complete Mock Payment
-          </button>
-        </form>
+        <div className="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4">
+          <p className="text-sm font-semibold text-amber-800">Secure Payment Required</p>
+          <p className="mt-1 text-xs text-amber-700">
+            Please use the Stripe checkout link provided in your email or contact support to finalize your territory purchase.
+          </p>
+        </div>
       )}
 
       <div className="mt-4">

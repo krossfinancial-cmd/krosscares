@@ -178,19 +178,19 @@ async function main() {
   }
 
   const adminAuthUser = await ensureAuthUser({
-    email: "admin@krosscares.local",
+    email: "admin@krosscares.com",
     password: adminPassword,
     fullName: "Platform Admin",
     role: UserRole.ADMIN,
   });
   const realtorAuthUser = await ensureAuthUser({
-    email: "realtor@krosscares.local",
+    email: "realtor@krosscares.com",
     password: realtorPassword,
     fullName: "Sasha Realtor",
     role: UserRole.REALTOR,
   });
   const dealerAuthUser = await ensureAuthUser({
-    email: "dealer@krosscares.local",
+    email: "dealer@krosscares.com",
     password: dealerPassword,
     fullName: "Miles Dealer",
     role: UserRole.DEALER,
@@ -198,7 +198,7 @@ async function main() {
 
   const adminUser = await syncUserRecord({
     id: adminAuthUser.id,
-    email: "admin@krosscares.local",
+    email: "admin@krosscares.com",
     role: UserRole.ADMIN,
     fullName: "Platform Admin",
     companyName: "Kross Concepts",
@@ -207,7 +207,7 @@ async function main() {
 
   const realtorUser = await syncUserRecord({
     id: realtorAuthUser.id,
-    email: "realtor@krosscares.local",
+    email: "realtor@krosscares.com",
     role: UserRole.REALTOR,
     fullName: "Sasha Realtor",
     companyName: "Blue Ridge Realty",
@@ -216,7 +216,7 @@ async function main() {
 
   const dealerUser = await syncUserRecord({
     id: dealerAuthUser.id,
-    email: "dealer@krosscares.local",
+    email: "dealer@krosscares.com",
     role: UserRole.DEALER,
     fullName: "Miles Dealer",
     companyName: "Capital Auto Group",
@@ -230,7 +230,7 @@ async function main() {
       serviceState: "NC",
       licenseNumber: "NC-RE-004274",
       onboardingStatus: "ACTIVE",
-      leadRoutingEmail: "realtor@krosscares.local",
+      leadRoutingEmail: "realtor@krosscares.com",
       leadRoutingPhone: "919-555-0102",
       preferredContactMethod: "EMAIL",
       vertical: Vertical.REALTOR,
@@ -254,7 +254,7 @@ async function main() {
       serviceCity: "Raleigh",
       serviceState: "NC",
       onboardingStatus: "ACTIVE",
-      leadRoutingEmail: "dealer@krosscares.local",
+      leadRoutingEmail: "dealer@krosscares.com",
       leadRoutingPhone: "919-555-0103",
       preferredContactMethod: "EMAIL",
       vertical: Vertical.DEALER,
@@ -264,7 +264,7 @@ async function main() {
       serviceCity: "Raleigh",
       serviceState: "NC",
       onboardingStatus: "ACTIVE",
-      leadRoutingEmail: "dealer@krosscares.local",
+      leadRoutingEmail: "dealer@krosscares.com",
       leadRoutingPhone: "919-555-0103",
       preferredContactMethod: "EMAIL",
       vertical: Vertical.DEALER,
@@ -389,7 +389,7 @@ async function main() {
         clientId: realtorClient.id,
         zipId: ownedZip.id,
         amountCents: 100000,
-        provider: "mock",
+        provider: "stripe",
         status: "PAID",
         paidAt: new Date(),
       },
@@ -407,7 +407,7 @@ async function main() {
         status: "SIGNED",
         sentAt: new Date(),
         signedAt: new Date(),
-        documentUrl: "https://example.local/contracts/demo-contract.pdf",
+        documentUrl: "/terms-and-conditions.pdf",
       },
     });
   }
@@ -422,14 +422,14 @@ async function main() {
     update: {
       status: "COMPLETED",
       submittedAt: new Date(),
-      notes: "Seed onboarding complete",
+      notes: "Initial onboarding complete",
     },
     create: {
       clientId: realtorClient.id,
       zipId: ownedZip.id,
       status: "COMPLETED",
       submittedAt: new Date(),
-      notes: "Seed onboarding complete",
+      notes: "Initial onboarding complete",
     },
   });
 
@@ -442,7 +442,7 @@ async function main() {
         clientId: dealerClient.id,
         zipId: dealerOwnedZip.id,
         amountCents: 150000,
-        provider: "mock",
+        provider: "stripe",
         status: "PAID",
         paidAt: new Date(),
       },
@@ -475,14 +475,14 @@ async function main() {
     update: {
       status: "COMPLETED",
       submittedAt: new Date(),
-      notes: "Seed onboarding complete",
+      notes: "Initial onboarding complete",
     },
     create: {
       clientId: dealerClient.id,
       zipId: dealerOwnedZip.id,
       status: "COMPLETED",
       submittedAt: new Date(),
-      notes: "Seed onboarding complete",
+      notes: "Initial onboarding complete",
     },
   });
 

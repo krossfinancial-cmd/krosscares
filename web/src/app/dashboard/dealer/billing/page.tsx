@@ -1,4 +1,5 @@
 import { requireUser } from "@/lib/auth";
+import { isProduction } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 import { formatCurrency } from "@/lib/format";
 
@@ -16,7 +17,11 @@ export default async function DealerBillingPage() {
   return (
     <div className="card p-6">
       <h1 className="text-xl font-bold text-blue-950">Billing & Renewals</h1>
-      <p className="mt-2 text-sm text-blue-900/70">Stripe integration is staged. Local flow currently uses mock payment completion.</p>
+      <p className="mt-2 text-sm text-blue-900/70">
+        {isProduction
+          ? "Paid invoices are synced from Stripe after the verified Supabase webhook completes."
+          : "Manage your ZIP territory payments and view your billing history. Local mock payments remain available in development only."}
+      </p>
       <table className="mt-4 w-full text-sm">
         <thead className="text-xs uppercase text-blue-700">
           <tr>

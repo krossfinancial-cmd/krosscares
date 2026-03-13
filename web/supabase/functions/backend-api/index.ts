@@ -317,83 +317,6 @@ async function reserveZipAction(payload: Record<string, unknown>) {
   };
 }
 
-async function completeMockPaymentAction(payload: Record<string, unknown>) {
-  const zipId = asString(payload.zipId);
-  const userId = asString(payload.userId);
-  let clientId = asString(payload.clientId);
-
-  ensure(zipId, "ZIP id is required.");
-  ensure(userId, "User id is required.");
-  if (!clientId) {
-    const client = await fetchClientByUserId(userId);
-    if (!client) throw new ApiError(400, "Client profile missing.");
-    clientId = client.id as string;
-  }
-
-  const zip = await fetchZipById(zipId);
-  if (!zip) throw new ApiError(404, "ZIP not found.");
-  if (zip.assignedClientId !== clientId) throw new ApiError(400, "ZIP is not assigned to this account.");
-  if (zip.status !== "RESERVED") throw new ApiError(400, "ZIP must be reserved before payment.");
-
-  if (zip.reservationExpiresAt && new Date(zip.reservationExpiresAt) <= new Date()) {
-    const { error: releaseError } = await supabase
-      .from("ZipInventory")
-      .update({
-        status: "AVAILABLE",
-        assignedClientId: null,
-        reservationExpiresAt: null,
-        updatedAt: nowIso(),
-      })
-      .eq("id", zipId);
-
-    if (releaseError) throw new ApiError(500, releaseError.message);
-    throw new ApiError(400, "Reservation expired. Reclaim this ZIP to continue checkout.");
-  }
-
-  const current = nowIso();
-
-  const { error: paymentError } = await supabase
-    .from("Payment")
-    .update({
-      status: "PAID",
-      paidAt: current,
-    })
-    .eq("clientId", clientId)
-    .eq("zipId", zipId)
-    .eq("status", "PENDING");
-  if (paymentError) throw new ApiError(500, paymentError.message);
-
-  const { error: contractError } = await supabase
-    .from("Contract")
-    .update({
-      status: "SENT",
-      sentAt: current,
-    })
-    .eq("clientId", clientId)
-    .eq("zipId", zipId);
-  if (contractError) throw new ApiError(500, contractError.message);
-
-  const { error: onboardingError } = await supabase
-    .from("OnboardingForm")
-    .update({
-      status: "SENT",
-    })
-    .eq("clientId", clientId)
-    .eq("zipId", zipId);
-  if (onboardingError) throw new ApiError(500, onboardingError.message);
-
-  const { error: zipError } = await supabase
-    .from("ZipInventory")
-    .update({ reservationExpiresAt: null, updatedAt: current })
-    .eq("id", zipId);
-  if (zipError) throw new ApiError(500, zipError.message);
-
-  await audit(userId || null, "payment.completed", "zip_inventory", zipId, {
-    provider: "mock",
-  });
-
-  return { ok: true };
-}
 
 async function signContractAction(payload: Record<string, unknown>) {
   const zipId = asString(payload.zipId);
@@ -413,7 +336,7 @@ async function signContractAction(payload: Record<string, unknown>) {
     .update({
       status: "SIGNED",
       signedAt: nowIso(),
-      documentUrl: "https://example.local/contracts/territory-agreement.pdf",
+      documentUrl: "/terms-and-conditions.pdf",
     })
     .eq("clientId", clientId)
     .eq("zipId", zipId)
@@ -761,10 +684,7 @@ async function assignZipInternal(args: {
           sentAt: existingContract.sentAt || current,
           signedAt: current,
           documentUrl:
-            existingContract.documentUrl ||
-            (args.action === "zip.reassigned_admin"
-              ? "https://example.local/contracts/admin-reassigned.pdf"
-              : "https://example.local/contracts/admin-assigned.pdf"),
+            existingContract.documentUrl || "/terms-and-conditions.pdf",
         })
         .eq("id", existingContract.id);
       if (error) throw new ApiError(500, error.message);
@@ -777,9 +697,7 @@ async function assignZipInternal(args: {
         sentAt: current,
         signedAt: current,
         documentUrl:
-          args.action === "zip.reassigned_admin"
-            ? "https://example.local/contracts/admin-reassigned.pdf"
-            : "https://example.local/contracts/admin-assigned.pdf",
+          "/terms-and-conditions.pdf",
         createdAt: current,
       });
       if (error) throw new ApiError(500, error.message);
@@ -1126,13 +1044,11 @@ async function handleAction(action: string, payload: Record<string, unknown>) {
     case "webhooks.stripe": {
       return {
         ok: true,
-        message: "Stripe webhook endpoint is wired. Local flow currently uses mock payments.",
+        message: "Stripe webhook endpoint is active.",
       };
     }
     case "zip.reserve":
       return reserveZipAction(payload);
-    case "checkout.mock":
-      return completeMockPaymentAction(payload);
     case "contract.sign":
       return signContractAction(payload);
     case "onboarding.finalize":

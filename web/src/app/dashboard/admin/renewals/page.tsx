@@ -20,7 +20,9 @@ export default async function AdminRenewalsPage() {
     <div className="space-y-5">
       <div className="card p-6">
         <h1 className="text-xl font-bold text-blue-950">Renewal Queue</h1>
-        <p className="mt-2 text-sm text-blue-900/70">Manual trigger for local renewal job and dunning simulation.</p>
+        <p className="mt-2 text-sm text-blue-900/70">
+          Manual admin trigger for the renewal worker. Production cron jobs can call the same endpoint with the internal cron secret.
+        </p>
         <form action="/api/internal/renewals/run" method="post" className="mt-4">
           <button className="primary-btn" type="submit">
             Run Renewal Worker Now

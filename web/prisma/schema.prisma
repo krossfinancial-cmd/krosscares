@@ -303,3 +303,39 @@ model AuditLog {
   @@index([entityType, entityId])
   @@index([action])
 }
+
+model StripeEvent {
+  id            BigInt   @id @default(autoincrement())
+  stripeEventId String   @unique @map("stripe_event_id")
+  eventType     String   @map("event_type")
+  livemode      Boolean
+  apiVersion    String?  @map("api_version")
+  objectId      String?  @map("object_id")
+  payload       Json
+  processedAt   DateTime @default(now()) @map("processed_at") @db.Timestamptz
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  @@index([eventType])
+  @@index([objectId])
+  @@map("stripe_events")
+}
+
+model InvoicePayment {
+  id                    BigInt    @id @default(autoincrement())
+  stripeInvoiceId       String?   @unique @map("stripe_invoice_id")
+  stripePaymentIntentId String?   @unique @map("stripe_payment_intent_id")
+  stripeChargeId        String?   @unique @map("stripe_charge_id")
+  customerEmail         String?   @map("customer_email")
+  currency              String?
+  amountPaid            BigInt?   @map("amount_paid")
+  status                String    @default("pending")
+  paidAt                DateTime? @map("paid_at") @db.Timestamptz
+  rawSource             Json      @default("{}") @map("raw_source")
+  createdAt             DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt             DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@index([customerEmail])
+  @@index([status])
+  @@index([paidAt(sort: Desc)])
+  @@map("invoice_payments")
+}

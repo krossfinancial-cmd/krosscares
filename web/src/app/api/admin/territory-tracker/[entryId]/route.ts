@@ -8,6 +8,20 @@ type Params = Promise<{
   entryId: string;
 }>;
 
+type TrackerEntryResponse = {
+  id: string;
+  zipCode: string;
+  city: string;
+  county: string;
+  population: number;
+  density: number;
+  tier: string;
+  status: string;
+  statusDate: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export async function PATCH(request: Request, { params }: { params: Params }) {
   try {
     const user = await getCurrentUser();
@@ -23,7 +37,7 @@ export async function PATCH(request: Request, { params }: { params: Params }) {
       return NextResponse.json({ error: "Invalid tracker status." }, { status: 400 });
     }
 
-    const result = await callBackendApi<{ ok: boolean; entry: any }>("admin.tracker.updateStatus", {
+    const result = await callBackendApi<{ ok: boolean; entry: TrackerEntryResponse }>("admin.tracker.updateStatus", {
       entryId,
       status: nextStatus,
       actorUserId: user.id,
