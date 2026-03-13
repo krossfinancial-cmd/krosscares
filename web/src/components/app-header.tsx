@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { LayoutDashboard, Search, ShieldCheck } from "lucide-react";
-import { getCurrentUser, getSessionIdentity, getSessionToken } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 import { BrandLogo } from "@/components/brand-logo";
 import { isDatabaseUnavailableError } from "@/lib/database-errors";
 import { LogoutButton } from "@/components/logout-button";
 
 export async function AppHeader() {
   let user: Awaited<ReturnType<typeof getCurrentUser>> = null;
-  const sessionToken = await getSessionToken();
-  const sessionIdentity = await getSessionIdentity();
 
   try {
     user = await getCurrentUser();
@@ -20,9 +18,9 @@ export async function AppHeader() {
     console.error("Header auth lookup failed because the database is unavailable.", error);
   }
 
-  const isAuthenticated = Boolean(user || sessionToken);
-  const effectiveRole = user?.role || sessionIdentity?.role || null;
-  const effectiveEmail = user?.email || sessionIdentity?.email || "Signed in";
+  const isAuthenticated = Boolean(user);
+  const effectiveRole = user?.role || null;
+  const effectiveEmail = user?.email || "Signed in";
   const dashboardHref =
     effectiveRole === "ADMIN" ? "/dashboard/admin" : effectiveRole === "DEALER" ? "/dashboard/dealer" : effectiveRole === "REALTOR" ? "/dashboard/realtor" : "/dashboard";
 

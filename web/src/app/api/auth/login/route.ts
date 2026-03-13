@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { setSessionCookie, setSessionIdentityCookie } from "@/lib/auth";
-import { callBackendApi } from "@/lib/backend-api";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 import { appUrl } from "@/lib/app-url";
+import { prisma } from "@/lib/prisma";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 function dashboardForRole(role: "ADMIN" | "REALTOR" | "DEALER") {
   return role === "ADMIN" ? "/dashboard/admin" : role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
@@ -26,31 +26,35 @@ export async function POST(request: Request) {
   if (claimVertical) claimParams.set("claimVertical", claimVertical);
 
   try {
-    const result = await callBackendApi<{
-      ok: boolean;
-      role: "ADMIN" | "REALTOR" | "DEALER";
-      userId: string;
-      session: { token: string; expiresAt: string };
-    }>("auth.login", {
+    const supabase = await createServerSupabaseClient();
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    await setSessionCookie(result.session.token, result.session.expiresAt);
-    await setSessionIdentityCookie(
-      {
-        email: email.toLowerCase().trim(),
-        role: result.role,
-      },
-      result.session.expiresAt,
-    );
+
+    if (error || !data.user) {
+      throw new Error("Invalid credentials.");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: data.user.id },
+      select: { id: true, role: true },
+    });
+
+    if (!user) {
+      await supabase.auth.signOut();
+      throw new Error("No application account found.");
+    }
+
     const params = new URLSearchParams();
 
-    if (claimZipId && (result.role === "REALTOR" || result.role === "DEALER")) {
+    if (claimZipId && (user.role === "REALTOR" || user.role === "DEALER")) {
       try {
+        const { callBackendApi } = await import("@/lib/backend-api");
         await callBackendApi("zip.reserve", {
           zipId: claimZipId,
-          userId: result.userId,
-          expectedVertical: result.role,
+          userId: user.id,
+          expectedVertical: user.role,
         });
         if (claimZipCode) params.set("claimed_zip", claimZipCode);
       } catch (error) {
@@ -60,7 +64,7 @@ export async function POST(request: Request) {
       }
     }
 
-    const target = dashboardForRole(result.role);
+    const target = dashboardForRole(user.role);
     const query = params.toString();
     return NextResponse.redirect(appUrl(query ? `${target}?${query}` : target));
   } catch {

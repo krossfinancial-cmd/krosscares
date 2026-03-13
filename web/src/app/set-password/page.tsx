@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { getValidPasswordSetupToken } from "@/lib/password-setup";
+import { getCurrentUser } from "@/lib/auth";
 
 type SearchParams = Promise<{
-  token?: string;
   error?: string;
 }>;
 
@@ -16,26 +15,10 @@ function getErrorMessage(code?: string) {
 
 export default async function SetPasswordPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
-  const token = params.token?.trim() || "";
   const error = getErrorMessage(params.error);
+  const user = await getCurrentUser();
 
-  if (!token) {
-    return (
-      <div className="mx-auto max-w-lg">
-        <div className="card p-8">
-          <h1 className="text-2xl font-bold text-blue-950">Set Your Password</h1>
-          <p className="mt-3 text-sm text-blue-900/70">Missing setup token. Use the link from your email invite.</p>
-          <Link href="/login" className="mt-4 inline-block text-sm font-semibold text-blue-700 hover:text-blue-900">
-            Back to login
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  const validToken = await getValidPasswordSetupToken(token);
-
-  if (!validToken) {
+  if (!user) {
     return (
       <div className="mx-auto max-w-lg">
         <div className="card p-8">
@@ -54,7 +37,7 @@ export default async function SetPasswordPage({ searchParams }: { searchParams: 
       <div className="card p-8">
         <h1 className="text-2xl font-bold text-blue-950">Set Your Password</h1>
         <p className="mt-2 text-sm text-blue-900/70">
-          Welcome {validToken.user.fullName}. Create your password to access your dashboard.
+          Welcome {user.fullName}. Create your password to access your dashboard.
         </p>
 
         {error ? (
@@ -62,7 +45,6 @@ export default async function SetPasswordPage({ searchParams }: { searchParams: 
         ) : null}
 
         <form action="/api/auth/set-password" method="post" className="mt-6 space-y-4">
-          <input type="hidden" name="token" value={token} />
           <div>
             <label className="mb-1 block text-sm font-semibold text-blue-900" htmlFor="password">
               New Password

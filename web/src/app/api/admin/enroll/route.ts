@@ -1,9 +1,12 @@
+import { randomBytes } from "crypto";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { appUrl } from "@/lib/app-url";
+import { buildPasswordSetupUrl, createSupabaseAuthUser, deleteSupabaseAuthUser } from "@/lib/auth-admin";
 import { callBackendApi } from "@/lib/backend-api";
 import { getCurrentUser } from "@/lib/auth";
 import { sendEmail } from "@/lib/mailer";
+import { prisma } from "@/lib/prisma";
 import { uploadFile } from "@/lib/storage";
 
 const AdminEnrollSchema = z.object({
@@ -60,34 +63,58 @@ export async function POST(request: Request) {
       logo ? uploadFile(logo, "logos") : Promise.resolve<string | null>(null),
     ]);
 
-    const result = await callBackendApi<{
+    const zip = await prisma.zipInventory.findUnique({
+      where: { id: parsed.data.zipId },
+      select: {
+        vertical: true,
+      },
+    });
+
+    if (!zip) {
+      return NextResponse.redirect(appUrl(`/dashboard/admin/enroll/${rawZipId}?error=ZIP%20not%20found.`));
+    }
+
+    const authUser = await createSupabaseAuthUser({
+      email: parsed.data.email,
+      password: randomBytes(24).toString("hex"),
+      fullName: parsed.data.fullName,
+      role: zip.vertical === "DEALER" ? "DEALER" : "REALTOR",
+    });
+
+    let result: {
       ok: boolean;
       invite: {
         email: string;
         fullName: string;
-        token: string;
-        expiresAt: string;
       };
       zip: {
         zipCode: string;
         vertical: "REALTOR" | "DEALER";
       };
-    }>("admin.enroll", {
-      actorUserId: admin.id,
-      zipId: parsed.data.zipId,
-      fullName: parsed.data.fullName,
-      companyName: parsed.data.companyName,
-      email: parsed.data.email,
-      phone: parsed.data.phone,
-      licenseNumber: parsed.data.licenseNumber || null,
-      website: parsed.data.website || null,
-      leadRoutingEmail: parsed.data.leadRoutingEmail,
-      leadRoutingPhone: parsed.data.leadRoutingPhone,
-      headshotUrl,
-      logoUrl,
-    });
+    };
 
-    const setupUrl = `${process.env.APP_URL || "http://localhost:3000"}/set-password?token=${result.invite.token}`;
+    try {
+      result = await callBackendApi("admin.enroll", {
+        actorUserId: admin.id,
+        userId: authUser.id,
+        zipId: parsed.data.zipId,
+        fullName: parsed.data.fullName,
+        companyName: parsed.data.companyName,
+        email: parsed.data.email,
+        phone: parsed.data.phone,
+        licenseNumber: parsed.data.licenseNumber || null,
+        website: parsed.data.website || null,
+        leadRoutingEmail: parsed.data.leadRoutingEmail,
+        leadRoutingPhone: parsed.data.leadRoutingPhone,
+        headshotUrl,
+        logoUrl,
+      });
+    } catch (error) {
+      await deleteSupabaseAuthUser(authUser.id);
+      throw error;
+    }
+
+    const setupUrl = await buildPasswordSetupUrl(result.invite.email);
 
     try {
       await sendEmail(
@@ -97,10 +124,10 @@ export async function POST(request: Request) {
           `Hi ${result.invite.fullName},`,
           "",
           `Your ${result.zip.vertical.toLowerCase()} account for ZIP ${result.zip.zipCode} is enrolled and active.`,
-          "Use the link below to set your password:",
+          "Use the secure Supabase link below to set your password:",
           setupUrl,
           "",
-          `This link expires on ${new Date(result.invite.expiresAt).toISOString()}.`,
+          "This link can only be used once.",
         ].join("\n"),
       );
     } catch {

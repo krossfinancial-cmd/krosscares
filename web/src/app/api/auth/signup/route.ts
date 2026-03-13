@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
+import { UserRole } from "@prisma/client";
 import { z } from "zod";
 import { appUrl } from "@/lib/app-url";
-import { setSessionCookie, setSessionIdentityCookie } from "@/lib/auth";
 import { callBackendApi } from "@/lib/backend-api";
+import { createSupabaseAuthUser, deleteSupabaseAuthUser } from "@/lib/auth-admin";
 import { sendEmail } from "@/lib/mailer";
+import { prisma } from "@/lib/prisma";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 const SignupSchema = z
   .object({
@@ -83,28 +86,64 @@ export async function POST(request: Request) {
   const { fullName, email, phone, companyName, vertical, password } = parsed.data;
   let claimedZip: string | null = null;
   let claimError: string | null = null;
+  const role: UserRole = vertical === "DEALER" ? "DEALER" : "REALTOR";
 
   try {
-    const result = await callBackendApi<{
-      ok: boolean;
-      role: "REALTOR" | "DEALER";
-      userId: string;
-      session: { token: string; expiresAt: string };
-    }>("auth.signup", {
-      fullName,
+    const authUser = await createSupabaseAuthUser({
       email,
-      phone,
-      companyName,
-      vertical,
       password,
+      fullName,
+      role,
     });
+
+    try {
+      await prisma.$transaction(async (tx) => {
+        await tx.user.create({
+          data: {
+            id: authUser.id,
+            fullName,
+            email,
+            phone,
+            companyName: companyName || null,
+            role,
+          },
+        });
+
+        await tx.client.create({
+          data: {
+            userId: authUser.id,
+            vertical,
+            leadRoutingEmail: email,
+            leadRoutingPhone: phone,
+            preferredContactMethod: "EMAIL",
+            onboardingStatus: "PENDING",
+            serviceState: "NC",
+          },
+        });
+
+        await tx.auditLog.create({
+          data: {
+            actorUserId: authUser.id,
+            action: "auth.signup",
+            entityType: "user",
+            entityId: authUser.id,
+            metadata: {
+              vertical,
+            },
+          },
+        });
+      });
+    } catch (error) {
+      await deleteSupabaseAuthUser(authUser.id);
+      throw error;
+    }
 
     if (claimZipId) {
       try {
         await callBackendApi("zip.reserve", {
           zipId: claimZipId,
-          userId: result.userId,
-          expectedVertical: result.role,
+          userId: authUser.id,
+          expectedVertical: role,
         });
         claimedZip = claimZipCode || null;
       } catch (error) {
@@ -119,7 +158,7 @@ export async function POST(request: Request) {
           ["Full Name", fullName],
           ["Email Address", email],
           ["Phone", phone],
-          ["Business Type", result.role === "DEALER" ? "Dealer" : "Realtor"],
+          ["Business Type", role === "DEALER" ? "Dealer" : "Realtor"],
           ["Company Name", companyName || "-"],
           ...(claimZipId ? [["Requested ZIP", claimZipCode || claimZipId]] : []),
           ...(claimZipId ? [["ZIP Claim Status", claimError ? `Failed: ${claimError}` : "Reserved"]] : []),
@@ -157,17 +196,19 @@ export async function POST(request: Request) {
       }
     }
 
-    await setSessionCookie(result.session.token, result.session.expiresAt);
-    await setSessionIdentityCookie(
-      {
-        email,
-        role: result.role,
-      },
-      result.session.expiresAt,
-    );
+    const supabase = await createServerSupabaseClient();
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (signInError) {
+      throw signInError;
+    }
+
     return NextResponse.redirect(
       appUrl(
-        buildDashboardRedirect(result.role, {
+        buildDashboardRedirect(role, {
           claimedZip: claimedZip || undefined,
           claimError: claimError || undefined,
           claimZip: claimZipCode || undefined,
@@ -176,7 +217,7 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     const message = error instanceof Error ? error.message.toLowerCase() : "";
-    if (message.includes("already exists")) {
+    if (message.includes("already exists") || message.includes("already been registered") || message.includes("duplicate")) {
       claimParams.set("error", "email-exists");
       return NextResponse.redirect(appUrl(`/signup?${claimParams.toString()}`));
     }
