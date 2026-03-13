@@ -1,10 +1,8 @@
-import type { TerritoryTrackerStatus } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { TERRITORY_TRACKER_STATUS_VALUES } from "@/lib/territory-tracker-meta";
 import { getCurrentUser } from "@/lib/auth";
-import { isDatabaseUnavailableError } from "@/lib/database-errors";
-import { prisma } from "@/lib/prisma";
+import { callBackendApi } from "@/lib/backend-api";
 
 type Params = Promise<{
   entryId: string;
@@ -25,61 +23,25 @@ export async function PATCH(request: Request, { params }: { params: Params }) {
       return NextResponse.json({ error: "Invalid tracker status." }, { status: 400 });
     }
 
-    const safeStatus = nextStatus as TerritoryTrackerStatus;
-
-    const existingEntry = await prisma.territoryTrackerEntry.findUnique({
-      where: { id: entryId },
-    });
-
-    if (!existingEntry) {
-      return NextResponse.json({ error: "Tracker entry not found." }, { status: 404 });
-    }
-
-    const now = new Date();
-    let statusDate = existingEntry.statusDate;
-
-    if (existingEntry.status === "AVAILABLE" && safeStatus !== "AVAILABLE") {
-      statusDate = now;
-    } else if (safeStatus === "AVAILABLE") {
-      statusDate = null;
-    }
-
-    const updatedEntry = await prisma.territoryTrackerEntry.update({
-      where: { id: entryId },
-      data: {
-        status: safeStatus,
-        statusDate,
-      },
+    const result = await callBackendApi<{ ok: boolean; entry: any }>("admin.tracker.updateStatus", {
+      entryId,
+      status: nextStatus,
+      actorUserId: user.id,
     });
 
     revalidatePath("/dashboard/admin");
     revalidatePath("/dashboard/admin/territory-tracker");
 
     return NextResponse.json({
-      entry: {
-        id: updatedEntry.id,
-        zipCode: updatedEntry.zipCode,
-        city: updatedEntry.city,
-        county: updatedEntry.county,
-        population: updatedEntry.population,
-        density: updatedEntry.density,
-        tier: updatedEntry.tier,
-        status: updatedEntry.status,
-        statusDate: updatedEntry.statusDate ? updatedEntry.statusDate.toISOString() : null,
-      },
+      entry: result.entry,
     });
   } catch (error) {
-    if (!isDatabaseUnavailableError(error)) {
-      throw error;
-    }
-
-    console.error("Territory tracker update failed because the database is unavailable.", error);
-
+    console.error("Territory tracker update failed.", error);
     return NextResponse.json(
       {
-        error: "Territory tracker is temporarily unavailable while the database reconnects or pending schema updates finish.",
+        error: error instanceof Error ? error.message : "Failed to update tracker status.",
       },
-      { status: 503 },
+      { status: 500 },
     );
   }
 }

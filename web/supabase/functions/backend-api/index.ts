@@ -1068,6 +1068,53 @@ async function runRenewalsAction(payload: Record<string, unknown>) {
   };
 }
 
+async function updateTrackerStatusAction(payload: Record<string, unknown>) {
+  const entryId = asString(payload.entryId);
+  const status = asString(payload.status).toUpperCase().trim();
+  const actorUserId = asString(payload.actorUserId) || null;
+
+  ensure(entryId, "entryId is required.");
+  ensure(["AVAILABLE", "RESERVED", "SOLD"].includes(status), "Invalid tracker status.");
+
+  const { data: existing, error: fetchError } = await supabase
+    .from("TerritoryTrackerEntry")
+    .select("status, statusDate")
+    .eq("id", entryId)
+    .maybeSingle();
+
+  if (fetchError) throw new ApiError(500, fetchError.message);
+  if (!existing) throw new ApiError(404, "Tracker entry not found.");
+
+  const now = nowIso();
+  let statusDate = existing.statusDate;
+
+  if (existing.status === "AVAILABLE" && status !== "AVAILABLE") {
+    statusDate = now;
+  } else if (status === "AVAILABLE") {
+    statusDate = null;
+  }
+
+  const { data, error } = await supabase
+    .from("TerritoryTrackerEntry")
+    .update({
+      status,
+      statusDate,
+      updatedAt: now,
+    })
+    .eq("id", entryId)
+    .select()
+    .single();
+
+  if (error) throw new ApiError(500, error.message);
+
+  await audit(actorUserId, "tracker.status_updated", "territory_tracker", entryId, {
+    from: existing.status,
+    to: status,
+  });
+
+  return { ok: true, entry: data };
+}
+
 async function handleAction(action: string, payload: Record<string, unknown>) {
   switch (action) {
     case "health": {
@@ -1118,6 +1165,8 @@ async function handleAction(action: string, payload: Record<string, unknown>) {
       return releaseZipAction(payload);
     case "admin.enroll":
       return enrollAction(payload);
+    case "admin.tracker.updateStatus":
+      return updateTrackerStatusAction(payload);
     case "renewals.run":
       return runRenewalsAction(payload);
     default:
