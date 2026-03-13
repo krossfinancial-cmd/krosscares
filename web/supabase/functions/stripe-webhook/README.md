@@ -51,66 +51,6 @@ stripe trigger charge.succeeded
 
 For invoice testing, either trigger the invoice flow from your app or create a sandbox invoice in Stripe so Stripe emits `invoice.paid`.
 
-## Realtime SQL
+## Data exposure
 
-Enable `invoice_payments` for Realtime with:
-
-```sql
-ALTER TABLE "public"."invoice_payments" REPLICA IDENTITY FULL;
-
-DO $$
-BEGIN
-    ALTER PUBLICATION supabase_realtime ADD TABLE "public"."invoice_payments";
-EXCEPTION
-    WHEN duplicate_object THEN NULL;
-END $$;
-```
-
-## Frontend subscription example
-
-```ts
-type InvoicePaymentRealtimeRow = {
-  id: string | number;
-  stripe_invoice_id: string | null;
-  stripe_payment_intent_id: string | null;
-  stripe_charge_id: string | null;
-  customer_email: string | null;
-  amount_paid: number | null;
-  currency: string | null;
-  status: string;
-  paid_at: string | null;
-};
-
-const channel = supabase
-  .channel("invoice-payments")
-  .on(
-    "postgres_changes",
-    {
-      event: "*",
-      schema: "public",
-      table: "invoice_payments",
-    },
-    (payload) => {
-      const next = payload.new as InvoicePaymentRealtimeRow;
-      const previous = (payload.old ?? null) as Partial<InvoicePaymentRealtimeRow> | null;
-
-      if (!next || next.status !== "paid" || previous?.status === "paid") {
-        return;
-      }
-
-      const label =
-        next.customer_email ??
-        next.stripe_invoice_id ??
-        next.stripe_payment_intent_id ??
-        next.stripe_charge_id ??
-        "payment";
-
-      console.log("Invoice paid", next);
-      // Replace this with your toast or notification system.
-      alert(`Invoice paid: ${label}`);
-    },
-  )
-  .subscribe();
-```
-
-If RLS is enabled on `public.invoice_payments`, add an appropriate `SELECT` policy for the clients that need this subscription.
+Do not expose `invoice_payments` or `stripe_events` to browser clients through the Data API or Realtime. These tables contain payment metadata and should remain server-only. If the product needs payment status in the UI, add a server endpoint or a sanitized server-owned view instead of subscribing to the raw tables from the browser.

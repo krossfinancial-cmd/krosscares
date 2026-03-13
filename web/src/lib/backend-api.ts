@@ -9,11 +9,15 @@ function backendUrl() {
 }
 
 export async function callBackendApi<T = unknown>(action: string, payload: Record<string, unknown> = {}) {
+  if (!BACKEND_API_SECRET) {
+    throw new Error("BACKEND_API_SHARED_SECRET is not configured.");
+  }
+
   const response = await fetch(backendUrl(), {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      ...(BACKEND_API_SECRET ? { "x-backend-secret": BACKEND_API_SECRET } : {}),
+      "x-backend-secret": BACKEND_API_SECRET,
     },
     body: JSON.stringify({ action, payload }),
     cache: "no-store",
