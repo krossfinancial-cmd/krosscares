@@ -71,14 +71,9 @@ export default async function DealerOverviewPage() {
                 </div>
               </div>
               {zip.status === "RESERVED" && (
-                <div className="mt-3 flex gap-2">
-                  <Link href={`/dashboard/dealer/checkout/${zip.id}`} className="primary-btn text-xs">
-                    Continue Checkout
-                  </Link>
-                  <Link href={`/dashboard/dealer/contract/${zip.id}`} className="secondary-btn text-xs">
-                    Contract Status
-                  </Link>
-                </div>
+                <p className="mt-3 text-sm text-blue-900/70">
+                  This territory is reserved for your account. A KC agent will contact you within 24 hours to complete activation.
+                </p>
               )}
             </div>
           ))}

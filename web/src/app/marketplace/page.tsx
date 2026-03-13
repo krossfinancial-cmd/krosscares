@@ -328,6 +328,8 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
                           vertical={zip.vertical}
                           dashboardPath={user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor"}
                           status={displayStatus}
+                          assignedClientId={zip.assignedClientId}
+                          currentClientId={user.client?.id ?? null}
                         />
                       )}
                     </td>

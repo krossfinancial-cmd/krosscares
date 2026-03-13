@@ -20,9 +20,6 @@ async function audit(actorUserId: string, action: string, entityType: string, en
 }
 
 export async function reserveZip(zipId: string, actor: WorkflowActor) {
-  const expiration = addDays(new Date(), 0);
-  expiration.setMinutes(expiration.getMinutes() + 5);
-
   return prisma.$transaction(async (tx) => {
     const claimResult = await tx.zipInventory.updateMany({
       where: {
@@ -44,7 +41,7 @@ export async function reserveZip(zipId: string, actor: WorkflowActor) {
       data: {
         status: ZipStatus.RESERVED,
         assignedClientId: actor.clientId,
-        reservationExpiresAt: expiration,
+        reservationExpiresAt: null,
       },
     });
     if (claimResult.count === 0) throw new Error("ZIP is currently unavailable.");
@@ -54,61 +51,9 @@ export async function reserveZip(zipId: string, actor: WorkflowActor) {
     });
     if (!updated) throw new Error("ZIP not found.");
 
-    const pendingPayment = await tx.payment.findFirst({
-      where: {
-        clientId: actor.clientId,
-        zipId: updated.id,
-        status: PaymentStatus.PENDING,
-      },
-    });
-    if (!pendingPayment) {
-      await tx.payment.create({
-        data: {
-          clientId: actor.clientId,
-          zipId: updated.id,
-          amountCents: updated.annualPriceCents,
-          provider: "mock",
-          status: PaymentStatus.PENDING,
-        },
-      });
-    }
-
-    const existingContract = await tx.contract.findFirst({
-      where: {
-        clientId: actor.clientId,
-        zipId: updated.id,
-      },
-    });
-    if (!existingContract) {
-      await tx.contract.create({
-        data: {
-          clientId: actor.clientId,
-          zipId: updated.id,
-          status: ContractStatus.DRAFT,
-        },
-      });
-    }
-
-    await tx.onboardingForm.upsert({
-      where: {
-        clientId_zipId: {
-          clientId: actor.clientId,
-          zipId: updated.id,
-        },
-      },
-      update: {
-        status: OnboardingFormStatus.NOT_SENT,
-      },
-      create: {
-        clientId: actor.clientId,
-        zipId: updated.id,
-        status: OnboardingFormStatus.NOT_SENT,
-      },
-    });
-
     await audit(actor.userId, "zip.reserved", "zip_inventory", updated.id, {
       zipCode: updated.zipCode,
-      expiresAt: expiration.toISOString(),
+      contactWindowHours: 24,
     });
 
     return updated;

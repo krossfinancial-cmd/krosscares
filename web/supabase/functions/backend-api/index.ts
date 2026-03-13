@@ -39,12 +39,6 @@ function addDays(value: Date | string, days: number) {
   return date;
 }
 
-function addMinutes(value: Date | string, minutes: number) {
-  const date = typeof value === "string" ? new Date(value) : new Date(value);
-  date.setMinutes(date.getMinutes() + minutes);
-  return date;
-}
-
 function addHours(value: Date | string, hours: number) {
   const date = typeof value === "string" ? new Date(value) : new Date(value);
   date.setHours(date.getHours() + hours);
@@ -340,7 +334,6 @@ async function reserveZipAction(payload: Record<string, unknown>) {
   }
 
   const now = new Date();
-  const expiresAt = addMinutes(now, 5).toISOString();
   const canReserve =
     zip.status === "AVAILABLE" ||
     (zip.status === "RESERVED" && zip.reservationExpiresAt && new Date(zip.reservationExpiresAt) < now) ||
@@ -355,70 +348,20 @@ async function reserveZipAction(payload: Record<string, unknown>) {
     .update({
       status: "RESERVED",
       assignedClientId: clientId,
-      reservationExpiresAt: expiresAt,
+      reservationExpiresAt: null,
       updatedAt: nowIso(),
     })
     .eq("id", zipId);
   if (updateError) throw new ApiError(500, updateError.message);
 
-  const { data: pendingPayment, error: pendingPaymentError } = await supabase
-    .from("Payment")
-    .select("id")
-    .eq("clientId", clientId)
-    .eq("zipId", zipId)
-    .eq("status", "PENDING")
-    .limit(1)
-    .maybeSingle();
-  if (pendingPaymentError) throw new ApiError(500, pendingPaymentError.message);
-
-  if (!pendingPayment) {
-    const { error } = await supabase.from("Payment").insert({
-      id: crypto.randomUUID(),
-      clientId,
-      zipId,
-      provider: "mock",
-      providerSessionId: null,
-      amountCents: zip.annualPriceCents,
-      status: "PENDING",
-      paidAt: null,
-      createdAt: nowIso(),
-    });
-    if (error) throw new ApiError(500, error.message);
-  }
-
-  const { data: existingContract, error: existingContractError } = await supabase
-    .from("Contract")
-    .select("id")
-    .eq("clientId", clientId)
-    .eq("zipId", zipId)
-    .limit(1)
-    .maybeSingle();
-  if (existingContractError) throw new ApiError(500, existingContractError.message);
-
-  if (!existingContract) {
-    const { error } = await supabase.from("Contract").insert({
-      id: crypto.randomUUID(),
-      clientId,
-      zipId,
-      status: "DRAFT",
-      documentUrl: null,
-      sentAt: null,
-      signedAt: null,
-      createdAt: nowIso(),
-    });
-    if (error) throw new ApiError(500, error.message);
-  }
-
-  await upsertOnboardingForm(clientId, zipId, "NOT_SENT", null);
-
   await audit(userId, "zip.reserved", "zip_inventory", zipId, {
     zipCode: zip.zipCode,
-    expiresAt,
+    contactWindowHours: 24,
   });
 
   return {
     ok: true,
-    reservationExpiresAt: expiresAt,
+    reservationExpiresAt: null,
   };
 }
 
