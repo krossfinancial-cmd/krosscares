@@ -4,11 +4,11 @@ import { z } from "zod";
 import { appUrl } from "@/lib/app-url";
 import { callBackendApi } from "@/lib/backend-api";
 import { createSupabaseAuthUser, deleteSupabaseAuthUser } from "@/lib/auth-admin";
-import { sendEmail } from "@/lib/mailer";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 import { hasSupabasePublicClientConfig } from "@/lib/supabase/config";
 import { createOptionalServerSupabaseClient } from "@/lib/supabase/server";
+import { sendZipClaimNotification } from "@/lib/zip-claim-notifications";
 
 const SignupSchema = z
   .object({
@@ -32,15 +32,6 @@ const SignupSchema = z
 
 function dashboardForRole(role: "REALTOR" | "DEALER") {
   return role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor";
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
 }
 
 function buildDashboardRedirect(role: "REALTOR" | "DEALER", options: { claimedZip?: string; claimError?: string; claimZip?: string }) {
@@ -157,49 +148,18 @@ export async function POST(request: Request) {
       }
     }
 
-    const notifyEmail = process.env.NEW_ACCOUNT_NOTIFY_EMAIL?.trim();
-    if (notifyEmail) {
-      try {
-        const signupFields = [
-          ["Full Name", fullName],
-          ["Email Address", email],
-          ["Phone", phone],
-          ["Business Type", role === "DEALER" ? "Dealer" : "Realtor"],
-          ["Company Name", companyName || "-"],
-          ...(claimZipId ? [["Requested ZIP", claimZipCode || claimZipId]] : []),
-          ...(claimZipId ? [["ZIP Claim Status", claimError ? `Failed: ${claimError}` : "Reserved"]] : []),
-        ] as const;
-
-        await sendEmail(
-          notifyEmail,
-          `New Zip Client - ${fullName}`,
-          {
-            html: `
-              <table style="border-collapse:collapse;width:100%;max-width:720px;font-family:Arial,sans-serif;font-size:14px;">
-                <tbody>
-                  ${signupFields
-                    .map(
-                      ([label, value]) => `
-                        <tr>
-                          <th style="border:1px solid #d9e2f2;background:#f5f8ff;padding:10px 12px;text-align:left;width:220px;">
-                            ${escapeHtml(label)}
-                          </th>
-                          <td style="border:1px solid #d9e2f2;padding:10px 12px;">
-                            ${escapeHtml(value)}
-                          </td>
-                        </tr>
-                      `,
-                    )
-                    .join("")}
-                </tbody>
-              </table>
-            `,
-            text: signupFields.map(([label, value]) => `${label}: ${value}`).join("\n"),
-          },
-        );
-      } catch (error) {
-        console.error("Signup notification email failed.", error);
-      }
+    try {
+      await sendZipClaimNotification({
+        fullName,
+        email,
+        phone,
+        companyName,
+        role,
+        zipCode: claimZipId ? claimZipCode || claimZipId : null,
+        claimStatus: claimZipId ? (claimError ? `Failed: ${claimError}` : "Reserved") : null,
+      });
+    } catch (error) {
+      console.error("Signup notification email failed.", error);
     }
 
     const supabase = await createOptionalServerSupabaseClient();

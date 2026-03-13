@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 import { appUrl } from "@/lib/app-url";
 import { prisma } from "@/lib/prisma";
+import { sendZipClaimNotification } from "@/lib/zip-claim-notifications";
 import { createOptionalServerSupabaseClient } from "@/lib/supabase/server";
 
 function dashboardForRole(role: "ADMIN" | "REALTOR" | "DEALER") {
@@ -44,7 +45,14 @@ export async function POST(request: Request) {
 
     const user = await prisma.user.findUnique({
       where: { id: data.user.id },
-      select: { id: true, role: true },
+      select: {
+        id: true,
+        role: true,
+        fullName: true,
+        email: true,
+        phone: true,
+        companyName: true,
+      },
     });
 
     if (!user) {
@@ -62,6 +70,26 @@ export async function POST(request: Request) {
           userId: user.id,
           expectedVertical: user.role,
         });
+
+        try {
+          const zip = await prisma.zipInventory.findUnique({
+            where: { id: claimZipId },
+            select: { zipCode: true },
+          });
+
+          await sendZipClaimNotification({
+            fullName: user.fullName,
+            email: user.email,
+            phone: user.phone,
+            companyName: user.companyName,
+            role: user.role,
+            zipCode: zip?.zipCode || claimZipCode || claimZipId,
+            claimStatus: "Reserved",
+          });
+        } catch (error) {
+          console.error("Login ZIP reservation notification email failed.", error);
+        }
+
         if (claimZipCode) params.set("claimed_zip", claimZipCode);
       } catch (error) {
         const message = error instanceof Error ? error.message : "Unable to reserve ZIP.";
