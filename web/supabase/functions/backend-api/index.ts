@@ -1,5 +1,4 @@
 import { createClient } from "npm:@supabase/supabase-js@2.50.0";
-import bcrypt from "npm:bcryptjs@3.0.3";
 
 class ApiError extends Error {
   status: number;
@@ -12,10 +11,10 @@ class ApiError extends Error {
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-const SHARED_SECRET = Deno.env.get("BACKEND_API_SHARED_SECRET") || "";
+const SHARED_SECRET = Deno.env.get("BACKEND_API_SHARED_SECRET");
 
-if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-  throw new Error("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required.");
+if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !SHARED_SECRET) {
+  throw new Error("SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, and BACKEND_API_SHARED_SECRET are required.");
 }
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
@@ -39,12 +38,6 @@ function addDays(value: Date | string, days: number) {
   return date;
 }
 
-function addHours(value: Date | string, hours: number) {
-  const date = typeof value === "string" ? new Date(value) : new Date(value);
-  date.setHours(date.getHours() + hours);
-  return date;
-}
-
 function daysBetweenCalendar(a: Date, b: Date) {
   const aMidnight = new Date(a.getFullYear(), a.getMonth(), a.getDate()).getTime();
   const bMidnight = new Date(b.getFullYear(), b.getMonth(), b.getDate()).getTime();
@@ -63,25 +56,6 @@ function asString(value: unknown) {
 
 function normalizeEmail(value: unknown) {
   return asString(value).toLowerCase().trim();
-}
-
-function randomToken() {
-  return `${crypto.randomUUID().replaceAll("-", "")}${crypto.randomUUID().replaceAll("-", "")}`;
-}
-
-function randomHex(bytes = 32) {
-  const buffer = crypto.getRandomValues(new Uint8Array(bytes));
-  return Array.from(buffer)
-    .map((v) => v.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-async function sha256Hex(value: string) {
-  const encoded = new TextEncoder().encode(value);
-  const digest = await crypto.subtle.digest("SHA-256", encoded);
-  return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
 }
 
 async function audit(actorUserId: string | null, action: string, entityType: string, entityId: string, metadata?: unknown) {
@@ -206,28 +180,6 @@ async function upsertLeadRoute(params: {
     updatedAt: current,
   });
   if (error) throw new ApiError(500, error.message);
-}
-
-async function issuePasswordSetupToken(userId: string, expiresInHours = 72) {
-  const rawToken = randomHex(32);
-  const tokenHash = await sha256Hex(rawToken);
-  const expiresAt = addHours(new Date(), expiresInHours);
-
-  const { error } = await supabase.from("PasswordSetupToken").insert({
-    id: crypto.randomUUID(),
-    userId,
-    tokenHash,
-    expiresAt: expiresAt.toISOString(),
-    usedAt: null,
-    createdAt: nowIso(),
-  });
-
-  if (error) throw new ApiError(500, error.message);
-
-  return {
-    token: rawToken,
-    expiresAt: expiresAt.toISOString(),
-  };
 }
 
 async function attemptActivation(zipId: string, userId: string, clientId: string) {
@@ -629,17 +581,17 @@ async function waitlistJoinAction(payload: Record<string, unknown>) {
 
 async function createClientAction(payload: Record<string, unknown>) {
   const actorUserId = asString(payload.actorUserId);
+  const userId = asString(payload.userId);
   const fullName = asString(payload.fullName).trim();
   const email = normalizeEmail(payload.email);
-  const password = asString(payload.password);
   const companyName = asString(payload.companyName).trim();
   const phone = asString(payload.phone).trim();
   const vertical = asString(payload.vertical).toUpperCase() === "DEALER" ? "DEALER" : "REALTOR";
 
   ensure(actorUserId, "actorUserId is required.");
+  ensure(userId, "userId is required.");
   ensure(fullName, "fullName is required.");
   ensure(email, "email is required.");
-  ensure(password.length >= 8, "password-too-short");
 
   const { data: existingUser, error: existingError } = await supabase
     .from("User")
@@ -649,8 +601,6 @@ async function createClientAction(payload: Record<string, unknown>) {
   if (existingError) throw new ApiError(500, existingError.message);
   if (existingUser) throw new ApiError(409, "email-already-exists");
 
-  const passwordHash = await bcrypt.hash(password, 12);
-  const userId = crypto.randomUUID();
   const clientId = crypto.randomUUID();
   const role = vertical === "DEALER" ? "DEALER" : "REALTOR";
   const current = nowIso();
@@ -658,7 +608,6 @@ async function createClientAction(payload: Record<string, unknown>) {
   const { error: userError } = await supabase.from("User").insert({
     id: userId,
     email,
-    passwordHash,
     role,
     fullName,
     phone: phone || null,
@@ -916,6 +865,7 @@ async function releaseZipAction(payload: Record<string, unknown>) {
 
 async function enrollAction(payload: Record<string, unknown>) {
   const actorUserId = asString(payload.actorUserId);
+  const userId = asString(payload.userId);
   const zipId = asString(payload.zipId);
   const fullName = asString(payload.fullName).trim();
   const companyName = asString(payload.companyName).trim();
@@ -929,6 +879,7 @@ async function enrollAction(payload: Record<string, unknown>) {
   const logoUrl = asString(payload.logoUrl).trim();
 
   ensure(actorUserId, "actorUserId is required.");
+  ensure(userId, "userId is required.");
   ensure(zipId, "zipId is required.");
   ensure(fullName, "fullName is required.");
   ensure(companyName, "companyName is required.");
@@ -949,16 +900,12 @@ async function enrollAction(payload: Record<string, unknown>) {
   if (existingUser) throw new ApiError(409, "Email already exists.");
 
   const role = zip.vertical === "DEALER" ? "DEALER" : "REALTOR";
-  const passwordHash = await bcrypt.hash(randomHex(24), 12);
   const current = nowIso();
-
-  const userId = crypto.randomUUID();
   const clientId = crypto.randomUUID();
 
   const { error: userError } = await supabase.from("User").insert({
     id: userId,
     email,
-    passwordHash,
     role,
     fullName,
     phone,
@@ -1013,15 +960,11 @@ async function enrollAction(payload: Record<string, unknown>) {
     });
   }
 
-  const setup = await issuePasswordSetupToken(userId);
-
   return {
     ok: true,
     invite: {
       email,
       fullName,
-      token: setup.token,
-      expiresAt: setup.expiresAt,
     },
     zip: {
       zipCode: zip.zipCode,
@@ -1125,179 +1068,6 @@ async function runRenewalsAction(payload: Record<string, unknown>) {
   };
 }
 
-async function authLoginAction(payload: Record<string, unknown>) {
-  const email = normalizeEmail(payload.email);
-  const password = asString(payload.password);
-
-  ensure(email, "Invalid credentials.");
-  ensure(password, "Invalid credentials.");
-
-  const { data: user, error } = await supabase.from("User").select("*").eq("email", email).maybeSingle();
-  if (error) throw new ApiError(500, error.message);
-  if (!user) throw new ApiError(401, "Invalid credentials.");
-
-  const isValid = await bcrypt.compare(password, user.passwordHash as string);
-  if (!isValid) throw new ApiError(401, "Invalid credentials.");
-
-  const token = randomToken();
-  const expiresAt = addDays(new Date(), 30).toISOString();
-
-  const { error: sessionError } = await supabase.from("Session").insert({
-    id: crypto.randomUUID(),
-    token,
-    userId: user.id,
-    expiresAt,
-    createdAt: nowIso(),
-  });
-
-  if (sessionError) throw new ApiError(500, sessionError.message);
-
-  return {
-    ok: true,
-    role: user.role,
-    userId: user.id,
-    session: {
-      token,
-      expiresAt,
-    },
-  };
-}
-
-async function authLogoutAction(payload: Record<string, unknown>) {
-  const token = asString(payload.token);
-  if (!token) return { ok: true };
-
-  const { error } = await supabase.from("Session").delete().eq("token", token);
-  if (error) throw new ApiError(500, error.message);
-  return { ok: true };
-}
-
-async function authSetPasswordAction(payload: Record<string, unknown>) {
-  const token = asString(payload.token).trim();
-  const password = asString(payload.password);
-  ensure(token, "invalid-token");
-  ensure(password.length >= 8, "password-too-short");
-
-  const tokenHash = await sha256Hex(token);
-  const now = nowIso();
-
-  const { data: tokenRecord, error: tokenError } = await supabase
-    .from("PasswordSetupToken")
-    .select("id,userId")
-    .eq("tokenHash", tokenHash)
-    .is("usedAt", null)
-    .gt("expiresAt", now)
-    .maybeSingle();
-
-  if (tokenError) throw new ApiError(500, tokenError.message);
-  if (!tokenRecord) throw new ApiError(400, "invalid-token");
-
-  const passwordHash = await bcrypt.hash(password, 12);
-
-  const { error: userUpdateError } = await supabase
-    .from("User")
-    .update({
-      passwordHash,
-      updatedAt: nowIso(),
-    })
-    .eq("id", tokenRecord.userId);
-
-  if (userUpdateError) throw new ApiError(500, userUpdateError.message);
-
-  const { error: tokenUpdateError } = await supabase
-    .from("PasswordSetupToken")
-    .update({
-      usedAt: nowIso(),
-    })
-    .eq("userId", tokenRecord.userId)
-    .is("usedAt", null);
-
-  if (tokenUpdateError) throw new ApiError(500, tokenUpdateError.message);
-
-  return { ok: true };
-}
-
-async function authSignupAction(payload: Record<string, unknown>) {
-  const fullName = asString(payload.fullName).trim();
-  const email = normalizeEmail(payload.email);
-  const phone = asString(payload.phone).trim();
-  const companyName = asString(payload.companyName).trim();
-  const vertical = asString(payload.vertical).toUpperCase() === "DEALER" ? "DEALER" : "REALTOR";
-  const password = asString(payload.password);
-
-  ensure(fullName, "Invalid form input.");
-  ensure(email, "Invalid form input.");
-  ensure(phone, "Invalid form input.");
-  ensure(password.length >= 8, "Invalid form input.");
-
-  const { data: existing, error: existingError } = await supabase
-    .from("User")
-    .select("id")
-    .eq("email", email)
-    .maybeSingle();
-  if (existingError) throw new ApiError(500, existingError.message);
-  if (existing) throw new ApiError(409, "email already exists");
-
-  const passwordHash = await bcrypt.hash(password, 12);
-  const role = vertical === "DEALER" ? "DEALER" : "REALTOR";
-  const userId = crypto.randomUUID();
-  const clientId = crypto.randomUUID();
-  const current = nowIso();
-
-  const { error: userError } = await supabase.from("User").insert({
-    id: userId,
-    fullName,
-    email,
-    phone,
-    companyName: companyName || null,
-    passwordHash,
-    role,
-    createdAt: current,
-    updatedAt: current,
-  });
-  if (userError) throw new ApiError(500, userError.message);
-
-  const { error: clientError } = await supabase.from("Client").insert({
-    id: clientId,
-    userId,
-    vertical,
-    leadRoutingEmail: email,
-    leadRoutingPhone: phone,
-    preferredContactMethod: "EMAIL",
-    onboardingStatus: "PENDING",
-    serviceState: "NC",
-    createdAt: current,
-    updatedAt: current,
-  });
-  if (clientError) throw new ApiError(500, clientError.message);
-
-  await audit(userId, "auth.signup", "user", userId, {
-    vertical,
-  });
-
-  const token = randomToken();
-  const expiresAt = addDays(new Date(), 30).toISOString();
-  const { error: sessionError } = await supabase.from("Session").insert({
-    id: crypto.randomUUID(),
-    token,
-    userId,
-    expiresAt,
-    createdAt: nowIso(),
-  });
-
-  if (sessionError) throw new ApiError(500, sessionError.message);
-
-  return {
-    ok: true,
-    role,
-    userId,
-    session: {
-      token,
-      expiresAt,
-    },
-  };
-}
-
 async function handleAction(action: string, payload: Record<string, unknown>) {
   switch (action) {
     case "health": {
@@ -1312,14 +1082,6 @@ async function handleAction(action: string, payload: Record<string, unknown>) {
         message: "Stripe webhook endpoint is wired. Local flow currently uses mock payments.",
       };
     }
-    case "auth.login":
-      return authLoginAction(payload);
-    case "auth.logout":
-      return authLogoutAction(payload);
-    case "auth.signup":
-      return authSignupAction(payload);
-    case "auth.set_password":
-      return authSetPasswordAction(payload);
     case "zip.reserve":
       return reserveZipAction(payload);
     case "checkout.mock":
@@ -1371,14 +1133,12 @@ Deno.serve(async (request) => {
     });
   }
 
-  if (SHARED_SECRET) {
-    const incomingSecret = request.headers.get("x-backend-secret") || "";
-    if (incomingSecret !== SHARED_SECRET) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: JSON_HEADERS,
-      });
-    }
+  const incomingSecret = request.headers.get("x-backend-secret") || "";
+  if (incomingSecret !== SHARED_SECRET) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: JSON_HEADERS,
+    });
   }
 
   try {

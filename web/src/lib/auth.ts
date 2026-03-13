@@ -1,19 +1,8 @@
-import { randomUUID } from "crypto";
-import bcrypt from "bcryptjs";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { UserRole } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-
-const COOKIE_NAME = "kc_session";
-const IDENTITY_COOKIE_NAME = "kc_session_identity";
-const SESSION_DAYS = 30;
-
-export type SessionIdentity = {
-  email: string;
-  role: UserRole;
-};
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 function homeForRole(role: UserRole) {
   if (role === "ADMIN") return "/dashboard/admin";
@@ -21,134 +10,43 @@ function homeForRole(role: UserRole) {
   return "/dashboard/realtor";
 }
 
-function sessionExpiry() {
-  return new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000);
-}
-
-export async function setSessionCookie(token: string, expiresAt: Date | string) {
-  const expiry = typeof expiresAt === "string" ? new Date(expiresAt) : expiresAt;
-  const store = await cookies();
-  store.set(COOKIE_NAME, token, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    expires: expiry,
-    path: "/",
-  });
-}
-
-export async function setSessionIdentityCookie(identity: SessionIdentity, expiresAt: Date | string) {
-  const expiry = typeof expiresAt === "string" ? new Date(expiresAt) : expiresAt;
-  const store = await cookies();
-  const payload = Buffer.from(JSON.stringify(identity), "utf8").toString("base64url");
-
-  store.set(IDENTITY_COOKIE_NAME, payload, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    expires: expiry,
-    path: "/",
-  });
-}
-
-export async function getSessionToken() {
-  const store = await cookies();
-  return store.get(COOKIE_NAME)?.value || null;
-}
-
-export async function getSessionIdentity() {
-  const store = await cookies();
-  const rawValue = store.get(IDENTITY_COOKIE_NAME)?.value;
-  if (!rawValue) return null;
-
-  try {
-    const decoded = Buffer.from(rawValue, "base64url").toString("utf8");
-    const parsed = JSON.parse(decoded) as Partial<SessionIdentity>;
-    if (!parsed.email || !parsed.role) return null;
-    if (parsed.role !== "ADMIN" && parsed.role !== "REALTOR" && parsed.role !== "DEALER") return null;
-
-    return {
-      email: parsed.email,
-      role: parsed.role,
-    } satisfies SessionIdentity;
-  } catch {
-    return null;
-  }
-}
-
-export async function clearSessionCookie() {
-  const store = await cookies();
-  store.set(COOKIE_NAME, "", {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    expires: new Date(0),
-    path: "/",
-  });
-  store.delete(COOKIE_NAME);
-  store.set(IDENTITY_COOKIE_NAME, "", {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    expires: new Date(0),
-    path: "/",
-  });
-  store.delete(IDENTITY_COOKIE_NAME);
-}
-
-export async function createSession(userId: string) {
-  const token = randomUUID().replace(/-/g, "") + randomUUID().replace(/-/g, "");
-  const expiresAt = sessionExpiry();
-
-  await prisma.session.create({
-    data: {
-      token,
-      userId,
-      expiresAt,
-    },
-  });
-
-  await setSessionCookie(token, expiresAt);
-}
-
-export async function clearSession() {
-  const token = await getSessionToken();
-  if (token) {
-    await prisma.session.deleteMany({
-      where: { token },
-    });
-  }
-  await clearSessionCookie();
-}
-
 const loadCurrentUser = cache(async () => {
-  const store = await cookies();
-  const token = store.get(COOKIE_NAME)?.value || null;
-  if (!token) return null;
+  const supabase = await createServerSupabaseClient();
+  const { data, error } = await supabase.auth.getClaims();
+  const claims = data?.claims;
 
-  const session = await prisma.session.findUnique({
-    where: { token },
-    include: {
-      user: {
-        include: {
-          client: true,
-        },
-      },
-    },
-  });
-
-  if (!session) return null;
-  if (session.expiresAt < new Date()) {
-    await prisma.session.delete({ where: { token } });
-    store.delete(COOKIE_NAME);
+  if (error || !claims?.sub) {
     return null;
   }
 
-  return session.user;
+  return prisma.user.findUnique({
+    where: { id: claims.sub },
+    include: {
+      client: true,
+    },
+  });
+});
+
+export const loadCurrentAuthUser = cache(async () => {
+  const supabase = await createServerSupabaseClient();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) {
+    return null;
+  }
+
+  return user;
 });
 
 export async function getCurrentUser() {
   return loadCurrentUser();
+}
+
+export async function getCurrentAuthUser() {
+  return loadCurrentAuthUser();
 }
 
 export async function requireUser(role?: UserRole) {
@@ -158,16 +56,11 @@ export async function requireUser(role?: UserRole) {
   return user;
 }
 
-export async function loginWithPassword(email: string, password: string) {
-  const user = await prisma.user.findUnique({
-    where: { email: email.toLowerCase().trim() },
-  });
+export async function requireAuthUser() {
+  const user = await getCurrentAuthUser();
+  if (!user) {
+    redirect("/login");
+  }
 
-  if (!user) return { ok: false as const, message: "Invalid credentials." };
-
-  const isValid = await bcrypt.compare(password, user.passwordHash);
-  if (!isValid) return { ok: false as const, message: "Invalid credentials." };
-
-  await createSession(user.id);
-  return { ok: true as const, role: user.role };
+  return user;
 }

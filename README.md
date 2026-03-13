@@ -24,6 +24,12 @@ npm run db:seed   # run when you want to reset local demo data
 npm run dev
 ```
 
+Required auth env:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (or `NEXT_PUBLIC_SUPABASE_ANON_KEY`)
+- `SUPABASE_SERVICE_ROLE_KEY`
+
 Optional full stack services (Redis, MinIO, Mailpit, scheduler):
 
 ```bash

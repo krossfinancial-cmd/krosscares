@@ -7,10 +7,17 @@ import {
   ZipStatus,
   ZipTier,
 } from "@prisma/client";
-import bcrypt from "bcryptjs";
+import { createClient } from "@supabase/supabase-js";
 import territoryTrackerSeedData from "../src/data/territory-tracker-realtors.json";
+import { getSupabaseServiceRoleKey, getSupabaseUrl } from "../src/lib/supabase/config";
 
 const prisma = new PrismaClient();
+const supabaseAdmin = createClient(getSupabaseUrl(), getSupabaseServiceRoleKey(), {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false,
+  },
+});
 
 type TerritoryTrackerSeedRow = {
   zipCode: string;
@@ -23,6 +30,19 @@ type TerritoryTrackerSeedRow = {
   statusDate: string | null;
 };
 
+function parseStatusDate(value: string | null) {
+  if (!value) return null;
+
+  if (/^\d{5}$/.test(value)) {
+    const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+    excelEpoch.setUTCDate(excelEpoch.getUTCDate() + Number(value));
+    return excelEpoch;
+  }
+
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
 const SAMPLE_ZIPS = [
   { zipCode: "28207", city: "Charlotte", county: "Mecklenburg", tier: ZipTier.PREMIUM, price: 150000 },
   { zipCode: "27608", city: "Raleigh", county: "Wake", tier: ZipTier.PREMIUM, price: 150000 },
@@ -34,13 +54,97 @@ const SAMPLE_ZIPS = [
   { zipCode: "27587", city: "Wake Forest", county: "Wake", tier: ZipTier.STANDARD, price: 50000 },
 ];
 
+async function ensureAuthUser(args: {
+  email: string;
+  password: string;
+  fullName: string;
+  role: UserRole;
+}) {
+  const { data: listed, error: listError } = await supabaseAdmin.auth.admin.listUsers();
+  if (listError) {
+    throw listError;
+  }
+
+  const existing = listed.users.find((user) => user.email?.toLowerCase() === args.email);
+  if (existing) {
+    const { data, error } = await supabaseAdmin.auth.admin.updateUserById(existing.id, {
+      password: args.password,
+      email_confirm: true,
+      user_metadata: {
+        fullName: args.fullName,
+        role: args.role,
+      },
+    });
+
+    if (error || !data.user) {
+      throw error || new Error("Unable to update auth user.");
+    }
+
+    return data.user;
+  }
+
+  const { data, error } = await supabaseAdmin.auth.admin.createUser({
+    email: args.email,
+    password: args.password,
+    email_confirm: true,
+    user_metadata: {
+      fullName: args.fullName,
+      role: args.role,
+    },
+  });
+
+  if (error || !data.user) {
+    throw error || new Error("Unable to create auth user.");
+  }
+
+  return data.user;
+}
+
+async function syncUserRecord(args: {
+  id: string;
+  email: string;
+  role: UserRole;
+  fullName: string;
+  companyName: string;
+  phone: string;
+}) {
+  const existingByEmail = await prisma.user.findUnique({
+    where: { email: args.email },
+    select: { id: true },
+  });
+
+  if (existingByEmail && existingByEmail.id !== args.id) {
+    await prisma.user.delete({
+      where: { id: existingByEmail.id },
+    });
+  }
+
+  return prisma.user.upsert({
+    where: { id: args.id },
+    update: {
+      email: args.email,
+      role: args.role,
+      fullName: args.fullName,
+      companyName: args.companyName,
+      phone: args.phone,
+    },
+    create: {
+      id: args.id,
+      email: args.email,
+      role: args.role,
+      fullName: args.fullName,
+      companyName: args.companyName,
+      phone: args.phone,
+    },
+  });
+}
+
 async function main() {
-  const adminPassword = await bcrypt.hash("Admin#2026!", 10);
-  const realtorPassword = await bcrypt.hash("Realtor#2026!", 10);
-  const dealerPassword = await bcrypt.hash("Dealer#2026!", 10);
+  const adminPassword = "Admin#2026!";
+  const realtorPassword = "Realtor#2026!";
+  const dealerPassword = "Dealer#2026!";
 
   if (process.env.SEED_RESET === "true") {
-    await prisma.session.deleteMany();
     await prisma.lead.deleteMany();
     await prisma.payment.deleteMany();
     await prisma.contract.deleteMany();
@@ -67,67 +171,56 @@ async function main() {
         density: entry.density,
         tier: entry.tier,
         status: entry.status,
-        statusDate: entry.statusDate ? new Date(entry.statusDate) : null,
+        statusDate: parseStatusDate(entry.statusDate),
       })),
       skipDuplicates: true,
     });
   }
 
-  const adminUser = await prisma.user.upsert({
-    where: { email: "admin@krosscares.local" },
-    update: {
-      passwordHash: adminPassword,
-      role: UserRole.ADMIN,
-      fullName: "Platform Admin",
-      companyName: "Kross Concepts",
-      phone: "919-555-0101",
-    },
-    create: {
-      email: "admin@krosscares.local",
-      passwordHash: adminPassword,
-      role: UserRole.ADMIN,
-      fullName: "Platform Admin",
-      companyName: "Kross Concepts",
-      phone: "919-555-0101",
-    },
+  const adminAuthUser = await ensureAuthUser({
+    email: "admin@krosscares.local",
+    password: adminPassword,
+    fullName: "Platform Admin",
+    role: UserRole.ADMIN,
+  });
+  const realtorAuthUser = await ensureAuthUser({
+    email: "realtor@krosscares.local",
+    password: realtorPassword,
+    fullName: "Sasha Realtor",
+    role: UserRole.REALTOR,
+  });
+  const dealerAuthUser = await ensureAuthUser({
+    email: "dealer@krosscares.local",
+    password: dealerPassword,
+    fullName: "Miles Dealer",
+    role: UserRole.DEALER,
   });
 
-  const realtorUser = await prisma.user.upsert({
-    where: { email: "realtor@krosscares.local" },
-    update: {
-      passwordHash: realtorPassword,
-      role: UserRole.REALTOR,
-      fullName: "Sasha Realtor",
-      companyName: "Blue Ridge Realty",
-      phone: "919-555-0102",
-    },
-    create: {
-      email: "realtor@krosscares.local",
-      passwordHash: realtorPassword,
-      role: UserRole.REALTOR,
-      fullName: "Sasha Realtor",
-      companyName: "Blue Ridge Realty",
-      phone: "919-555-0102",
-    },
+  const adminUser = await syncUserRecord({
+    id: adminAuthUser.id,
+    email: "admin@krosscares.local",
+    role: UserRole.ADMIN,
+    fullName: "Platform Admin",
+    companyName: "Kross Concepts",
+    phone: "919-555-0101",
   });
 
-  const dealerUser = await prisma.user.upsert({
-    where: { email: "dealer@krosscares.local" },
-    update: {
-      passwordHash: dealerPassword,
-      role: UserRole.DEALER,
-      fullName: "Miles Dealer",
-      companyName: "Capital Auto Group",
-      phone: "919-555-0103",
-    },
-    create: {
-      email: "dealer@krosscares.local",
-      passwordHash: dealerPassword,
-      role: UserRole.DEALER,
-      fullName: "Miles Dealer",
-      companyName: "Capital Auto Group",
-      phone: "919-555-0103",
-    },
+  const realtorUser = await syncUserRecord({
+    id: realtorAuthUser.id,
+    email: "realtor@krosscares.local",
+    role: UserRole.REALTOR,
+    fullName: "Sasha Realtor",
+    companyName: "Blue Ridge Realty",
+    phone: "919-555-0102",
+  });
+
+  const dealerUser = await syncUserRecord({
+    id: dealerAuthUser.id,
+    email: "dealer@krosscares.local",
+    role: UserRole.DEALER,
+    fullName: "Miles Dealer",
+    companyName: "Capital Auto Group",
+    phone: "919-555-0103",
   });
 
   const realtorClient = await prisma.client.upsert({
