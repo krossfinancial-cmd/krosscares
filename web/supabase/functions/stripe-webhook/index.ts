@@ -89,6 +89,63 @@ type InvoicePaymentRow = {
 
 type InvoicePaymentWrite = Omit<InvoicePaymentRow, "id" | "created_at" | "updated_at">;
 
+type UserRow = {
+  id: string;
+  email: string;
+  fullName: string | null;
+};
+
+type ClientRow = {
+  id: string;
+  userId: string;
+  vertical: string;
+  onboardingStatus: string;
+};
+
+type ZipInventoryRow = {
+  id: string;
+  zipCode: string;
+  vertical: string;
+  annualPriceCents: number;
+  status: string;
+  assignedClientId: string | null;
+  reservationExpiresAt: string | null;
+  updatedAt: string | null;
+  createdAt: string;
+};
+
+type PaymentRow = {
+  id: string;
+  clientId: string;
+  zipId: string;
+  provider: string;
+  providerSessionId: string | null;
+  amountCents: number;
+  status: string;
+  paidAt: string | null;
+  createdAt: string;
+};
+
+type ContractRow = {
+  id: string;
+  clientId: string;
+  zipId: string;
+  status: string;
+  documentUrl: string | null;
+  sentAt: string | null;
+  signedAt: string | null;
+  createdAt: string;
+};
+
+type OnboardingFormRow = {
+  id: string;
+  clientId: string;
+  zipId: string;
+  status: string;
+  submittedAt: string | null;
+  createdAt: string;
+};
+
 function jsonResponse(status: number, body: Record<string, unknown>) {
   return new Response(JSON.stringify(body), {
     status,
@@ -204,6 +261,14 @@ function buildStripeEventRow(event: Stripe.Event): StripeEventRow {
     payload: toJsonObject(event as unknown),
     processed_at: new Date().toISOString(),
   };
+}
+
+function buildProviderSessionId(payment: InvoicePaymentWrite) {
+  return firstNonNull(
+    payment.stripe_payment_intent_id,
+    payment.stripe_charge_id,
+    payment.stripe_invoice_id,
+  );
 }
 
 function buildInvoicePaymentWrite(event: Stripe.Event): InvoicePaymentWrite | null {
@@ -471,6 +536,392 @@ async function upsertInvoicePayment(next: InvoicePaymentWrite, event: Stripe.Eve
   }
 }
 
+async function findUserByEmail(email: string) {
+  const { data, error } = await supabase
+    .from("User")
+    .select("id,email,fullName")
+    .eq("email", email)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Failed to look up user by email: ${error.message}`);
+  }
+
+  return data as UserRow | null;
+}
+
+async function findClientByUserId(userId: string) {
+  const { data, error } = await supabase
+    .from("Client")
+    .select("id,userId,vertical,onboardingStatus")
+    .eq("userId", userId)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Failed to look up client by user id: ${error.message}`);
+  }
+
+  return data as ClientRow | null;
+}
+
+async function findPaymentsForClient(clientId: string) {
+  const { data, error } = await supabase
+    .from("Payment")
+    .select("id,clientId,zipId,provider,providerSessionId,amountCents,status,paidAt,createdAt")
+    .eq("clientId", clientId)
+    .order("createdAt", { ascending: false });
+
+  if (error) {
+    throw new Error(`Failed to load payments for client: ${error.message}`);
+  }
+
+  return (data ?? []) as PaymentRow[];
+}
+
+async function findAssignedZipsForClient(clientId: string) {
+  const { data, error } = await supabase
+    .from("ZipInventory")
+    .select("id,zipCode,vertical,annualPriceCents,status,assignedClientId,reservationExpiresAt,updatedAt,createdAt")
+    .eq("assignedClientId", clientId)
+    .in("status", ["RESERVED", "SOLD"])
+    .order("updatedAt", { ascending: false, nullsFirst: false })
+    .order("createdAt", { ascending: false });
+
+  if (error) {
+    throw new Error(`Failed to load assigned zips for client: ${error.message}`);
+  }
+
+  return (data ?? []) as ZipInventoryRow[];
+}
+
+async function findContract(clientId: string, zipId: string) {
+  const { data, error } = await supabase
+    .from("Contract")
+    .select("id,clientId,zipId,status,documentUrl,sentAt,signedAt,createdAt")
+    .eq("clientId", clientId)
+    .eq("zipId", zipId)
+    .order("createdAt", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Failed to load contract for client/zip: ${error.message}`);
+  }
+
+  return data as ContractRow | null;
+}
+
+async function findOnboardingForm(clientId: string, zipId: string) {
+  const { data, error } = await supabase
+    .from("OnboardingForm")
+    .select("id,clientId,zipId,status,submittedAt,createdAt")
+    .eq("clientId", clientId)
+    .eq("zipId", zipId)
+    .order("createdAt", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Failed to load onboarding form for client/zip: ${error.message}`);
+  }
+
+  return data as OnboardingFormRow | null;
+}
+
+function pickZipForPortalSync(payments: PaymentRow[], zips: ZipInventoryRow[], invoicePayment: InvoicePaymentWrite) {
+  const sessionId = buildProviderSessionId(invoicePayment);
+  const amountPaid = invoicePayment.amount_paid;
+
+  if (sessionId) {
+    const bySession = payments.find((payment) => payment.providerSessionId === sessionId);
+    if (bySession) {
+      return zips.find((zip) => zip.id === bySession.zipId) ?? null;
+    }
+  }
+
+  if (amountPaid !== null) {
+    const pendingByAmount = payments.find(
+      (payment) => payment.status === "PENDING" && payment.amountCents === amountPaid,
+    );
+    if (pendingByAmount) {
+      return zips.find((zip) => zip.id === pendingByAmount.zipId) ?? null;
+    }
+
+    const reservedByAmount = zips.filter(
+      (zip) => zip.status === "RESERVED" && zip.annualPriceCents === amountPaid,
+    );
+    if (reservedByAmount.length === 1) {
+      return reservedByAmount[0];
+    }
+
+    const assignedByAmount = zips.filter((zip) => zip.annualPriceCents === amountPaid);
+    if (assignedByAmount.length === 1) {
+      return assignedByAmount[0];
+    }
+  }
+
+  const reservedZips = zips.filter((zip) => zip.status === "RESERVED");
+  if (reservedZips.length === 1) {
+    return reservedZips[0];
+  }
+
+  if (zips.length === 1) {
+    return zips[0];
+  }
+
+  return null;
+}
+
+async function upsertPortalPayment(
+  client: ClientRow,
+  zip: ZipInventoryRow,
+  invoicePayment: InvoicePaymentWrite,
+  event: Stripe.Event,
+) {
+  const providerSessionId = buildProviderSessionId(invoicePayment);
+  const current = new Date().toISOString();
+  const payments = await findPaymentsForClient(client.id);
+
+  const existingPaid = payments.find(
+    (payment) => payment.zipId === zip.id && payment.status === "PAID",
+  );
+
+  if (existingPaid) {
+    const { error } = await supabase
+      .from("Payment")
+      .update({
+        provider: "stripe",
+        providerSessionId: providerSessionId ?? existingPaid.providerSessionId,
+        paidAt: existingPaid.paidAt ?? invoicePayment.paid_at ?? current,
+      })
+      .eq("id", existingPaid.id);
+
+    if (error) {
+      throw new Error(`Failed to update existing paid Payment row: ${error.message}`);
+    }
+
+    return existingPaid.id;
+  }
+
+  const pending = payments.find(
+    (payment) => payment.zipId === zip.id && payment.status === "PENDING",
+  );
+
+  if (pending) {
+    const { error } = await supabase
+      .from("Payment")
+      .update({
+        status: "PAID",
+        provider: "stripe",
+        providerSessionId,
+        paidAt: invoicePayment.paid_at ?? current,
+      })
+      .eq("id", pending.id);
+
+    if (error) {
+      throw new Error(`Failed to update pending Payment row: ${error.message}`);
+    }
+
+    return pending.id;
+  }
+
+  const { data, error } = await supabase
+    .from("Payment")
+    .insert({
+      id: crypto.randomUUID(),
+      clientId: client.id,
+      zipId: zip.id,
+      provider: "stripe",
+      providerSessionId,
+      amountCents: invoicePayment.amount_paid ?? zip.annualPriceCents,
+      status: "PAID",
+      paidAt: invoicePayment.paid_at ?? current,
+      createdAt: current,
+    })
+    .select("id")
+    .single();
+
+  if (error) {
+    throw new Error(`Failed to create Payment row from Stripe webhook: ${error.message}`);
+  }
+
+  log("info", "stripe_webhook.portal_payment_synced", {
+    stripe_event_id: event.id,
+    client_id: client.id,
+    zip_id: zip.id,
+    payment_id: data.id,
+  });
+
+  return data.id as string;
+}
+
+async function ensurePortalContract(client: ClientRow, zip: ZipInventoryRow, paidAt: string | null) {
+  const current = new Date().toISOString();
+  const existing = await findContract(client.id, zip.id);
+
+  if (existing) {
+    if (existing.status === "SIGNED") {
+      return existing.id;
+    }
+
+    const { error } = await supabase
+      .from("Contract")
+      .update({
+        status: "SENT",
+        sentAt: existing.sentAt ?? paidAt ?? current,
+        documentUrl: existing.documentUrl ?? "https://example.local/contracts/territory-agreement.pdf",
+      })
+      .eq("id", existing.id);
+
+    if (error) {
+      throw new Error(`Failed to update Contract row from Stripe webhook: ${error.message}`);
+    }
+
+    return existing.id;
+  }
+
+  const { data, error } = await supabase
+    .from("Contract")
+    .insert({
+      id: crypto.randomUUID(),
+      clientId: client.id,
+      zipId: zip.id,
+      status: "SENT",
+      documentUrl: "https://example.local/contracts/territory-agreement.pdf",
+      sentAt: paidAt ?? current,
+      signedAt: null,
+      createdAt: current,
+    })
+    .select("id")
+    .single();
+
+  if (error) {
+    throw new Error(`Failed to create Contract row from Stripe webhook: ${error.message}`);
+  }
+
+  return data.id as string;
+}
+
+async function ensurePortalOnboardingForm(client: ClientRow, zip: ZipInventoryRow) {
+  const current = new Date().toISOString();
+  const existing = await findOnboardingForm(client.id, zip.id);
+
+  if (existing) {
+    if (existing.status === "COMPLETED") {
+      return existing.id;
+    }
+
+    const { error } = await supabase
+      .from("OnboardingForm")
+      .update({
+        status: "SENT",
+      })
+      .eq("id", existing.id);
+
+    if (error) {
+      throw new Error(`Failed to update OnboardingForm row from Stripe webhook: ${error.message}`);
+    }
+
+    return existing.id;
+  }
+
+  const { data, error } = await supabase
+    .from("OnboardingForm")
+    .insert({
+      id: crypto.randomUUID(),
+      clientId: client.id,
+      zipId: zip.id,
+      status: "SENT",
+      submittedAt: null,
+      createdAt: current,
+    })
+    .select("id")
+    .single();
+
+  if (error) {
+    throw new Error(`Failed to create OnboardingForm row from Stripe webhook: ${error.message}`);
+  }
+
+  return data.id as string;
+}
+
+async function updatePortalZipReservation(zipId: string) {
+  const { error } = await supabase
+    .from("ZipInventory")
+    .update({
+      reservationExpiresAt: null,
+      updatedAt: new Date().toISOString(),
+    })
+    .eq("id", zipId);
+
+  if (error) {
+    throw new Error(`Failed to update ZipInventory reservation from Stripe webhook: ${error.message}`);
+  }
+}
+
+async function syncPortalStateForPaidWebhook(invoicePayment: InvoicePaymentWrite, event: Stripe.Event) {
+  if (invoicePayment.status !== "paid" || !invoicePayment.customer_email) {
+    return;
+  }
+
+  const user = await findUserByEmail(invoicePayment.customer_email);
+  if (!user) {
+    log("info", "stripe_webhook.portal_sync_skipped", {
+      stripe_event_id: event.id,
+      reason: "user_not_found",
+      customer_email: invoicePayment.customer_email,
+    });
+    return;
+  }
+
+  const client = await findClientByUserId(user.id);
+  if (!client) {
+    log("info", "stripe_webhook.portal_sync_skipped", {
+      stripe_event_id: event.id,
+      reason: "client_not_found",
+      user_id: user.id,
+      customer_email: invoicePayment.customer_email,
+    });
+    return;
+  }
+
+  const [payments, assignedZips] = await Promise.all([
+    findPaymentsForClient(client.id),
+    findAssignedZipsForClient(client.id),
+  ]);
+
+  const zip = pickZipForPortalSync(payments, assignedZips, invoicePayment);
+  if (!zip) {
+    log("info", "stripe_webhook.portal_sync_skipped", {
+      stripe_event_id: event.id,
+      reason: "zip_match_not_found_or_ambiguous",
+      client_id: client.id,
+      customer_email: invoicePayment.customer_email,
+      amount_paid: invoicePayment.amount_paid,
+      assigned_zip_count: assignedZips.length,
+    });
+    return;
+  }
+
+  const [paymentId, contractId, onboardingFormId] = await Promise.all([
+    upsertPortalPayment(client, zip, invoicePayment, event),
+    ensurePortalContract(client, zip, invoicePayment.paid_at),
+    ensurePortalOnboardingForm(client, zip),
+  ]);
+
+  await updatePortalZipReservation(zip.id);
+
+  log("info", "stripe_webhook.portal_sync_success", {
+    stripe_event_id: event.id,
+    client_id: client.id,
+    user_id: user.id,
+    zip_id: zip.id,
+    payment_id: paymentId,
+    contract_id: contractId,
+    onboarding_form_id: onboardingFormId,
+  });
+}
+
 Deno.serve(async (request) => {
   if (request.method !== "POST") {
     return jsonResponse(405, {
@@ -579,6 +1030,7 @@ Deno.serve(async (request) => {
     }
 
     const saved = await upsertInvoicePayment(invoicePayment, event);
+    await syncPortalStateForPaidWebhook(invoicePayment, event);
 
     return jsonResponse(200, {
       ok: true,

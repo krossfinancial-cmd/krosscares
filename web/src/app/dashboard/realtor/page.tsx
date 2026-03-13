@@ -2,6 +2,7 @@ import Link from "next/link";
 import { formatCurrency, zipStatusColor } from "@/lib/format";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { getDashboardOnboardingStatus } from "@/lib/invoice-payments";
 
 type SearchParams = Promise<{
   welcome?: string;
@@ -37,6 +38,7 @@ export default async function RealtorOverviewPage({ searchParams }: { searchPara
       take: 5,
     }),
   ]);
+  const onboardingStatus = await getDashboardOnboardingStatus(client.onboardingStatus, client.id);
 
   return (
     <div className="space-y-6">
@@ -69,7 +71,7 @@ export default async function RealtorOverviewPage({ searchParams }: { searchPara
         </div>
         <div className="card p-5">
           <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Onboarding Status</p>
-          <p className="mt-2 text-lg font-semibold text-blue-950">{client.onboardingStatus.replace("_", " ")}</p>
+          <p className="mt-2 text-lg font-semibold text-blue-950">{onboardingStatus.replace("_", " ")}</p>
         </div>
       </div>
 
