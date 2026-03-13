@@ -39,13 +39,31 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#39;");
 }
 
+function buildDashboardRedirect(role: "REALTOR" | "DEALER", options: { claimedZip?: string; claimError?: string; claimZip?: string }) {
+  const params = new URLSearchParams();
+  params.set("welcome", "1");
+  if (options.claimedZip) params.set("claimed_zip", options.claimedZip);
+  if (options.claimError) params.set("claim_error", options.claimError);
+  if (options.claimZip) params.set("claim_zip", options.claimZip);
+  return `${dashboardForRole(role)}?${params.toString()}`;
+}
+
 export async function POST(request: Request) {
+  const formData = await request.formData();
+  const claimZipId = String(formData.get("claimZipId") || "").trim();
+  const claimZipCode = String(formData.get("claimZipCode") || "").trim();
+  const claimVertical = String(formData.get("claimVertical") || "").trim().toUpperCase();
+  const claimParams = new URLSearchParams();
+  if (claimZipId) claimParams.set("claimZipId", claimZipId);
+  if (claimZipCode) claimParams.set("claimZipCode", claimZipCode);
+  if (claimVertical) claimParams.set("claimVertical", claimVertical);
+
   const limit = await checkRateLimit(`signup:${requestFingerprint(request)}`, 20, 60_000);
   if (!limit.allowed) {
-    return NextResponse.redirect(appUrl("/signup?error=rate-limit"));
+    claimParams.set("error", "rate-limit");
+    return NextResponse.redirect(appUrl(`/signup?${claimParams.toString()}`));
   }
 
-  const formData = await request.formData();
   const parsed = SignupSchema.safeParse({
     fullName: String(formData.get("fullName") || ""),
     email: String(formData.get("email") || ""),
@@ -58,15 +76,19 @@ export async function POST(request: Request) {
 
   if (!parsed.success) {
     const issue = parsed.error.issues[0]?.message || "Invalid form input.";
-    return NextResponse.redirect(appUrl(`/signup?error=${encodeURIComponent(issue)}`));
+    claimParams.set("error", issue);
+    return NextResponse.redirect(appUrl(`/signup?${claimParams.toString()}`));
   }
 
   const { fullName, email, phone, companyName, vertical, password } = parsed.data;
+  let claimedZip: string | null = null;
+  let claimError: string | null = null;
 
   try {
     const result = await callBackendApi<{
       ok: boolean;
       role: "REALTOR" | "DEALER";
+      userId: string;
       session: { token: string; expiresAt: string };
     }>("auth.signup", {
       fullName,
@@ -77,6 +99,19 @@ export async function POST(request: Request) {
       password,
     });
 
+    if (claimZipId) {
+      try {
+        await callBackendApi("zip.reserve", {
+          zipId: claimZipId,
+          userId: result.userId,
+          expectedVertical: result.role,
+        });
+        claimedZip = claimZipCode || null;
+      } catch (error) {
+        claimError = error instanceof Error ? error.message : "Unable to reserve ZIP.";
+      }
+    }
+
     const notifyEmail = process.env.NEW_ACCOUNT_NOTIFY_EMAIL?.trim();
     if (notifyEmail) {
       try {
@@ -86,6 +121,8 @@ export async function POST(request: Request) {
           ["Phone", phone],
           ["Business Type", result.role === "DEALER" ? "Dealer" : "Realtor"],
           ["Company Name", companyName || "-"],
+          ...(claimZipId ? [["Requested ZIP", claimZipCode || claimZipId]] : []),
+          ...(claimZipId ? [["ZIP Claim Status", claimError ? `Failed: ${claimError}` : "Reserved"]] : []),
         ] as const;
 
         await sendEmail(
@@ -128,12 +165,22 @@ export async function POST(request: Request) {
       },
       result.session.expiresAt,
     );
-    return NextResponse.redirect(appUrl(`${dashboardForRole(result.role)}?welcome=1`));
+    return NextResponse.redirect(
+      appUrl(
+        buildDashboardRedirect(result.role, {
+          claimedZip: claimedZip || undefined,
+          claimError: claimError || undefined,
+          claimZip: claimZipCode || undefined,
+        }),
+      ),
+    );
   } catch (error) {
     const message = error instanceof Error ? error.message.toLowerCase() : "";
     if (message.includes("already exists")) {
-      return NextResponse.redirect(appUrl("/signup?error=email-exists"));
+      claimParams.set("error", "email-exists");
+      return NextResponse.redirect(appUrl(`/signup?${claimParams.toString()}`));
     }
-    return NextResponse.redirect(appUrl(`/signup?error=${encodeURIComponent("create-failed")}`));
+    claimParams.set("error", "create-failed");
+    return NextResponse.redirect(appUrl(`/signup?${claimParams.toString()}`));
   }
 }

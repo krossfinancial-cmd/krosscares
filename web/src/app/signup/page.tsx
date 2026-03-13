@@ -5,6 +5,9 @@ import { isDatabaseUnavailableError } from "@/lib/database-errors";
 
 type SearchParams = Promise<{
   error?: string;
+  claimZipId?: string;
+  claimZipCode?: string;
+  claimVertical?: string;
 }>;
 
 function errorMessage(code?: string) {
@@ -15,6 +18,15 @@ function errorMessage(code?: string) {
   if (code === "create-failed") return "We could not create your account. Please try again.";
 
   return decodeURIComponent(code);
+}
+
+function buildClaimQuery(claimZipId?: string, claimZipCode?: string, claimVertical?: string) {
+  const query = new URLSearchParams();
+  if (claimZipId) query.set("claimZipId", claimZipId);
+  if (claimZipCode) query.set("claimZipCode", claimZipCode);
+  if (claimVertical) query.set("claimVertical", claimVertical);
+  const value = query.toString();
+  return value ? `?${value}` : "";
 }
 
 export default async function SignupPage({ searchParams }: { searchParams: SearchParams }) {
@@ -36,6 +48,10 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
 
   const params = await searchParams;
   const error = errorMessage(params.error);
+  const claimZipId = params.claimZipId?.trim() || "";
+  const claimZipCode = params.claimZipCode?.trim() || "";
+  const claimVertical = params.claimVertical?.trim().toUpperCase() === "DEALER" ? "DEALER" : "REALTOR";
+  const claimQuery = buildClaimQuery(claimZipId, claimZipCode, claimZipId ? claimVertical : undefined);
 
   return (
     <div className="mx-auto max-w-xl">
@@ -48,8 +64,16 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
         {error ? (
           <div className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</div>
         ) : null}
+        {claimZipId ? (
+          <div className="mt-4 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800">
+            Create your account to reserve ZIP {claimZipCode || "selected territory"} right after signup.
+          </div>
+        ) : null}
 
         <form action="/api/auth/signup" method="post" className="mt-6 grid gap-4 md:grid-cols-2">
+          <input type="hidden" name="claimZipId" value={claimZipId} />
+          <input type="hidden" name="claimZipCode" value={claimZipCode} />
+          <input type="hidden" name="claimVertical" value={claimZipId ? claimVertical : ""} />
           <label className="md:col-span-2">
             <span className="mb-1 block text-sm font-semibold text-blue-900">Full Name</span>
             <input
@@ -84,7 +108,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
 
           <label>
             <span className="mb-1 block text-sm font-semibold text-blue-900">Business Type</span>
-            <select name="vertical" defaultValue="REALTOR" className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950">
+            <select name="vertical" defaultValue={claimZipId ? claimVertical : "REALTOR"} className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950">
               <option value="REALTOR">Realtor</option>
               <option value="DEALER">Car Dealer</option>
             </select>
@@ -136,7 +160,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
           <Link href="/marketplace" className="font-semibold text-blue-700 hover:text-blue-900">
             Back to marketplace
           </Link>
-          <Link href="/login" className="font-semibold text-blue-700 hover:text-blue-900">
+          <Link href={`/login${claimQuery}`} className="font-semibold text-blue-700 hover:text-blue-900">
             Already have an account? Sign in
           </Link>
         </div>

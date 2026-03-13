@@ -3,7 +3,23 @@ import { formatCurrency, zipStatusColor } from "@/lib/format";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export default async function RealtorOverviewPage() {
+type SearchParams = Promise<{
+  welcome?: string;
+  claimed_zip?: string;
+  claim_error?: string;
+  claim_zip?: string;
+}>;
+
+function safeDecode(value: string) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+export default async function RealtorOverviewPage({ searchParams }: { searchParams: SearchParams }) {
+  const params = await searchParams;
   const user = await requireUser("REALTOR");
   const client = await prisma.client.findUnique({
     where: { userId: user.id },
@@ -29,6 +45,17 @@ export default async function RealtorOverviewPage() {
         <p className="mt-2 text-sm font-bold text-red-600">
           Check your email within 24 hours for account activation steps
         </p>
+        {params.claimed_zip ? (
+          <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+            ZIP {params.claimed_zip} has been reserved for your account.
+          </div>
+        ) : null}
+        {params.claim_error ? (
+          <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            {params.claim_zip ? `ZIP ${params.claim_zip}: ` : ""}
+            {safeDecode(params.claim_error)}
+          </div>
+        ) : null}
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">

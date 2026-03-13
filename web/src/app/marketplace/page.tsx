@@ -312,7 +312,14 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
                     </td>
                     <td className="px-4 py-3 text-right">
                       {!user ? (
-                        <a href="/login" className="secondary-btn text-xs">
+                        <a
+                          href={`/login?${new URLSearchParams({
+                            claimZipId: zip.id,
+                            claimZipCode: zip.zipCode,
+                            claimVertical: zip.vertical,
+                          }).toString()}`}
+                          className="secondary-btn text-xs"
+                        >
                           Sign in to claim
                         </a>
                       ) : user.role === "ADMIN" ? (

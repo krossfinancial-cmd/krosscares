@@ -30,9 +30,11 @@ export async function AppHeader() {
     <header className="glass sticky top-0 z-50 border-b border-blue-100">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:py-3">
         <div className="flex min-w-0 items-center">
-          <Link href="/" className="flex items-center" aria-label="Kross Concepts home">
-            <BrandLogo variant="mark" className="h-12 w-auto md:hidden" priority />
-            <BrandLogo variant="full" className="hidden h-20 w-auto object-contain md:block" priority />
+          <Link href="/" className="flex flex-col items-start leading-none" aria-label="Kross Concepts home">
+            <BrandLogo variant="mark" className="h-12 w-auto md:h-16" priority />
+            <span className="mt-1 hidden pl-0.5 text-[11px] font-medium tracking-[0.08em] text-blue-950/85 md:block">
+              Building Your Future
+            </span>
           </Link>
         </div>
 
