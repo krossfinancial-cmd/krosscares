@@ -35,6 +35,22 @@ export function hasSupabasePublicClientConfig() {
   return getOptionalSupabasePublicClientConfig() !== null;
 }
 
+export function hasSupabaseAdminClientConfig() {
+  return Boolean(normalize(process.env.NEXT_PUBLIC_SUPABASE_URL) && normalize(process.env.SUPABASE_SERVICE_ROLE_KEY));
+}
+
+export function getSupabaseAuthConfigStatus() {
+  const hasPublicClient = hasSupabasePublicClientConfig();
+  const hasAdminClient = hasSupabaseAdminClientConfig();
+
+  return {
+    hasPublicClient,
+    hasAdminClient,
+    canSignIn: hasPublicClient,
+    canSignUp: hasPublicClient && hasAdminClient,
+  };
+}
+
 export function warnMissingSupabasePublicClientConfig(context: string) {
   if (hasWarnedMissingPublicClientConfig) {
     return;

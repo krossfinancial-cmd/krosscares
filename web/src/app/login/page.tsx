@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { isDatabaseUnavailableError } from "@/lib/database-errors";
+import { getSupabaseAuthConfigStatus } from "@/lib/supabase/config";
 
 type SearchParams = Promise<{
   error?: string;
@@ -45,7 +46,10 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
     redirect(user.role === "ADMIN" ? "/dashboard/admin" : user.role === "DEALER" ? "/dashboard/dealer" : "/dashboard/realtor");
   }
   const params = await searchParams;
-  const error = errorMessage(params.error);
+  const loginAvailable = getSupabaseAuthConfigStatus().canSignIn;
+  const error = loginAvailable
+    ? errorMessage(params.error)
+    : "Sign in is unavailable until Supabase auth is configured for this deployment.";
   const loggedOut = params.logged_out === "1";
   const passwordSet = params.password_set === "1";
   const claimZipId = params.claimZipId?.trim() || "";
@@ -90,6 +94,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
               name="email"
               type="email"
               required
+              disabled={!loginAvailable}
               className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950"
               placeholder="you@example.com"
             />
@@ -103,12 +108,13 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
               name="password"
               type="password"
               required
+              disabled={!loginAvailable}
               className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950"
               placeholder="********"
             />
           </div>
-          <button className="primary-btn w-full" type="submit">
-            Continue
+          <button className="primary-btn w-full disabled:cursor-not-allowed disabled:opacity-60" type="submit" disabled={!loginAvailable}>
+            {loginAvailable ? "Continue" : "Auth Not Configured"}
           </button>
         </form>
 

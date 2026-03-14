@@ -15,6 +15,8 @@ Premium blue/white Next.js SaaS for exclusive ZIP territory sales and lifecycle 
 
 ## Run Locally
 
+For `npm run dev`, copy `web/.env.example` to `web/.env`.
+
 ```bash
 docker compose up -d db
 cd web
@@ -29,6 +31,8 @@ Required auth env:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (or `NEXT_PUBLIC_SUPABASE_ANON_KEY`)
 - `SUPABASE_SERVICE_ROLE_KEY`
+
+For `docker compose`, copy the root `.env.example` to `.env` and fill in the same Supabase keys there. Docker Compose does not read `web/.env` when wiring container environment variables.
 
 Optional full stack services (Redis, MinIO, Mailpit, scheduler):
 

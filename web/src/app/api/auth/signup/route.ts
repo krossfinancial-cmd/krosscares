@@ -6,7 +6,7 @@ import { callBackendApi } from "@/lib/backend-api";
 import { createSupabaseAuthUser, deleteSupabaseAuthUser } from "@/lib/auth-admin";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
-import { hasSupabasePublicClientConfig } from "@/lib/supabase/config";
+import { getSupabaseAuthConfigStatus } from "@/lib/supabase/config";
 import { createOptionalServerSupabaseClient } from "@/lib/supabase/server";
 import { sendZipClaimNotification } from "@/lib/zip-claim-notifications";
 
@@ -80,7 +80,7 @@ export async function POST(request: Request) {
   let claimError: string | null = null;
   const role: UserRole = vertical === "DEALER" ? "DEALER" : "REALTOR";
 
-  if (!hasSupabasePublicClientConfig()) {
+  if (!getSupabaseAuthConfigStatus().canSignUp) {
     claimParams.set("error", "auth-unavailable");
     return NextResponse.redirect(appUrl(`/signup?${claimParams.toString()}`));
   }

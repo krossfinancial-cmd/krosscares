@@ -3,6 +3,7 @@ import { checkRateLimit, requestFingerprint } from "@/lib/rate-limit";
 import { appUrl } from "@/lib/app-url";
 import { prisma } from "@/lib/prisma";
 import { sendZipClaimNotification } from "@/lib/zip-claim-notifications";
+import { getSupabaseAuthConfigStatus } from "@/lib/supabase/config";
 import { createOptionalServerSupabaseClient } from "@/lib/supabase/server";
 
 function dashboardForRole(role: "ADMIN" | "REALTOR" | "DEALER") {
@@ -27,6 +28,11 @@ export async function POST(request: Request) {
   if (claimVertical) claimParams.set("claimVertical", claimVertical);
 
   try {
+    if (!getSupabaseAuthConfigStatus().canSignIn) {
+      claimParams.set("error", "auth-unavailable");
+      return NextResponse.redirect(appUrl(`/login?${claimParams.toString()}`));
+    }
+
     const supabase = await createOptionalServerSupabaseClient();
 
     if (!supabase) {

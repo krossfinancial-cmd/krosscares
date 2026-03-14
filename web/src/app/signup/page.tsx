@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { isDatabaseUnavailableError } from "@/lib/database-errors";
+import { getSupabaseAuthConfigStatus } from "@/lib/supabase/config";
 
 type SearchParams = Promise<{
   error?: string;
@@ -48,7 +49,10 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
   }
 
   const params = await searchParams;
-  const error = errorMessage(params.error);
+  const signupAvailable = getSupabaseAuthConfigStatus().canSignUp;
+  const error = signupAvailable
+    ? errorMessage(params.error)
+    : "Account creation is unavailable until Supabase auth is configured for this deployment.";
   const claimZipId = params.claimZipId?.trim() || "";
   const claimZipCode = params.claimZipCode?.trim() || "";
   const claimVertical = params.claimVertical?.trim().toUpperCase() === "DEALER" ? "DEALER" : "REALTOR";
@@ -80,6 +84,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
             <input
               name="fullName"
               required
+              disabled={!signupAvailable}
               className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950"
               placeholder="Jordan Smith"
             />
@@ -91,6 +96,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
               name="email"
               type="email"
               required
+              disabled={!signupAvailable}
               className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950"
               placeholder="you@company.com"
             />
@@ -102,6 +108,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
               name="phone"
               type="tel"
               required
+              disabled={!signupAvailable}
               className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950"
               placeholder="(555) 555-1234"
             />
@@ -109,7 +116,12 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
 
           <label>
             <span className="mb-1 block text-sm font-semibold text-blue-900">Business Type</span>
-            <select name="vertical" defaultValue={claimZipId ? claimVertical : "REALTOR"} className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950">
+            <select
+              name="vertical"
+              defaultValue={claimZipId ? claimVertical : "REALTOR"}
+              disabled={!signupAvailable}
+              className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950"
+            >
               <option value="REALTOR">Realtor</option>
               <option value="DEALER">Car Dealer</option>
             </select>
@@ -119,6 +131,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
             <span className="mb-1 block text-sm font-semibold text-blue-900">Company Name (optional)</span>
             <input
               name="companyName"
+              disabled={!signupAvailable}
               className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950"
               placeholder="Your company"
             />
@@ -131,6 +144,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
               type="password"
               minLength={8}
               required
+              disabled={!signupAvailable}
               className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950"
               placeholder="At least 8 characters"
             />
@@ -143,13 +157,14 @@ export default async function SignupPage({ searchParams }: { searchParams: Searc
               type="password"
               minLength={8}
               required
+              disabled={!signupAvailable}
               className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm text-blue-950"
               placeholder="Re-enter password"
             />
           </label>
 
-          <button className="primary-btn md:col-span-2" type="submit">
-            Create Account
+          <button className="primary-btn md:col-span-2 disabled:cursor-not-allowed disabled:opacity-60" type="submit" disabled={!signupAvailable}>
+            {signupAvailable ? "Create Account" : "Auth Not Configured"}
           </button>
         </form>
 
