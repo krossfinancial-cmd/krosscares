@@ -3,7 +3,7 @@ import { ArrowDown, ArrowUp, ArrowUpDown, Search } from "lucide-react";
 import type { ZipStatus } from "@prisma/client";
 import { ZipActionButton } from "@/components/zip-action-button";
 import { isDatabaseUnavailableError } from "@/lib/database-errors";
-import { formatCurrency, zipStatusColor } from "@/lib/format";
+import { formatCurrency, formatZipTierLabel, zipStatusColor } from "@/lib/format";
 import { getCurrentUser } from "@/lib/auth";
 import { getMarketplaceZips } from "@/lib/queries";
 
@@ -302,7 +302,7 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
                   <tr key={zip.id} className="border-t border-blue-100 hover:bg-blue-50/60">
                     <td className="px-4 py-3 font-semibold text-blue-950">{zip.zipCode}</td>
                     <td className="px-4 py-3 text-blue-900">{zip.city}, {zip.state}</td>
-                    <td className="px-4 py-3 text-blue-900">{zip.tier.replace("_", " ")}</td>
+                    <td className="px-4 py-3 text-blue-900">{formatZipTierLabel(zip.tier)}</td>
                     <td className="px-4 py-3 text-blue-900">{zip.vertical}</td>
                     <td className="px-4 py-3 font-semibold text-blue-950">{formatCurrency(zip.annualPriceCents)}</td>
                     <td className="px-4 py-3">

@@ -9,6 +9,7 @@ import {
 } from "@prisma/client";
 import { createClient } from "@supabase/supabase-js";
 import territoryTrackerSeedData from "../src/data/territory-tracker-realtors.json";
+import { ZIP_TIER_PRICE_CENTS } from "../src/lib/pricing";
 import { getSupabaseServiceRoleKey, getSupabaseUrl } from "../src/lib/supabase/config";
 
 const prisma = new PrismaClient();
@@ -44,14 +45,14 @@ function parseStatusDate(value: string | null) {
 }
 
 const SAMPLE_ZIPS = [
-  { zipCode: "28207", city: "Charlotte", county: "Mecklenburg", tier: ZipTier.PREMIUM, price: 150000 },
-  { zipCode: "27608", city: "Raleigh", county: "Wake", tier: ZipTier.PREMIUM, price: 150000 },
-  { zipCode: "27519", city: "Cary", county: "Wake", tier: ZipTier.HIGH_DEMAND, price: 100000 },
-  { zipCode: "28173", city: "Waxhaw", county: "Union", tier: ZipTier.HIGH_DEMAND, price: 100000 },
-  { zipCode: "28031", city: "Cornelius", county: "Mecklenburg", tier: ZipTier.STANDARD, price: 50000 },
-  { zipCode: "28211", city: "Charlotte", county: "Mecklenburg", tier: ZipTier.STANDARD, price: 50000 },
-  { zipCode: "27540", city: "Holly Springs", county: "Wake", tier: ZipTier.STANDARD, price: 50000 },
-  { zipCode: "27587", city: "Wake Forest", county: "Wake", tier: ZipTier.STANDARD, price: 50000 },
+  { zipCode: "28207", city: "Charlotte", county: "Mecklenburg", tier: ZipTier.PREMIUM, price: ZIP_TIER_PRICE_CENTS.PREMIUM },
+  { zipCode: "27608", city: "Raleigh", county: "Wake", tier: ZipTier.PREMIUM, price: ZIP_TIER_PRICE_CENTS.PREMIUM },
+  { zipCode: "27519", city: "Cary", county: "Wake", tier: ZipTier.HIGH_DEMAND, price: ZIP_TIER_PRICE_CENTS.HIGH_DEMAND },
+  { zipCode: "28173", city: "Waxhaw", county: "Union", tier: ZipTier.HIGH_DEMAND, price: ZIP_TIER_PRICE_CENTS.HIGH_DEMAND },
+  { zipCode: "28031", city: "Cornelius", county: "Mecklenburg", tier: ZipTier.STANDARD, price: ZIP_TIER_PRICE_CENTS.STANDARD },
+  { zipCode: "28211", city: "Charlotte", county: "Mecklenburg", tier: ZipTier.STANDARD, price: ZIP_TIER_PRICE_CENTS.STANDARD },
+  { zipCode: "27540", city: "Holly Springs", county: "Wake", tier: ZipTier.STANDARD, price: ZIP_TIER_PRICE_CENTS.STANDARD },
+  { zipCode: "27587", city: "Wake Forest", county: "Wake", tier: ZipTier.STANDARD, price: ZIP_TIER_PRICE_CENTS.STANDARD },
 ];
 
 async function ensureAuthUser(args: {
@@ -388,7 +389,7 @@ async function main() {
       data: {
         clientId: realtorClient.id,
         zipId: ownedZip.id,
-        amountCents: 100000,
+        amountCents: ownedZip.annualPriceCents,
         provider: "stripe",
         status: "PAID",
         paidAt: new Date(),
@@ -441,7 +442,7 @@ async function main() {
       data: {
         clientId: dealerClient.id,
         zipId: dealerOwnedZip.id,
-        amountCents: 150000,
+        amountCents: dealerOwnedZip.annualPriceCents,
         provider: "stripe",
         status: "PAID",
         paidAt: new Date(),

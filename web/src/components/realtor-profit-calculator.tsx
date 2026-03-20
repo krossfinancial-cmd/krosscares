@@ -2,20 +2,9 @@
 
 import Link from "next/link";
 import { type ReactNode, useMemo, useState } from "react";
+import { ZIP_TIER_LABELS, ZIP_TIER_PRICE_DOLLARS, type ZipTierPriceKey } from "@/lib/pricing";
 
-type TerritoryType = "rural" | "standard" | "premium";
-
-const TERRITORY_PRICES: Record<TerritoryType, number> = {
-  rural: 520,
-  standard: 998,
-  premium: 1120,
-};
-
-const TERRITORY_LABELS: Record<TerritoryType, string> = {
-  rural: "Rural",
-  standard: "Standard",
-  premium: "Premium",
-};
+type TerritoryType = ZipTierPriceKey;
 
 const SPLIT_PRESETS = [50, 70, 80, 90];
 
@@ -41,12 +30,12 @@ export function RealtorProfitCalculator() {
   const [homePrice, setHomePrice] = useState(400_000);
   const [commissionRate, setCommissionRate] = useState(2.5);
   const [agentSplit, setAgentSplit] = useState(70);
-  const [territoryType, setTerritoryType] = useState<TerritoryType>("standard");
+  const [territoryType, setTerritoryType] = useState<TerritoryType>("HIGH_DEMAND");
   const [dealsPerYear, setDealsPerYear] = useState(6);
   const [monthlyPortalSpend, setMonthlyPortalSpend] = useState(1_000);
 
   const results = useMemo(() => {
-    const territoryCost = TERRITORY_PRICES[territoryType] ?? 0;
+    const territoryCost = ZIP_TIER_PRICE_DOLLARS[territoryType] ?? 0;
     const grossCommission = homePrice * (commissionRate / 100);
     const agentCommission = grossCommission * (agentSplit / 100);
     const brokerCommission = grossCommission - agentCommission;
@@ -159,9 +148,9 @@ export function RealtorProfitCalculator() {
                 onChange={(event) => setTerritoryType(event.target.value as TerritoryType)}
                 className="w-full rounded-2xl border border-blue-200 bg-white px-4 py-3 text-blue-950"
               >
-                <option value="rural">Rural - $520/year</option>
-                <option value="standard">Standard - $998/year</option>
-                <option value="premium">Premium - $1,120/year</option>
+                <option value="STANDARD">Standard - $520/year</option>
+                <option value="HIGH_DEMAND">High Demand - $998/year</option>
+                <option value="PREMIUM">Premium - $1,120/year</option>
               </select>
             </Field>
 
@@ -206,7 +195,7 @@ export function RealtorProfitCalculator() {
             <StatCard label="Gross commission" value={formatCurrency(results.grossCommission)} />
             <StatCard label="Your commission" value={formatCurrency(results.agentCommission)} highlight />
             <StatCard label="Brokerage portion" value={formatCurrency(results.brokerCommission)} />
-            <StatCard label={`${TERRITORY_LABELS[territoryType]} territory`} value={formatCurrency(results.territoryCost)} />
+            <StatCard label={`${ZIP_TIER_LABELS[territoryType]} territory`} value={formatCurrency(results.territoryCost)} />
             <StatCard label="Annual commission income" value={formatCurrency(results.annualAgentIncome)} />
             <StatCard label="Break-even closings" value={results.breakEvenDeals.toFixed(2)} highlight />
             <StatCard label="Annual portal spend" value={formatCurrency(results.annualPortalSpend)} />
@@ -223,7 +212,7 @@ export function RealtorProfitCalculator() {
               One closing earns you {formatCurrency(results.agentCommission)}.
             </p>
             <p className="mt-3 text-sm text-blue-900/75">
-              Your {TERRITORY_LABELS[territoryType].toLowerCase()} territory costs{" "}
+              Your {ZIP_TIER_LABELS[territoryType].toLowerCase()} territory costs{" "}
               <span className="font-semibold text-blue-950">{formatCurrency(results.territoryCost)}</span>, which is{" "}
               <span className="font-semibold text-blue-950">{results.territoryAsPercentOfOneDeal.toFixed(1)}%</span> of one closing.
             </p>

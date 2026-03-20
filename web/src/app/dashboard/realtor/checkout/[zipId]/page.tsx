@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
 import { isProduction } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, formatZipTierLabel } from "@/lib/format";
 import { ReservationCountdown } from "@/components/reservation-countdown";
 
 type Params = Promise<{ zipId: string }>;
@@ -49,7 +49,7 @@ export default async function CheckoutPage({ params, searchParams }: { params: P
       ) : null}
       <div className="mt-5 space-y-2 rounded-xl border border-blue-100 bg-blue-50 p-4 text-sm text-blue-900">
         <p><strong>City:</strong> {zip.city}, {zip.state}</p>
-        <p><strong>Tier:</strong> {zip.tier.replace("_", " ")}</p>
+        <p><strong>Tier:</strong> {formatZipTierLabel(zip.tier)}</p>
         <p><strong>Annual price:</strong> {formatCurrency(zip.annualPriceCents)}</p>
         <p><strong>Current status:</strong> {zip.status}</p>
         <p><strong>Payment status:</strong> {payment?.status || "PENDING"}</p>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatCurrency, zipStatusColor } from "@/lib/format";
+import { formatCurrency, formatZipTierLabel, zipStatusColor } from "@/lib/format";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { getDashboardOnboardingStatus } from "@/lib/invoice-payments";
@@ -90,7 +90,7 @@ export default async function RealtorOverviewPage({ searchParams }: { searchPara
                   <p className="text-base font-semibold text-blue-950">
                     {zip.zipCode} · {zip.city}, {zip.state}
                   </p>
-                  <p className="text-sm text-blue-900/70">{zip.tier.replace("_", " ")} tier</p>
+                  <p className="text-sm text-blue-900/70">{formatZipTierLabel(zip.tier)} tier</p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-semibold text-blue-950">{formatCurrency(zip.annualPriceCents)}</p>

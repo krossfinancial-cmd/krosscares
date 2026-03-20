@@ -3,6 +3,7 @@ import { LandingHero } from "@/components/landing-hero";
 import { Check, X } from "lucide-react";
 import type { ReactNode } from "react";
 import { RealtorProfitCalculator } from "@/components/realtor-profit-calculator";
+import { ZIP_TIER_LABELS, ZIP_TIER_PRICE_DOLLARS, type ZipTierPriceKey } from "@/lib/pricing";
 
 const HOW_IT_WORKS = [
   {
@@ -56,7 +57,7 @@ const COMPARISON_ROWS = [
   },
   {
     feature: "Cost Per Month",
-    kross: { label: "$12-$25" },
+    kross: { label: "$43-$93" },
     zillow: { label: "$500-$3,000" },
     realtor: { label: "$300-$1,500" },
   },
@@ -80,6 +81,14 @@ const BENEFITS = [
     description: "Simple annual territory pricing with renewal reminders.",
   },
 ];
+
+const priceFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
+
+const PRICING_TIERS: ZipTierPriceKey[] = ["STANDARD", "HIGH_DEMAND", "PREMIUM"];
 
 export default function Home() {
   return (
@@ -185,14 +194,14 @@ export default function Home() {
           <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Realtor ROI Example</p>
           <h3 className="mt-2 text-xl font-bold text-blue-950">One home closing can cover your annual ZIP fee.</h3>
           <p className="mt-3 text-sm text-blue-900/75">
-            Example: A $300,000 closing at a 3% side can outperform a $1,000 annual ZIP cost.
+            Example: A $300,000 closing at a 3% side can outperform a $998 annual ZIP cost.
           </p>
         </AnimatedCard>
         <AnimatedCard className="p-6">
           <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Dealer ROI Example</p>
           <h3 className="mt-2 text-xl font-bold text-blue-950">One financed sale can cover your yearly territory.</h3>
           <p className="mt-3 text-sm text-blue-900/75">
-            Example: A financed deal with ~$2,000 gross can outperform a $750–$1,500 annual ZIP cost.
+            Example: A financed deal with ~$2,000 gross can outperform a $520-$1,120 annual ZIP cost.
           </p>
         </AnimatedCard>
       </section>
@@ -201,21 +210,13 @@ export default function Home() {
         <h2 className="text-2xl font-bold text-blue-950">Pricing</h2>
         <p className="mt-2 text-sm text-blue-900/70">Annual pricing by territory demand and lead velocity.</p>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
-          <AnimatedCard className="p-5">
-            <p className="text-sm font-semibold text-blue-700">Rural</p>
-            <p className="mt-2 text-3xl font-bold text-blue-950">$520</p>
-            <p className="text-sm text-blue-900/70">per year</p>
-          </AnimatedCard>
-          <AnimatedCard className="p-5">
-            <p className="text-sm font-semibold text-blue-700">Standard</p>
-            <p className="mt-2 text-3xl font-bold text-blue-950">$998</p>
-            <p className="text-sm text-blue-900/70">per year</p>
-          </AnimatedCard>
-          <AnimatedCard className="p-5">
-            <p className="text-sm font-semibold text-blue-700">Premium</p>
-            <p className="mt-2 text-3xl font-bold text-blue-950">$1,120</p>
-            <p className="text-sm text-blue-900/70">per year</p>
-          </AnimatedCard>
+          {PRICING_TIERS.map((tier) => (
+            <AnimatedCard key={tier} className="p-5">
+              <p className="text-sm font-semibold text-blue-700">{ZIP_TIER_LABELS[tier]}</p>
+              <p className="mt-2 text-3xl font-bold text-blue-950">{priceFormatter.format(ZIP_TIER_PRICE_DOLLARS[tier])}</p>
+              <p className="text-sm text-blue-900/70">per year</p>
+            </AnimatedCard>
+          ))}
         </div>
       </section>
 

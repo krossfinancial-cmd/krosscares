@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { formatCurrency, zipStatusColor } from "@/lib/format";
+import { formatCurrency, formatZipTierLabel, zipStatusColor } from "@/lib/format";
 
 type SearchParams = {
   assigned?: string;
@@ -78,7 +78,7 @@ export async function AdminZipInventoryManager({ searchParams }: { searchParams:
             <tr key={zip.id} className="border-t border-blue-100">
               <td className="py-3 font-semibold text-blue-950">{zip.zipCode}</td>
               <td className="py-3 text-blue-900">{zip.city}, {zip.state}</td>
-              <td className="py-3 text-blue-900">{zip.tier.replace("_", " ")}</td>
+              <td className="py-3 text-blue-900">{formatZipTierLabel(zip.tier)}</td>
               <td className="py-3 text-blue-900">{zip.vertical}</td>
               <td className="py-3 text-blue-900">{formatCurrency(zip.annualPriceCents)}</td>
               <td className="py-3">
